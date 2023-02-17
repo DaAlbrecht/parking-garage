@@ -42,7 +42,7 @@ model ParkingSpaceCustomer {
 }
 
 model Customer {
-  id                   Int                       @id @default(autoincrement())
+  id                   Int                        @id @default(autoincrement())
   is_long_term_customer Boolean
   is_blocked            Boolean
   parkingSpaceCustomers ParkingSpaceCustomer[]
