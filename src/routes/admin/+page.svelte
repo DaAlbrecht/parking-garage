@@ -20,24 +20,20 @@
             {/if}
         </div>
         {#each data.garages as garage}
-        <div class="flex-row content-center justify-center text-center">
-            <div>
+            <div class="flex-row content-center justify-center text-center">
+                <div>
                     {garage.id}
                     {garage.name}
                     {garage.address}
+                </div>
+                <div>
+                    <form method="POST" action="?/deleteGarage" use:enhance>
+                        <input type="hidden" name="id" value={garage.id}/>
+                        <button>delete</button>
+                    </form>
+                    <a href="/admin/edit/{garage.id}">edit</a>
+                </div>
             </div>
-            <div>
-                <form method="POST" action="?/deleteGarage" use:enhance>
-                    <input type="hidden" name="id" value={garage.id}/>
-                    <button>delete</button>
-                </form>
-
-                <form method="POST" action="?/editGarage" use:enhance>
-                    <input type="hidden" name="id" value={garage.id}/>
-                    <button>edit</button>
-                </form>
-            </div>
-        </div>
         {/each}
     </div>
 </div>

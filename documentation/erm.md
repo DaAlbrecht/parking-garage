@@ -16,11 +16,12 @@ erDiagram
   Level {
     int id PK
     int parking_garage_id FK
-    int number
+    int levelNumber
     int parking_spaces
   }
   ParkingSpace {
     int id PK
+    int number
     int level_id FK
   }
   Parking_Space_Customer {

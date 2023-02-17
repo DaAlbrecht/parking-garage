@@ -47,6 +47,33 @@ export const actions: Actions = {
 		return {
 			status: 200
 		};
+	},
+	updateGarage: async ({ request }) => {
+		const data = await request.formData();
+		const id = data.get('id');
+		const name = data.get('name');
+		const address = data.get('address');
+
+		if (!id) return fail(422, { error: 'Missing id' });
+
+		const idNumber = Number(id);
+
+		try {
+			await prisma.parkingGarage.update({
+				where: {
+					id: idNumber
+				},
+				data: {
+					name: name?.toString(),
+					address: address?.toString()
+				}
+			});
+		} catch (error) {
+			return fail(422, { error: 'Garage does not exist' });
+		}
+		return {
+			status: 200
+		};
 	}
 };
 
