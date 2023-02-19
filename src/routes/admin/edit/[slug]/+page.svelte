@@ -22,6 +22,7 @@
                 <input type="hidden" name="id" value={level.id}/>
                 <button>delete</button>
             </form>
+            <a href="/admin/details/{level.id}">Details</a>
         </div>
     {/each}
 </div>

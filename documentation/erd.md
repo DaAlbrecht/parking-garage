@@ -18,14 +18,9 @@ erDiagram
 
   ParkingSpace {
     Int id PK 
-    Int level_id  
-    }
-  
-
-  ParkingSpaceCustomer {
-    Int id PK 
-    Int parking_space_id  
     Int customer_id  
+    Int level_id  
+    Int parkingSpot  
     }
   
 
@@ -66,9 +61,8 @@ erDiagram
     }
   
     Level o{--|| ParkingGarage : "parkingGarage"
+    ParkingSpace o{--|| Customer : "customer"
     ParkingSpace o{--|| Level : "level"
-    ParkingSpaceCustomer o{--|| ParkingSpace : "parking_space"
-    ParkingSpaceCustomer o{--|| Customer : "customer"
     ParkingTicket o{--|| Customer : "customer"
     ExitTicket o{--|| Customer : "customer"
     ParkingRate o{--|| ParkingGarage : "parkingGarage"
