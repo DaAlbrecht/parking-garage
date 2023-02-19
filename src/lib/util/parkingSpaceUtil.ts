@@ -14,3 +14,8 @@ export async function getOccupiedParkingSpaces(levels: Level[]): Promise<Parking
 	);
 	return parkingSpaces.flat();
 }
+
+export async function getArrayOfOccupiedParkingSpaces(levels: Level[]): Promise<number[]> {
+	const occupiedParkingSpaces = await getOccupiedParkingSpaces(levels);
+	return occupiedParkingSpaces.map((parkingSpace) => parkingSpace.parkingSpot);
+}

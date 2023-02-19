@@ -1,6 +1,6 @@
 import { prisma } from '$lib/server/database';
 import type { ParkingGarage, ParkingSpace } from '.prisma/client';
-import { getOccupiedParkingSpaces } from './getOccupiedParkingSpaces';
+import { getOccupiedParkingSpaces } from './parkingSpaceUtil';
 
 export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<ParkingSpace | null> {
 	const levels = await prisma.level.findMany({
@@ -8,22 +8,22 @@ export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<Park
 			parking_garage_id: garage.id
 		}
 	});
-	const occupiedParkingSpacesFlat = await getOccupiedParkingSpaces(levels);
+	const occupiedParkingSpaces = await getOccupiedParkingSpaces(levels);
 
 	//find the level with the least percentage of occupied parking spaces
 	const levelWithLeastOccupiedParkingSpaces = levels.reduce((prev, current) => {
-		const occupiedParkingSpacesForLevel = occupiedParkingSpacesFlat.filter(
+		const occupiedParkingSpacesForLevel = occupiedParkingSpaces.filter(
 			(parkingSpace) => parkingSpace.level_id === current.id
 		);
 		const percentageOccupied = occupiedParkingSpacesForLevel.length / current.parking_spaces;
 		const percentageOccupiedPrev = prev
-			? occupiedParkingSpacesFlat.filter((parkingSpace) => parkingSpace.level_id === prev.id)
-					.length / prev.parking_spaces
+			? occupiedParkingSpaces.filter((parkingSpace) => parkingSpace.level_id === prev.id).length /
+			  prev.parking_spaces
 			: 1;
 		return percentageOccupied < percentageOccupiedPrev ? current : prev;
 	});
 
-	const occupiedParkingSpaceForLevel = occupiedParkingSpacesFlat.filter(
+	const occupiedParkingSpaceForLevel = occupiedParkingSpaces.filter(
 		(parkingSpace) => parkingSpace.level_id === levelWithLeastOccupiedParkingSpaces.id
 	);
 

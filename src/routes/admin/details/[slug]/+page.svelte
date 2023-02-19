@@ -5,6 +5,10 @@
 
 {#each data.levels as level }
     {#each Array(level.parking_spaces) as _, index(index)}
-        <div>{index}</div>
+        {#if data.occupiedParkingSpaces.includes(index)}
+            <div class="bg-red-600">{index}</div>
+        {:else}
+            <div>{index}</div>
+        {/if}
     {/each}
 {/each}
