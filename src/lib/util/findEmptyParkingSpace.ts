@@ -43,6 +43,11 @@ export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<Park
 		(_, i) => i
 	).filter((i) => !occupiedParkingSpaceForLevel.map((p) => p.parkingSpot).includes(i));
 
+	///TODO: useful error message if there are no empty parking spaces for this garage
+	if (emptyParkingSpaces.length === 0) {
+		return null;
+	}
+
 	const randomIndex = Math.floor(Math.random() * emptyParkingSpaces.length);
 	const parkingSpace = await prisma.parkingSpace.create({
 		data: {
