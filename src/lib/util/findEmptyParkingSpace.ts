@@ -20,15 +20,17 @@ export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<Park
 	);
 	const occupiedParkingSpacesFlat = parkingSpaces.flat();
 
-	//find the level with the least amount of occupied parking spaces
+	//find the level with the least percentage of occupied parking spaces
 	const levelWithLeastOccupiedParkingSpaces = levels.reduce((prev, current) => {
-		const prevParkingSpaces = occupiedParkingSpacesFlat.filter(
-			(parkingSpace) => parkingSpace.level_id === prev.id
-		);
-		const currentParkingSpaces = occupiedParkingSpacesFlat.filter(
+		const occupiedParkingSpacesForLevel = occupiedParkingSpacesFlat.filter(
 			(parkingSpace) => parkingSpace.level_id === current.id
 		);
-		return prevParkingSpaces.length < currentParkingSpaces.length ? prev : current;
+		const percentageOccupied = occupiedParkingSpacesForLevel.length / current.parking_spaces;
+		const percentageOccupiedPrev = prev
+			? occupiedParkingSpacesFlat.filter((parkingSpace) => parkingSpace.level_id === prev.id)
+					.length / prev.parking_spaces
+			: 1;
+		return percentageOccupied < percentageOccupiedPrev ? current : prev;
 	});
 
 	const occupiedParkingSpaceForLevel = occupiedParkingSpacesFlat.filter(
