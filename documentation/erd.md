@@ -12,16 +12,20 @@ erDiagram
     Int id PK 
     Int levelNumber  
     Int parking_spaces  
+    Int parking_garage_id  
     }
   
 
   ParkingSpace {
     Int id PK 
+    Int level_id  
     }
   
 
   ParkingSpaceCustomer {
     Int id PK 
+    Int parking_space_id  
+    Int customer_id  
     }
   
 
@@ -35,6 +39,7 @@ erDiagram
   ParkingTicket {
     Int id PK 
     DateTime entry_date  
+    Int customer_id  
     }
   
 
@@ -42,12 +47,15 @@ erDiagram
     Int id PK 
     DateTime exit_date  
     Float price  
+    Int customer_id  
     }
   
 
   ParkingRate {
     Int id PK 
     Float price  
+    Int parking_garage_id  
+    Int rate_type_id  
     }
   
 

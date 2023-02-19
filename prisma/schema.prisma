@@ -8,8 +8,9 @@ generator client {
 }
 
 generator erd {
-  provider = "prisma-erd-generator"
-  output   = "../documentation/erd.md"
+  provider                  = "prisma-erd-generator"
+  output                    = "../documentation/erd.md"
+  includeRelationFromFields = true
 }
 
 model ParkingGarage {
