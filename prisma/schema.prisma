@@ -7,6 +7,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../documentation/erd.md"
+}
+
 model ParkingGarage {
   id           Int           @id @default(autoincrement())
   name         String
@@ -19,7 +24,7 @@ model Level {
   id                Int            @id @default(autoincrement())
   levelNumber       Int
   parking_spaces    Int
-  parkingGarage     ParkingGarage  @relation(fields: [parking_garage_id], references: [id])
+  parkingGarage     ParkingGarage  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   parkingSpaces     ParkingSpace[]
 
@@ -34,13 +39,11 @@ model ParkingSpace {
 }
 
 model ParkingSpaceCustomer {
-  id               Int             @id @default(autoincrement())
-  parking_space    ParkingSpace    @relation(fields: [parking_space_id], references: [id])
+  id               Int          @id @default(autoincrement())
+  parking_space    ParkingSpace @relation(fields: [parking_space_id], references: [id])
   parking_space_id Int
-  customer         Customer        @relation(fields: [customer_id], references: [id])
+  customer         Customer     @relation(fields: [customer_id], references: [id])
   customer_id      Int
-  parkingTickets   ParkingTicket[]
-  exitTickets      ExitTicket[]
 }
 
 model Customer {
@@ -53,22 +56,18 @@ model Customer {
 }
 
 model ParkingTicket {
-  id                        Int                  @id @default(autoincrement())
-  entry_date                DateTime
-  customer                  Customer             @relation(fields: [customer_id], references: [id])
-  customer_id               Int
-  parkingSpaceCustomer      ParkingSpaceCustomer @relation(fields: [parking_space_customer_id], references: [id])
-  parking_space_customer_id Int
+  id          Int      @id @default(autoincrement())
+  entry_date  DateTime
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id Int
 }
 
 model ExitTicket {
-  id                        Int                  @id @default(autoincrement())
-  exit_date                 DateTime
-  price                     Float
-  customer                  Customer             @relation(fields: [customer_id], references: [id])
-  customer_id               Int
-  parkingSpaceCustomer      ParkingSpaceCustomer @relation(fields: [parking_space_customer_id], references: [id])
-  parking_space_customer_id Int
+  id          Int      @id @default(autoincrement())
+  exit_date   DateTime
+  price       Float
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id Int
 }
 
 model ParkingRate {

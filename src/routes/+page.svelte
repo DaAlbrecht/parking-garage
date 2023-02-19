@@ -4,7 +4,7 @@
   export let id: string = "";
 </script>
 
-<div class="h-full">
+<div class="h-full relative">
     <div class="flex flex-col">
         <div class="text-center">
             <form method="POST" action="?/longTermCustomer" use:enhance>
