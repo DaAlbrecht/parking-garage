@@ -3,6 +3,41 @@ import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 
 export const actions: Actions = {
+	addLevel: async ({ request }) => {
+		const data = await request.formData();
+		const parkingGarageId = data.get('garageId');
+		const capacity = data.get('parking_spaces');
+
+		if (!parkingGarageId || !capacity) {
+			return fail(422, { error: 'Missing data' });
+		}
+
+		const parkingGarageIdNumber = Number(parkingGarageId);
+		const capacityNumber = Number(capacity);
+		const highestLevel = await prisma.level.findFirst({
+			where: {
+				parking_garage_id: parkingGarageIdNumber
+			},
+			orderBy: {
+				levelNumber: 'desc'
+			}
+		});
+		try {
+			await prisma.level.create({
+				data: {
+					levelNumber: highestLevel ? highestLevel.levelNumber + 1 : 1,
+					parking_spaces: capacityNumber,
+					parking_garage_id: parkingGarageIdNumber
+				}
+			});
+		} catch (error) {
+			return fail(422, { error: 'Level already exists' });
+		}
+		return {
+			status: 200
+		};
+	},
+
 	deleteLevel: async ({ request }) => {
 		const data = await request.formData();
 		const id = data.get('id');
