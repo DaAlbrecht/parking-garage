@@ -1,5 +1,6 @@
 import { prisma } from '$lib/server/database';
 import type { ParkingGarage, ParkingSpace } from '.prisma/client';
+import { getOccupiedParkingSpaces } from './getOccupiedParkingSpaces';
 
 export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<ParkingSpace | null> {
 	const levels = await prisma.level.findMany({
@@ -7,18 +8,7 @@ export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<Park
 			parking_garage_id: garage.id
 		}
 	});
-
-	//get all occupied parkingSpaces
-	const parkingSpaces = await Promise.all(
-		levels.map(async (level) => {
-			return await prisma.parkingSpace.findMany({
-				where: {
-					level_id: level.id
-				}
-			});
-		})
-	);
-	const occupiedParkingSpacesFlat = parkingSpaces.flat();
+	const occupiedParkingSpacesFlat = await getOccupiedParkingSpaces(levels);
 
 	//find the level with the least percentage of occupied parking spaces
 	const levelWithLeastOccupiedParkingSpaces = levels.reduce((prev, current) => {
