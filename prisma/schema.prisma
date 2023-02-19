@@ -1,11 +1,87 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../documentation/erd.md"
+}
+
+model ParkingGarage {
+  id           Int           @id @default(autoincrement())
+  name         String
+  address      String
+  levels       Level[]
+  parkingRates ParkingRate[]
+}
+
+model Level {
+  id                Int            @id @default(autoincrement())
+  levelNumber       Int
+  parking_spaces    Int
+  parkingGarage     ParkingGarage  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parking_garage_id Int
+  parkingSpaces     ParkingSpace[]
+
+  @@unique([parking_garage_id, levelNumber])
+}
+
+model ParkingSpace {
+  id                    Int                    @id @default(autoincrement())
+  level                 Level                  @relation(fields: [level_id], references: [id])
+  level_id              Int
+  parkingSpaceCustomers ParkingSpaceCustomer[]
+}
+
+model ParkingSpaceCustomer {
+  id               Int          @id @default(autoincrement())
+  parking_space    ParkingSpace @relation(fields: [parking_space_id], references: [id])
+  parking_space_id Int
+  customer         Customer     @relation(fields: [customer_id], references: [id])
+  customer_id      Int
+}
+
+model Customer {
+  id                    Int                    @id @default(autoincrement())
+  is_long_term_customer Boolean
+  is_blocked            Boolean
+  parkingSpaceCustomers ParkingSpaceCustomer[]
+  parkingTickets        ParkingTicket[]
+  exitTickets           ExitTicket[]
+}
+
+model ParkingTicket {
+  id          Int      @id @default(autoincrement())
+  entry_date  DateTime
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id Int
+}
+
+model ExitTicket {
+  id          Int      @id @default(autoincrement())
+  exit_date   DateTime
+  price       Float
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id Int
+}
+
+model ParkingRate {
+  id                Int           @id @default(autoincrement())
+  price             Float
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parking_garage_id Int
+  rateType          RateType      @relation(fields: [rate_type_id], references: [id])
+  rate_type_id      Int
+}
+
+model RateType {
+  id           Int           @id @default(autoincrement())
+  start_time   DateTime
+  end_time     DateTime
+  parkingRates ParkingRate[]
 }
