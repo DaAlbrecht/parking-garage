@@ -1,4 +1,9 @@
+
 # Parking-Garage
+
+## Disclaimer
+
+I used this project to look into sveltekit and learn about Typescript as well as a web framework. I have no prior experience to both.
 
 This was a mandatory project i need to do for my  Advanced Federal Diploma of Higher Education in Software Engineering.
 
