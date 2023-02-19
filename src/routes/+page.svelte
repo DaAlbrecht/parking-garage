@@ -12,6 +12,7 @@
                 <button>Check in</button>
             </form>
             <form method="POST" action="?/getParkingSpot" use:enhance>
+                <input type="hidden" name="id" value={7}/>
                 <button>get parking spot</button>
             </form>
         </div>

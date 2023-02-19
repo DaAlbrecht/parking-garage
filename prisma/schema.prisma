@@ -8,8 +8,9 @@ generator client {
 }
 
 generator erd {
-  provider = "prisma-erd-generator"
-  output   = "../documentation/erd.md"
+  provider                  = "prisma-erd-generator"
+  output                    = "../documentation/erd.md"
+  includeRelationFromFields = true
 }
 
 model ParkingGarage {
@@ -32,25 +33,21 @@ model Level {
 }
 
 model ParkingSpace {
-  id                    Int                    @id @default(autoincrement())
-  level                 Level                  @relation(fields: [level_id], references: [id])
-  level_id              Int
-  parkingSpaceCustomers ParkingSpaceCustomer[]
-}
+  id          Int      @id @default(autoincrement())
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id Int
+  level       Level    @relation(fields: [level_id], references: [id])
+  level_id    Int
+  parkingSpot Int
 
-model ParkingSpaceCustomer {
-  id               Int          @id @default(autoincrement())
-  parking_space    ParkingSpace @relation(fields: [parking_space_id], references: [id])
-  parking_space_id Int
-  customer         Customer     @relation(fields: [customer_id], references: [id])
-  customer_id      Int
+  @@unique([level_id, parkingSpot])
 }
 
 model Customer {
-  id                    Int                    @id @default(autoincrement())
+  id                    Int             @id @default(autoincrement())
   is_long_term_customer Boolean
   is_blocked            Boolean
-  parkingSpaceCustomers ParkingSpaceCustomer[]
+  parkingSpace          ParkingSpace[]
   parkingTickets        ParkingTicket[]
   exitTickets           ExitTicket[]
 }
