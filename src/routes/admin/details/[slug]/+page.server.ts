@@ -1,4 +1,5 @@
 import { prisma } from '$lib/server/database';
+import { getArrayOfOccupiedParkingSpaces } from '$lib/util/parkingSpaceUtil';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
@@ -7,5 +8,6 @@ export const load = (async ({ params }) => {
 			parking_garage_id: Number(params.slug)
 		}
 	});
-	return { levels: levels };
+	const occupiedParkingSpaces = await getArrayOfOccupiedParkingSpaces(levels);
+	return { levels: levels, occupiedParkingSpaces: occupiedParkingSpaces };
 }) satisfies PageServerLoad;
