@@ -22,19 +22,19 @@ export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<Park
 	const parkingSpaces = await getAllParkingSpacesForLevel(leastOccupiedLevel);
 	if (parkingSpaces.length === 0) return null;
 
-	console.log(parkingSpaces);
+	
 	//find the first parking space that is not occupied
 	const freeParkingSpace = parkingSpaces.find((parkingSpace) => !parkingSpace.occupied);
-	// if (freeParkingSpace) {
-	// 	const parkingSpace = await prisma.parkingSpace.create({
-	// 		data: {
-	// 			parkingSpot: freeParkingSpace.parkingSpot,
-	// 			level_id: leastOccupiedLevel.id,
-	// 			customer_id: 1
-	// 		}
-	// 	});
-	// 	return parkingSpace;
-	// }
+	if (freeParkingSpace) {
+		const parkingSpace = await prisma.parkingSpace.create({
+			data: {
+				parkingSpot: freeParkingSpace.parkingSpot,
+				level_id: leastOccupiedLevel.id,
+				customer_id: 1
+			}
+		});
+		return parkingSpace;
+	}
 
 	return null;
 }
