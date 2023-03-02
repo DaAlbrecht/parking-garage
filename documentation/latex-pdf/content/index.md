@@ -5,6 +5,7 @@ author: "David Albrecht, TEKO Bern"
 numbersections: true
 toc: true
 lof: true
+lot: true
 mainfont: Times New Roman
 bibliography: "bibliography.bib"
 link-citations: true
@@ -88,6 +89,8 @@ ParkinTown requires a new parking garage management tool.
 | GCR-104  | Requirements | The application should offer a graphical representation of the different floors per parking garage, showing the free and occupied parking spaces as well as those of the permanent tenants. The system should be able to generate reports and evaluations per parking garage and customer category over a defined time period at any time. The turnover of each parking lot should be calculated and displayed for a given month and annually, with individual months shown separately. |
 | GCR-105  | Requirements | The amount owed by occasional users should be calculated based on the length of stay and the applicable parking tariff. The system should automatically switch to a daily flat rate for stays longer than 24 hours, and the full amount should be charged for the elapsed days. After payment, a digital exit ticket should be issued to the customer. |
 
+Table: Product-related general conditions \label{tab:prodgencon}
+
 ## Delimitations
 
 1. Geographic scope: The system will be designed to meet the parking management needs of a single municipality or town, rather than multiple locations or regions.
@@ -102,23 +105,135 @@ ParkinTown requires a new parking garage management tool.
 
 ## Stakeholder analysis
 
-### Stakholders
+### Stakeholders
 
 | ID| Stakeholder| Description|
-|------------|------------|-------------|
+|---|----------|--------------|
 | CUPT| Customers (Casual Users and Permanent Tenants)| They are the primary stakeholders who will use the parking system and benefit from its features. Casual users will expect a hassle-free parking experience with transparent billing and adequate parking space availability, while permanent tenants will expect a personalized parking solution with timely billing and automated payment options.|
 | PGO | Parking Garage Owners| They are the ones who will own and operate the parking garages. They will expect a reliable IT system that can cater to the diverse needs of their customers and offer timely billing and revenue generation. They may also expect a user-friendly interface to manage parking space allocation and rates.|
 | IDSA | IT Developers and System Administrators| They are responsible for developing and maintaining the parking system. They will expect a clear understanding of the stakeholders' requirements, access to the necessary resources, and a flexible system architecture to accommodate future changes in the parking industry.|
 | MAR | Municipal Authorities and Regulators| They are responsible for ensuring compliance with local regulations, safety standards, and environmental norms. They will expect the parking system to follow the applicable rules and regulations, maintain accurate records of parking transactions, and provide transparent billing information to customers and regulators.|
 | FPSP | Financial Institutions and Payment Service Providers | They are responsible for processing payments and ensuring the security of financial transactions. They will expect the parking system to integrate with their payment processing platforms, offer secure payment options, and maintain accurate records of financial transactions.|
 
-# Concept
+Table: List of Stakeholders and their abbreviation \label{tab:stakeholder}
+
+## Project planning
+
+The Parking Garage project aims to develop a software system that automates the management of parking garages. The project requires a comprehensive approach that involves planning, analysis, design, implementation, verification, and documentation. The Gantt chart  outlines the key activities involved in the project.
+
+![Gantt \label{fig:gantt}](images/gantt.png "Gantt")
+
+
+Project Initiation
+
+The project initiation phase involves defining the scope and objectives of the project, identifying stakeholders, and creating a project plan. The activities involved in this phase are:
+
+Initial Situation (1 day): This activity involves setting up the project, defining the project team, and identifying the project's objectives.
+Situation Analysis (1 day): This activity involves analyzing the current parking system in place, including identifying the strengths and weaknesses of the current system.
+General Conditions (3 days): This activity involves defining the constraints, assumptions, and dependencies of the project.
+Delimitations (1 day): This activity involves setting the boundaries of the project, defining what is included and excluded.
+Project Planning (1 day): This activity involves creating a detailed project plan, including timelines, resources, and budgets.
+Requirement Engineering
+
+The requirement engineering phase involves gathering, analyzing, and documenting the requirements for the software system. The activities involved in this phase are:
+
+Stakeholder Requirements (2 days): This activity involves gathering the requirements of the stakeholders, including the customers, users, and other interested parties.
+System Requirements (2 days): This activity involves translating the stakeholder requirements into system requirements.
+Architecture and Design (3 days): This activity involves designing the architecture of the system, including defining the components, interfaces, and data flows.
+Implementation
+
+The implementation phase involves developing and testing the software system. The activities involved in this phase are:
+
+Development Setup (2 days): This activity involves setting up the development environment, including installing the necessary software and hardware.
+Admin Implementation (7 days): This activity involves developing the administrative features of the system, including user management and database management.
+Report Generation (7 days): This activity involves developing the reporting features of the system, including generating reports on occupancy, revenue, and other metrics.
+Consumer Implementation (5 days): This activity involves developing the consumer-facing features of the system, including user interfaces and payment processing.
+GUI Polishing (3 days): This activity involves refining the user interface design to improve the user experience.
+Verification
+
+The verification phase involves testing the software system to ensure that it meets the requirements and is free of defects. The activities involved in this phase are:
+
+Create Verification Plan (5 days): This activity involves creating a plan for testing the system, including defining the test cases, test data, and test procedures.
+Release (2 days): This activity involves releasing the system to the stakeholders after it has been tested and approved.
+Development Plan
+
+The development plan phase involves creating a plan for the long-term development and maintenance of the software system. The activities involved in this phase are:
+
+Development Plan (3 days): This activity involves creating a plan for the ongoing development of the system, including identifying future features and improvements.
+Documentation
+
+The documentation phase involves creating user manuals, technical documentation, and other materials to support the use and maintenance of the software system. The activities involved in this phase are:
+
+Documentation (49 days): This activity involves creating user manuals, technical documentation, and other materials to support the use and maintenance of the software system.
+Conclusion
+
+The Parking Garage project requires a comprehensive approach that involves planning, analysis, design, implementation, verification, and documentation. The Gantt chart provides a detailed overview of the key activities involved in each phase of the project.
+
+# Development plan
+
+# Stakeholder requirements
+
+# System requirements
+
+## Functional requirements
+
+| ID | Trace from | Description |
+|----|:---:|----------------------|
+| R101 | PGO, IDSA| The IT system must allow for the configuration of parking garages individually, with the number of floors and parking spaces per floor being freely definable. |
+| R102 | PGO, IDSA| The number of parking spaces per floor may vary and can be set independently of other floors. |
+| R103 | PGO, IDSA| Each parking garage must have exactly one entrance and one exit barrier. |
+| R104 | CUPT, PGO| There are two categories of customers for each parking garage - Casual users and permanent tenants. |
+| R105 | CUPT, PGO| Permanent tenants are assigned a fixed parking space and pay a monthly rent for it. |
+| R106 | CUPT, PGO| If a permanent tenant's rent is not paid on the 15th of each month, their access is blocked until payment is made. |
+| R107 | CUPT| Occasional users can generate a digital parking ticket by pressing a button on the entrance barrier, which contains at least the date and time of entry, floor number, and assigned parking space number. |
+| R108 | CUPT| Permanent tenants must enter a unique personal code at the entrance barrier. |
+| R109 | CUPT, PGO| The date and time of entry are registered for both permanent tenants and occasional users for internal billing purposes. |
+| R110 | CUPT| The parking ticket for occasional users is validated before exit. |
+| R111 | CUPT| The date and time of exit are recorded. |
+| R112 | CUPT| The amount owed is calculated for occasional users based on the length of stay and the parking tariff. |
+| R113 | CUPT| When leaving the parking garage, either the unique personal code (permanent tenant) or the ticket number (occasional user) is read or entered at the exit barrier. |
+| R114 | CUPT, PGO, MAR| All entry and exit times are logged for both permanent tenants and occasional users. |
+| R115 | PGO, IDSA| The system must be able to generate an evaluation per parking garage and user category over a defined time period at any time. |
+| R116 | PGO, IDSA| Parking rates must be flexible and vary depending on the time of day. |
+| R117 | PGO, IDSA| A separate tariff applies for weekends and public holidays. |
+| R118 | PGO, IDSA| The parking tariff calculation is made on a quarter-hour basis, with the tariff at the beginning of the respective quarter-hour applying for the entire quarter-hour. |
+| R119 | CUPT| Any quarter of an hour that has elapsed will be charged in full. |
+| R120 | CUPT| If the parking time is longer than 24 hours, the billing will automatically switch to daily flat rate, charging the full amount for the days that have elapsed. |
+| R121 | CUPT| A graphical representation of the different floors per parking garage must be available on the application, showing the free and occupied parking spaces, as well as those of the permanent tenants. |
+| R122 | CUPT, IDSA| The allocation of parking spaces for occasional users must be based on an algorithm, which aims at a balanced distribution. |
+| R123 | PGO| The application must be able to calculate and display the turnover of each parking lot (divided by customer category) for a given month at any time. |
+| R124 | PGO| The application must also be able to calculate and display the annual turnover, showing the individual months separately. |
+
+Table: Functional requirements \label{tab:funcreq}
+
+
+## Non-Functional requirements
+
+| ID | Trace from | Description |
+|----|:---:|----------------------|
+| NFR101 | CUPT, PGO, IDSA | The system must be easy to use and navigate for both occasional users and permanent tenants. |
+| NFR102 | CUPT, PGO, IDSA | The system must be secure, ensuring that personal data is protected. |
+| NFR103 | CUPT, PGO, IDSA | The system must be reliable and available at all times, with minimal downtime for maintenance. |
+| NFR104 | CUPT, PGO, IDSA | The application must have a responsive design and work on multiple devices and platforms. |
+| NFR105 | CUPT, PGO, IDSA | The system must be scalable and able to accommodate future growth. |
+| NFR106 | CUPT, PGO, IDSA, MAR, FPSP | The IT system must be compliant with relevant laws and regulations, including data privacy and protection regulations. |
+| NFR107 | CUPT, PGO, IDSA | The application must have a user-friendly interface with clear instructions on how to use the system and its features. |
+| NFR108 | IDSA | The IT system must be compatible with existing software and hardware systems used by the company. |
+| NFR109 | IDSA | The system must have a backup and recovery plan in case of system failure or data loss. |
+
+Table: Non-Functional requirements \label{tab:nonefuncreq}
+
+
+# System architecture and design
+
+The new parking garage software for ParkingTown is a web based sveltekit  application. [@svelte]
+The Application wil be delivered as a state of the art OCI compliant container image. [@OCI] Database access is handled by the ORM [@ORM] prisma [@prisma]
+
+prisma allows a wide variety of SQL based database providers.
+
 
 ## Context diagram
 
-## Detailed requirements for the new system
-
-## Use Case Descriptions
 
 ## Sequence diagram
 
@@ -128,14 +243,15 @@ ParkinTown requires a new parking garage management tool.
 
 ### ERD
 
-![ERD \label{fig:1}](images/erd.png "ERD")
-
-
-## System architecture
+![ERD \label{fig:erd}](images/erd.png "ERD")
 
 # Implementation
 
 ## Development environment
+
+## Algorithm
+
+# Verification and validation
 
 # Conclusion
 
