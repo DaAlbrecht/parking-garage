@@ -107,15 +107,17 @@ Table: Product-related general conditions \label{tab:prodgencon}
 
 ### Stakeholders
 
-| ID| Stakeholder| Description|
-|---|----------|--------------|
-| CUPT| Customers (Casual Users and Permanent Tenants)| They are the primary stakeholders who will use the parking system and benefit from its features. Casual users will expect a hassle-free parking experience with transparent billing and adequate parking space availability, while permanent tenants will expect a personalized parking solution with timely billing and automated payment options.|
-| PGO | Parking Garage Owners| They are the ones who will own and operate the parking garages. They will expect a reliable IT system that can cater to the diverse needs of their customers and offer timely billing and revenue generation. They may also expect a user-friendly interface to manage parking space allocation and rates.|
-| IDSA | IT Developers and System Administrators| They are responsible for developing and maintaining the parking system. They will expect a clear understanding of the stakeholders' requirements, access to the necessary resources, and a flexible system architecture to accommodate future changes in the parking industry.|
-| MAR | Municipal Authorities and Regulators| They are responsible for ensuring compliance with local regulations, safety standards, and environmental norms. They will expect the parking system to follow the applicable rules and regulations, maintain accurate records of parking transactions, and provide transparent billing information to customers and regulators.|
-| FPSP | Financial Institutions and Payment Service Providers | They are responsible for processing payments and ensuring the security of financial transactions. They will expect the parking system to integrate with their payment processing platforms, offer secure payment options, and maintain accurate records of financial transactions.|
+| ID| Stakeholder|
+|---|------------|
+| CUPT| Customers (Casual Users and Permanent Tenants) |
+| PGO | Parking Garage Owners | 
+| IDSA | IT Developers and System Administrators |
+| MAR | Municipal Authorities and Regulators |
+| FPSP | Financial Institutions and Payment Service Providers |
 
 Table: List of Stakeholders and their abbreviation \label{tab:stakeholder}
+
+
 
 ## Project planning
 
@@ -124,54 +126,71 @@ The Parking Garage project aims to develop a software system that automates the 
 ![Gantt \label{fig:gantt}](images/gantt.png "Gantt")
 
 
-Project Initiation
+### Project Initiation
 
 The project initiation phase involves defining the scope and objectives of the project, identifying stakeholders, and creating a project plan. The activities involved in this phase are:
 
-Initial Situation (1 day): This activity involves setting up the project, defining the project team, and identifying the project's objectives.
-Situation Analysis (1 day): This activity involves analyzing the current parking system in place, including identifying the strengths and weaknesses of the current system.
-General Conditions (3 days): This activity involves defining the constraints, assumptions, and dependencies of the project.
-Delimitations (1 day): This activity involves setting the boundaries of the project, defining what is included and excluded.
-Project Planning (1 day): This activity involves creating a detailed project plan, including timelines, resources, and budgets.
-Requirement Engineering
+1. Initial Situation (1 day): This activity involves setting up the project, defining the project team, and identifying the project's objectives.
+2. Situation Analysis (1 day): This activity involves analyzing the current parking system in place, including identifying the strengths and weaknesses of the current system.
+3. General Conditions (3 days): This activity involves defining the constraints, assumptions, and dependencies of the project.
+4. Delimitations (1 day): This activity involves setting the boundaries of the project, defining what is included and excluded.
+5. Project Planning (1 day): This activity involves creating a detailed project plan, including timelines, resources, and budgets.
+   
+### Requirement Engineering
 
 The requirement engineering phase involves gathering, analyzing, and documenting the requirements for the software system. The activities involved in this phase are:
 
-Stakeholder Requirements (2 days): This activity involves gathering the requirements of the stakeholders, including the customers, users, and other interested parties.
-System Requirements (2 days): This activity involves translating the stakeholder requirements into system requirements.
-Architecture and Design (3 days): This activity involves designing the architecture of the system, including defining the components, interfaces, and data flows.
-Implementation
+1. Stakeholder Requirements (2 days): This activity involves gathering the requirements of the stakeholders, including the customers, users, and other interested parties.
+2. System Requirements (2 days): This activity involves translating the stakeholder requirements into system requirements.
+3. Architecture and Design (3 days): This activity involves designing the architecture of the system, including defining the components, interfaces, and data flows.
+
+### Implementation
 
 The implementation phase involves developing and testing the software system. The activities involved in this phase are:
 
-Development Setup (2 days): This activity involves setting up the development environment, including installing the necessary software and hardware.
-Admin Implementation (7 days): This activity involves developing the administrative features of the system, including user management and database management.
-Report Generation (7 days): This activity involves developing the reporting features of the system, including generating reports on occupancy, revenue, and other metrics.
-Consumer Implementation (5 days): This activity involves developing the consumer-facing features of the system, including user interfaces and payment processing.
-GUI Polishing (3 days): This activity involves refining the user interface design to improve the user experience.
-Verification
+1. Development Setup (2 days): This activity involves setting up the development environment, including installing the necessary software and hardware.
+2. Admin Implementation (7 days): This activity involves developing the administrative features of the system, including user management and database management.
+3. Report Generation (7 days): This activity involves developing the reporting features of the system, including generating reports on occupancy, revenue, and other metrics.
+4. Consumer Implementation (5 days): This activity involves developing the consumer-facing features of the system, including user interfaces and payment processing.
+5. GUI Polishing (3 days): This activity involves refining the user interface design to improve the user experience.
+
+### Verification
 
 The verification phase involves testing the software system to ensure that it meets the requirements and is free of defects. The activities involved in this phase are:
 
-Create Verification Plan (5 days): This activity involves creating a plan for testing the system, including defining the test cases, test data, and test procedures.
-Release (2 days): This activity involves releasing the system to the stakeholders after it has been tested and approved.
-Development Plan
+1. Create Verification Plan (5 days): This activity involves creating a plan for testing the system, including defining the test cases, test data, and test procedures.
+2. Release (2 days): This activity involves releasing the system to the stakeholders after it has been tested and approved.
+
+### Development Plan
 
 The development plan phase involves creating a plan for the long-term development and maintenance of the software system. The activities involved in this phase are:
 
-Development Plan (3 days): This activity involves creating a plan for the ongoing development of the system, including identifying future features and improvements.
-Documentation
+1. Development Plan (3 days): This activity involves creating a plan for the ongoing development of the system, including identifying future features and improvements.
+   
+### Documentation
 
-The documentation phase involves creating user manuals, technical documentation, and other materials to support the use and maintenance of the software system. The activities involved in this phase are:
+The documentation phase involves technical documentation, and other materials to support the use and maintenance of the software system. The activities involved in this phase are:
 
-Documentation (49 days): This activity involves creating user manuals, technical documentation, and other materials to support the use and maintenance of the software system.
-Conclusion
+1. Documentation (49 days): This activity involves creating user manuals, technical documentation, and other materials to support the use and maintenance of the software system.
+
+### Conclusion
 
 The Parking Garage project requires a comprehensive approach that involves planning, analysis, design, implementation, verification, and documentation. The Gantt chart provides a detailed overview of the key activities involved in each phase of the project.
 
 # Development plan
 
 # Stakeholder requirements
+
+| ID| Stakeholder| Description|
+|---|----------|--------------|
+| CUPT| Customers (Casual Users and Permanent Tenants)| They are the primary stakeholders who will use the parking system and benefit from its features. Casual users will expect a hassle-free parking experience with transparent billing and adequate parking space availability, while permanent tenants will expect a personalized parking solution with timely billing and automated payment options.|
+| PGO | Parking Garage Owners| They are the ones who will own and operate the parking garages. They will expect a reliable IT system that can cater to the diverse needs of their customers and offer timely billing and revenue generation. They may also expect a user-friendly interface to manage parking space allocation and rates.|
+| IDSA | IT Developers and System Administrators| They are responsible for developing and maintaining the parking system. They will expect a clear understanding of the stakeholders' requirements, access to the necessary resources, and a flexible system architecture to accommodate future changes in the parking industry.|
+| MAR | Municipal Authorities and Regulators| They are responsible for ensuring compliance with local regulations, safety standards, and environmental norms. They will expect the parking system to follow the applicable rules and regulations, maintain accurate records of parking transactions, and provide transparent billing information to customers and regulators.|
+| FPSP | Financial Institutions and Payment Service Providers | They are responsible for processing payments and ensuring the security of financial transactions. They will expect the parking system to integrate with their payment processing platforms, offer secure payment options, and maintain accurate records of financial transactions.|
+
+
+Table: List of Stakeholders and their abbreviation \label{tab:stakeholderreqs}
 
 # System requirements
 
@@ -231,21 +250,276 @@ The Application wil be delivered as a state of the art OCI compliant container i
 
 prisma allows a wide variety of SQL based database providers.
 
+## Svelte / Sveltekit
+
+### What is Svelte
+
+Svelte is a front-end JavaScript framework that allows developers to build web applications using reactive components. It was created by Rich Harris in 2016 and has since gained popularity due to its unique approach to building web applications. Unlike other front-end frameworks that rely on a virtual DOM, Svelte compiles your code into highly optimized and efficient JavaScript code at build time.
+
+In Svelte, components are defined using a syntax similar to HTML and CSS, making it easy for developers to create reusable and reactive UI elements. Svelte's compiler then generates efficient code that updates the DOM directly, resulting in fast and smooth user experiences.
+
+Svelte provides several built-in features that make it easier for developers to build web applications quickly. These features include:
+
+- Reactivity: Svelte provides a reactive system that allows components to update automatically when data changes.
+- Scoped CSS: Svelte allows developers to define CSS styles that are scoped to a specific component, reducing the risk of CSS conflicts.
+- Animations: Svelte provides an easy-to-use API for adding animations to your components.
+- Event handling: Svelte provides an intuitive syntax for handling events and user interactions.
+
+[@SvelteWikipedia]
+
+### What is SvelteKit
+
+SvelteKit is a high-performance web application framework built on top of Svelte. It was released in 2021 and provides several built-in features that make it easier to build server-rendered web applications. SvelteKit is designed to create highly optimized web applications with minimal overhead.
+
+SvelteKit provides several key features that make it a compelling choice for web application development:
+
+- Server-side rendering: SvelteKit allows developers to render components on the server, reducing the initial load time of your web application.
+- Automatic code splitting: SvelteKit automatically splits your code into smaller chunks, reducing the amount of code that needs to be downloaded by the client.
+- File-based routing: SvelteKit allows you to define routes for your web application using a file-based routing system, making it easier to organize your code and routes.
+- API routes: SvelteKit provides an easy-to-use API for defining server-side routes and interacting with databases and other services.
+- Integration with other tools: SvelteKit integrates with popular tools like TypeScript, GraphQL, and Tailwind CSS, making it easier to build complex web applications.
+
+SvelteKit builds on the strengths of Svelte and provides a powerful and efficient framework for building server-rendered web applications.
+
+[@SvelteKit]
+
+### Why Sveltekit instead of other fullstack javascript frameworks
+
+One of the main reasons sveltekit was chosen for this project is, that i wanted to learn this technology for a long time. This project was a perfect learning opportunity to get hands on experience with a new up and coming javascript framework.
+
+According to the biggest javascript survey, Svelte / Sveltekit is amongst the most loved frameworks. [@StateOfJS]
+
+Some of the reasons why sveltekit is so loved are:
+
+1. **Performance**
+One of the primary benefits of using SvelteKit is its performance. SvelteKit is designed to create highly optimized web applications with minimal overhead. It does this by using a unique feature called the "Svelte Compiler" that compiles your code during the build process, resulting in highly optimized and lightweight code.
+
+2. **Easy to learn and use**
+SvelteKit is relatively easy to learn and use, especially if you are already familiar with modern JavaScript frameworks like React or Vue. SvelteKit provides an intuitive and straightforward syntax that makes it easy to write and understand code.
+
+3. **Built-in features and integrations**
+SvelteKit comes with several built-in features and integrations, making it easier to build web applications quickly. It includes features such as server-side rendering, automatic code splitting, file-based routing, and more. Additionally, it integrates with popular tools like Tailwind CSS, TypeScript, and GraphQL.
+
+4. **Flexibility**
+SvelteKit is highly flexible and customizable, making it an excellent choice for a wide range of projects. Whether you are building a simple blog or a complex e-commerce website, SvelteKit can adapt to your needs and requirements.
+
+5. **Great community support**
+SvelteKit has a great community that is continually improving and contributing to the framework. The community provides excellent documentation, resources, and support to help you get started and overcome any challenges you may encounter.
+
+In conclusion, SvelteKit is an excellent choice for web development projects, providing high performance, ease of use, built-in features and integrations, flexibility, and great community support.
+
+## Containers
+
+Containers are a method of software virtualization that allows you to package an application and all its dependencies into a single lightweight package, which can be deployed and run consistently across different computing environments.
+
+### What are Containers
+
+To understand containers, it's helpful to first understand traditional virtualization, which involves running multiple operating systems on a single physical machine. With virtualization, each operating system has its own set of resources (like memory and CPU), and the hypervisor (a layer of software that sits between the operating system and the physical hardware) manages the allocation of those resources.
+
+![Comparing Docker to VM`s \label{fig:dockervm}](images/dockerVsVm.png "what are containers") 
+
+
+Containers, on the other hand, are a form of operating-system-level virtualization, which means they share the same kernel as the host operating system. This makes them much more lightweight and portable than traditional virtual machines, since they don't require a separate operating system to be installed and managed for each container.
+
+[@DockerVM]
+
+Instead, containers use a combination of file system isolation and process isolation to provide a separate environment for each application. Each container has its own file system that is isolated from the host file system, and each container runs in its own process space, separate from other containers on the same host.
+
+Containers can be created from a base image (like an operating system or a programming language runtime) and customized with additional software and configurations specific to your application. Once the container is built, it can be deployed to any host that supports the container runtime (like Docker or Kubernetes).
+
+Some of the benefits of using containers include:
+
+- **Portability:** Containers can be run on any host that supports the container runtime, making them a great option for deploying applications across different environments (like development, staging, and production).
+- **Consistency:** Since each container contains all the dependencies required to run the application, you can be sure that the application will run consistently across different hosts.
+- **Scalability:** Containers can be easily scaled up or down to meet changing demand, since they are lightweight and don't require a lot of resources.
+- **Isolation:** Since each container runs in its own process space, containers provide a degree of isolation between different applications, reducing the risk of conflicts or security vulnerabilities.
+
+[@OsLevelVirtualization]
+
+### OCI Containers
+
+The OCI is a collaborative project hosted by the Linux Foundation, with the goal of creating open standards for container formats and runtimes. The OCI was founded in 2015 by Docker and other industry leaders, in response to a growing need for interoperability and standardization in the container ecosystem.
+
+The OCI is focused on two main specifications: the Image Format Specification and the Runtime Specification. These specifications define how containers should be packaged, distributed, and run, and are designed to be vendor-neutral and interoperable.
+
+The Image Format Specification defines a standard format for container images, which is used to package an application and its dependencies into a single distributable artifact. This specification includes details like how images should be structured, how layers should be defined and represented, and how metadata should be included.
+
+The Runtime Specification defines a standard interface between the container image and the host operating system, which allows the container to be run in a consistent and portable way across different environments. This specification includes details like how the container should be started and stopped, how it should interact with the host filesystem and network, and how resources like CPU and memory should be managed.
+
+Both specifications are designed to be flexible and extensible, allowing for innovation and customization while maintaining interoperability. The OCI also includes tools and utilities for working with container images and runtimes, like the OCI Image Tool and the OCI Runtime Tool.
+
+One of the main goals of the OCI is to foster collaboration and interoperability in the container ecosystem. By creating open standards that are supported by a broad community of vendors and developers, the OCI aims to reduce fragmentation and increase adoption of containers as a standard way to package, distribute, and run applications.
+
+[@OpenContainerInitiative]
+
+### Docker
+
+Docker is a containerization platform that allows you to package an application and its dependencies into a single portable unit called a container. Docker is built on top of the Linux kernel's containerization features, like cgroups and namespaces, and provides a simple and user-friendly interface for working with containers.
+
+Docker containers are OCI compliant and therefore can run on any Container runtime that supports OCI Images like Kubernetes or Openshift.
+
+Docker is the facto standard for building and running containers on a development machine. Docker is available for Linux (native) or as a desktop application called Docker Desktop.
+
+Docker Desktop is a desktop application for Windows and macOS that provides an easy-to-use interface for working with containers. It includes all the tools and services needed to develop, build, and deploy containerized applications on a local machine.
+
+[@docker]
+
+#### When to use Docker
+
+Docker in present is the most widely used container runtime / platform. The Docker Platform is easy to use and comes with a feature rich GUI. Docker is mostly used in development setups. Docker was one of the first implementations of linux cgroup containers under windows and contributed with this massively to the success of containerization.
+
+With the majority of containers and container orchestration tools like kubernetes rising in popularity docker is no longer the industry leader for building, packaging and running production grade containers.
+
+Some of the reasons are:
+
+- **Kubernetes:** kubernetes drooped the docker runtime support in kubernetes version v1.24  [@KubernetesDockerRuntime] (Docker containers still run on kubernetes since they are OCI compliant)
+- **Develope close to production:** With most container running in a Kubernetes Cluster developers started using local kubernetes clusters like mininkube [@Minikube] or rancher desktop [@RancherDesktop] as development environments. This enables the developers to be as close to the production infrastructure as possible.
+- **Docker in Docker:** In order to build docker images from inside docker (for example CI pipeline) the docker demon is required to run as root. This is a potential security risk for the toolchain and its recommended to use different tools like kaniko [@Kaniko] to build your production container images.
+
+## Prisma
+
+Prisma is an open-source tool that simplifies database access for developers. It provides a type-safe and scalable ORM (Object-Relational Mapping) layer that enables developers to interact with their database in a more intuitive and efficient manner.
+
+With Prisma, developers can define their data models in a declarative schema language called Prisma Schema. This schema defines the structure of the database and the relationships between tables. Prisma Schema also supports various data types, such as strings, numbers, booleans, and timestamps.
+
+Prisma generates a set of CRUD (Create, Read, Update, Delete) operations based on the defined schema. These operations are generated as TypeScript or JavaScript functions that can be called directly from the application code. This removes the need to write SQL queries manually, and also makes the codebase more maintainable and readable.
+
+Prisma is designed to work with multiple database engines such as  MySQL, PostgreSQL, and MongoDB and other SQL based databases. With the abstraction provided by Prisma switching between different databases is achievable without having to rewrite their application code.
+
+Prisma also provides advanced features such as data validation, query optimization, and transaction management. These features ensure that the data stored in the database is consistent and secure.
+
+In addition to its core features, Prisma also has a growing ecosystem of plugins and integrations that make it even more powerful. For example, Prisma Migrate enables developers to manage database schema changes in a version-controlled manner, while Prisma Client allows for real-time data synchronization between the client and server.
+
+[@prisma]
+
+### ORM
+
+An ORM (Object-Relational Mapping) is a technique used to map data between an application's object-oriented programming language and a relational database. In other words, an ORM acts as a bridge between the application and the database, providing a layer of abstraction that makes it easier for developers to interact with the database.
+
+The basic idea behind an ORM is to represent database tables as classes in the programming language used by the application. Each row in the table is then represented as an instance of the class, and the columns in the table are represented as properties of the class. This allows developers to interact with the database using familiar object-oriented programming concepts, such as objects, methods, and properties.
+
+One of the primary benefits of using an ORM is that it can simplify the process of interacting with the database. Rather than writing SQL queries directly, developers can use the ORM to perform CRUD (creating, reading, updating, and deleting) database operations. These operations are typically performed using methods provided by the ORM, rather than by writing SQL queries manually.
+
+Another benefit of using an ORM is that it can make the application code more maintainable and readable. By abstracting away the details of how the data is stored in the database, the ORM can make the application code more focused on the business logic of the application, rather than on the details of how the data is stored.
+
+[@ORM]
+
+### PostgreSQL
+
+PostgreSQL is an open-source object-relational database management system (ORDBMS) that is designed to store, manage, and manipulate large amounts of data. 
+
+PostgreSQL is known for its ability to handle complex transactions and data structures, making it ideal for use in applications that require high levels of reliability and concurrency. It uses a technique called multi-version concurrency control (MVCC) to allow multiple users to access the database simultaneously without conflicts. This technique ensures that data consistency is maintained even when multiple users are making changes to the database concurrently. MVCC allows PostgreSQL to handle complex transactions and large amounts of data with ease, making it suitable for a wide range of applications.
+
+One of the main advantages of PostgreSQL is its extensibility. It provides support for user-defined functions, triggers, and custom data types, allowing developers to extend the database to meet their specific needs. 
+
+PostgreSQL's support for advanced indexing and querying is another key strength. It provides a variety of indexing options, including B-tree, hash, GiST, and SP-GiST, as well as support for full-text search and geospatial queries. PostgreSQL's indexing and querying capabilities are highly optimized, allowing for efficient retrieval and analysis of large amounts of data. This makes it suitable for use in applications that require complex querying and data analysis, such as business intelligence and data warehousing.
+
+PostgreSQL is also known for its focus on data security and reliability. It provides robust authentication and encryption mechanisms, as well as support for backup and recovery operations. PostgreSQL's focus on data security and reliability makes it a popular choice for applications that require high levels of data security and availability, such as healthcare systems and government agencies.
+
+These are some of the reasons why PostgreSQL is used as a database, running inside a container.
+
+[@Postgres]
 
 ## Context diagram
+
 
 
 ## Sequence diagram
 
 ## Class diagram
 
-## Database modeling
-
-### ERD
+## ERD
 
 ![ERD \label{fig:erd}](images/erd.png "ERD")
 
 # Implementation
+
+## Documentation workflow
+
+In the Company i work we create SaMD (Software as Medical Device). Software that classifies as medical device needs to be developed with specific regulations in mind and requires to follow specific process. Present we use Microsoft Word to write the required documentation but this raises a few challenges.
+
+1. Word is not as easy to generate from within a pipeline (For example openAPI specification)
+2. Word is not as easy to Lint inside a pipeline
+3. Including Code or Project specific references in good looking format is not possible
+4. Word is slow and the formatting is tedious
+
+With this Project i wanted to try if its possible to write large project documentation using Markdown and export the written documentation in a professional looking PDF.
+In order to achieve this the following software is used:
+
+1. **Pandoc:** used to convert the markdown into LaTex format and print a PDF [@Pandoc]
+2. **LaTeX:** Pandoc rquires LaTeX to be installed in order to generate the PDF [@LaTeX]
+
+### Folder Structure
+
+In order to generate an academic looking paper the following folder structure is used
+```
+latex-pdf
+ |assets
+ | -citation-style.csl
+ |-build
+ | -output_print.pdf
+ |-content
+ | -images
+ | -bibliography.bib
+ | -index.md
+ |-layouts
+ | -print.tex
+ |-Makefile
+ |-build.sh
+```
+- **assets:**  Used for third party styles, in this case how to style the citations
+- **build:** The output directory where the PDF will be generated to
+- **content** Holds the full markdown file, all used figures and the bibliography
+- **layouts:** Pandoc can convert the markdown into different output formats, in the layout folder could the different formats specify some individual layouts
+
+### Buildscript
+
+The script "build.sh" is handling the generation of the PDF file. 
+
+```bash
+#!/bin/bash
+CONTENTDIR="content"
+BUILDDIR="build"
+FILENAME="index"
+ASSETSDIR="assets"
+
+download_csl() {
+    mkdir "${ASSETSDIR}" -p
+    wget -O "${ASSETSDIR}/citation-style.csl" \
+        "https://raw.githubusercontent.com/citation-style-language/styles/master/harvard-anglia-ruskin-university.csl"
+}
+
+pdf_print() {
+    mkdir "${BUILDDIR}"
+    echo "Creating pdf-print output"
+    pandoc "${CONTENTDIR}/${FILENAME}.md" \
+        --resource-path="${CONTENTDIR}" \
+        --citeproc \
+        --csl="${ASSETSDIR}/citation-style.csl" \
+        --from="markdown+tex_math_single_backslash+tex_math_dollars+raw_tex" \
+        --to="latex" \
+        --output="${BUILDDIR}/output_print.pdf" \
+        --pdf-engine="xelatex" \
+        --include-in-header="layouts/print.tex"
+}
+# Example: `./build.sh pdf_print`
+$*
+```
+
+The Script defines four Variables:
+
+1. CONTENTDIR: the path to the directory that holds all figures and the markdown file
+2. BUILDDIR: the path to the output directory of this script
+3. FILENAME: the filename of the markdown file
+4. ASSETSDIR: the path to the asset directory that holds the csl
+
+To run the  script run the following command from the latex-pdf directory:
+
+```bash
+chmod +x build.sh #allow the script to be executed
+./build.sh pdf_print #run the script
+```
+
 
 ## Development environment
 

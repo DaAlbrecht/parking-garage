@@ -11,7 +11,7 @@ download_csl() {
 }
 
 pdf_print() {
-    mkdir "${BUILDDIR}" -p
+    mkdir "${BUILDDIR}"
     echo "Creating pdf-print output"
     pandoc "${CONTENTDIR}/${FILENAME}.md" \
         --resource-path="${CONTENTDIR}" \
