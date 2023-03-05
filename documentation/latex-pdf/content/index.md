@@ -447,8 +447,16 @@ With this Project i wanted to try if its possible to write large project documen
 In order to achieve this the following software is used:
 
 1. **Pandoc:** used to convert the markdown into LaTex format and print a PDF [@Pandoc]
+    
+    ```zsh
+    brew install pandoc
+    ```
+
 2. **LaTeX:** Pandoc rquires LaTeX to be installed in order to generate the PDF [@LaTeX]
 
+    ```zsh
+    brew install --cask mactex
+    ```
 ### Folder Structure
 
 In order to generate an academic looking paper the following folder structure is used
@@ -519,9 +527,329 @@ To run the  script run the following command from the latex-pdf directory:
 chmod +x build.sh #allow the script to be executed
 ./build.sh pdf_print #run the script
 ```
+### Index.md
+
+The ```index.md``` is the markdown file that is specified in the [build.sh](#buildscript) file to converted into PDF.
+
+Pandoc uses a yaml based syntax in the header to configure the default conversion behavior.
+
+The following configuration was mande
+
+```yaml
+title: "Parking Garage"
+date: "May 2023"
+author: "David Albrecht, TEKO Bern"
+numbersections: true
+toc: true
+lof: true
+lot: true
+mainfont: Times New Roman
+bibliography: "bibliography.bib"
+link-citations: true
+urlcolor: "blue"
+```
+
+1. **title:** Sets the Document title on the cover sheet
+2. **date:** Sets the Date on the cover sheet
+3. **author:** Sets the author on the cover sheet
+4. **numbersections:** Enables the numbering of the headings
+5. **toc:** Creates a table of content at the beginning of the document
+6. **lof:** Creates a list of figures at the beginning of the document
+7. **lot:** Creates a list of tables at the beginning of the document
+8. **mainfont:** Sets the font for the entire document
+9. **bibliography:** Path to the bibliography (contains the details of external sources)
+10. **link-citations** Enables to click a link and follow its reference
+11. **urlcolor:** Sets the color of all URL's in the entire document
 
 
 ## Development environment
+
+For the development environment the following of the shelf software is used:
+
+1. **Visual studio Code:**  VS code is used as primary code editor
+2. **nvm:** nvm is used to manage the specific node versions
+3. **Nodejs:** JavaScript runtime
+4. **Docker:** For PostgreSQL database
+
+### Setup Development environment
+
+The project is developed on a MacBook m2 Pro. The installation guide for the development setup is therefore written for apple silicon but all used software components are available for windows and linux. 
+
+1. Install [Visual Studio Code](https://code.visualstudio.com/download) [@VsCode]
+2. Install nvm [@nvm]
+   
+    ```zsh
+    brew install nvm 
+    ```
+
+3. Install Nodejs
+   
+    ```zsh
+    nvm install --lts
+    ```
+
+4. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+5. Clone GitHub Repository
+
+    ```zsh
+    git clone git@github.com:DaAlbrecht/parking-garage.git
+    cd parking-garage/
+    ```
+
+6. Create ```.env``` file for environment variables
+
+    ```zsh
+    export USERNAME=<USERNAME> 
+    export PASSWORD=<PASSWORD>
+    cat > .env << EOF
+    DATABASE_URL=postgres://$USERNAME:$PASSWORD@localhost:5432/garage
+    ```
+
+7. Start the database container
+
+    ```zsh
+    docker-compose up-d
+    ```
+
+8. Install js dependencies
+
+    ```zsh
+    npm install
+    ```
+
+9. Create Prisma client and push schema to database
+
+    ```zsh
+    npx prisma generate
+    npx prisma db push
+    ```
+
+10. Start Sveltekit Application
+
+    ```zsh
+    npm run dev
+    ```
+    
+## Folder structure
+
+
+## Prisma Schema
+
+The ```schema.prisma``` file describes the configuration and model of the database.
+
+The first part of the schema file is responsible for handling the connection to the database. It requires two parameter
+
+1. **provider:**  The type of database used
+2. **url:** The connection string in the format:
+   
+ ```postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA```
+   
+Here's a short explanation of each component from [@ConnectPrisma]:
+
+- USER: The name of your database user
+- PASSWORD: The password for your database user
+- HOST: The name of your host name (for the local environment, it is localhost)
+- PORT: The port where your database server is running (typically 5432 for PostgreSQL)
+- DATABASE: The name of the database
+- SCHEMA: The name of the schema inside the database
+
+Instead of hardcoding the connection string, the value gets read out from the environment variable
+
+```js
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+```
+
+The next section is responsible for generating the prisma client
+
+```js
+generator client {
+  provider = "prisma-client-js"
+}
+
+```
+
+Additionally on schema creation an erd diagram with the mermaid syntax should be created
+
+```js
+generator erd {
+  provider                  = "prisma-erd-generator"
+  output                    = "../documentation/erd.md"
+  includeRelationFromFields = true
+}
+```
+### Models
+
+After these configuration entries the models according to [ERD](#erd)
+
+#### ParkingGarage
+
+```js
+model ParkingGarage {
+  id           Int           @id @default(autoincrement())
+  name         String
+  address      String
+  levels       Level[]
+  parkingRates ParkingRate[]
+}
+```
+
+1. **id:** this is the primary key and is marked to be automatically created / incremented
+2. **name:** the name of the garage
+3. **levels:** One-to-many (1-n) relation with the record "Level"
+4. **parkingRates:** One-to-many (1-n) relation with the record "ParkingRate"  
+
+#### Level
+
+```js
+model Level {
+  id                Int            @id @default(autoincrement())
+  levelNumber       Int
+  parking_spaces    Int
+  parkingGarage     ParkingGarage  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parking_garage_id Int
+  parkingSpaces     ParkingSpace[]
+
+  @@unique([parking_garage_id, levelNumber])
+}
+```
+
+1. **id:** this is the primary key and is marked to be automatically created / incremented
+2. **levelNumber:** floor number of the Level
+3. **parking_spaces:** amount of parking spaces this level can hold
+4. **parkingGarage:** one-to-many (1-n) relation with the record "ParkingGarage"
+5. **parking_garage_id:** the foreignkey to the ParkingGarage record
+6. **parkingSpaces:** one-to-many (1-n) relation with the record "ParkingSpace"
+
+A parking garage can not have a level twice, to ensure this prisma uses the following syntax:
+
+```js
+@@unique([parking_garage_id, levelNumber])
+```
+
+This insures that the combination of the attributes ```parking_garage_id``` and ```levelNumber``` are unique
+
+#### ParkingSpace
+
+```js
+model ParkingSpace {
+  id          Int      @id @default(autoincrement())
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id Int
+  level       Level    @relation(fields: [level_id], references: [id])
+  level_id    Int
+  parkingSpot Int
+
+  @@unique([level_id, parkingSpot])
+}
+```
+
+1. **id:** this is the primary key and is marked to be automatically created / incremented
+2. **customer:** one-to-one (1-1) relation with the Customer record
+3. **customer_id:** the foreignkey to the Customer record
+4. **level:** one-to-one (1-1) relation with the Level record
+5. **level_id:** the foreignkey to the Level record
+6. **parkingSpot:** the number of the spot
+
+The model ParkingSpace represents a occupied parking space. If there are no parking spots occupied, then this table is empty.
+
+One ```ParkingSpace``` can not have the same combination of the level and parking spot twice. 
+
+This prevents from trying to occupy the same spot twice at the same time.
+
+#### Customer
+
+```js
+model Customer {
+  id                    Int             @id @default(autoincrement())
+  is_long_term_customer Boolean
+  is_blocked            Boolean
+  parkingSpace          ParkingSpace[]
+  parkingTickets        ParkingTicket[]
+  exitTickets           ExitTicket[]
+}
+```
+
+1. **id:** this is the primary key and is marked to be automatically created / incremented
+2. **is_long_term_customer:** indicates if the user is a casual user or a permanent tenant
+3. **is_blocked:** indicates if the user has payed the monthly fee if its a permanent tenant
+4. **parkingSpace:** one-to-many (1-n) relation with the ParkingSpace record
+5. **parkingTickets:** one-to-many (1-n) relation with the ParkingTicket record
+6. **exitTickets:** one-to-many (1-n) relation with the ExitTicket record
+
+#### ParkingTicket
+
+```js
+model ParkingTicket {
+  id          Int      @id @default(autoincrement())
+  entry_date  DateTime
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id Int
+}
+```
+
+1. **id:** this is the primary key and is marked to be automatically created / incremented
+2. **entry_date:** the timestamp when a user entered the entry barrier.
+3. **customer:** tne-to-many (1-n) relation with the ParkingSpace record
+4. **customer_id:** the foreignkey to the Customer record
+
+#### ExitTicket
+
+```js
+model ExitTicket {
+  id          Int      @id @default(autoincrement())
+  exit_date   DateTime
+  price       Float
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer_id Int
+}
+```
+
+1. **id:** this is the primary key and is marked to be automatically created / incremented
+2. **exit_date:** the timestamp when a user left the garage
+3. **customer:** tne-to-many (1-n) relation with the ParkingSpace record
+4. **customer_id:** the foreignkey to the Customer record
+
+#### ParkingRate
+
+```js
+model ParkingRate {
+  id                Int           @id @default(autoincrement())
+  price             Float
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parking_garage_id Int
+  rateType          RateType      @relation(fields: [rate_type_id], references: [id])
+  rate_type_id      Int
+}
+```
+
+1. **id:** this is the primary key and is marked to be automatically created / incremented
+2. **price:** the hourly price
+3. **parkingGarage:** One-to-many (1-n) relation with the ParkingGarage record
+4. **parking_garage_id:** the foreignkey to the ParkingGarage record
+5. **rateType:** One-to-many (1-n) relation with the RateType record
+6. **rate_type_id:** the foreignkey to the RateType record
+
+#### RateType
+
+```js
+model RateType {
+  id           Int           @id @default(autoincrement())
+  start_time   DateTime
+  end_time     DateTime
+  parkingRates ParkingRate[]
+}
+```
+
+1. **id:** this is the primary key and is marked to be automatically created / incremented
+2. **start_time:** start time for when this rate should apply
+3. **end_time:** end time for when this rate should apply
+4. **parkingRates:** One-to-many (1-n) relation with the ParkingRate record
+
+The ```RateType``` model is used to define at what day, a rate is used. This allows to reuse the ParkingRate entries.
 
 ## Algorithm
 
