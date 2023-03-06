@@ -1,7 +1,9 @@
-
 <script lang="ts">
   import { enhance } from '$app/forms';
-  export let id: string = "";
+    import type { PageData } from './$types';
+  
+    export let id: string = "";
+    export let data: PageData;
 </script>
 
 <div class="h-full relative">
@@ -12,9 +14,15 @@
                 <button>Check in</button>
             </form>
             <form method="POST" action="?/getParkingSpot" use:enhance>
-                <input type="hidden" name="id" value={7}/>
+                <input type="hidden" name="id" value={1}/>
                 <button>get parking spot</button>
             </form>
         </div>
     </div>
-</div>
+  </div>
+
+
+
+
+
+  

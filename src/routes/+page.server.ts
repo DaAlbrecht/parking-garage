@@ -1,7 +1,7 @@
 import { prisma } from '$lib/server/database';
 import { fail } from '@sveltejs/kit';
 import { findEmptyParkingSpace } from '$lib/util/findEmptyParkingSpace';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 export const actions: Actions = {
 	longTermCustomer: async ({ request }) => {
@@ -21,6 +21,7 @@ export const actions: Actions = {
 	getParkingSpot: async ({ request }) => {
 		const data = await request.formData();
 		const id = data.get('id');
+		console.log(id);
 		if (!id) return fail(422, { error: 'Missing id' });
 		const idNumber = Number(id);
 		const garage = await prisma.parkingGarage.findUnique({
@@ -32,3 +33,8 @@ export const actions: Actions = {
 		findEmptyParkingSpace(garage);
 	}
 };
+
+export const load = (async () => {
+	const garages = await prisma.parkingGarage.findMany();
+	return { garages: garages };
+}) satisfies PageServerLoad;

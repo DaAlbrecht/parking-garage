@@ -14,11 +14,13 @@ generator erd {
 }
 
 model ParkingGarage {
-  id           Int           @id @default(autoincrement())
-  name         String
-  address      String
-  levels       Level[]
-  parkingRates ParkingRate[]
+  id             Int             @id @default(autoincrement())
+  name           String
+  address        String
+  levels         Level[]
+  parkingRates   ParkingRate[]
+  parkingTickets ParkingTicket[]
+  exitTickets    ExitTicket[]
 }
 
 model Level {
@@ -53,18 +55,22 @@ model Customer {
 }
 
 model ParkingTicket {
-  id          Int      @id @default(autoincrement())
-  entry_date  DateTime
-  customer    Customer @relation(fields: [customer_id], references: [id])
-  customer_id Int
+  id                Int           @id @default(autoincrement())
+  entry_date        DateTime
+  customer          Customer      @relation(fields: [customer_id], references: [id])
+  customer_id       Int
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parking_garage_id Int
 }
 
 model ExitTicket {
-  id          Int      @id @default(autoincrement())
-  exit_date   DateTime
-  price       Float
-  customer    Customer @relation(fields: [customer_id], references: [id])
-  customer_id Int
+  id                Int           @id @default(autoincrement())
+  exit_date         DateTime
+  price             Float
+  customer          Customer      @relation(fields: [customer_id], references: [id])
+  customer_id       Int
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parking_garage_id Int
 }
 
 model ParkingRate {

@@ -33,6 +33,15 @@ export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<Park
 				customer_id: 1
 			}
 		});
+		if(parkingSpace){
+		 	await prisma.parkingTicket.create({
+				data: {
+					customer_id: 1,
+					entry_date: new Date(),
+					parking_garage_id: garage.id,
+				}
+			});
+		}
 		return parkingSpace;
 	}
 
