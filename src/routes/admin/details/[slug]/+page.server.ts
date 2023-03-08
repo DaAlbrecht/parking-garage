@@ -1,5 +1,6 @@
 import { prisma } from '$lib/server/database';
 import { getAllParkingSpacesForLevel } from '$lib/util/parkingSpaceUtil';
+import { getReportForLevel } from '$lib/util/reports';
 import type { Level } from '@prisma/client';
 import type { PageServerLoad } from './$types';
 
@@ -15,6 +16,8 @@ export const load = (async ({ params }) => {
 	});
 	const parkingSpaceInfos = new Array<LevelInfo>();
 	for(const level of levels) {
+		const report = await getReportForLevel(level);
+		console.log(report);
 		const parkingSpaces = await getAllParkingSpacesForLevel(level);
 		parkingSpaceInfos.push({
 			level: level,
@@ -23,3 +26,4 @@ export const load = (async ({ params }) => {
 	}
 	return {parkingSpaceInfos : parkingSpaceInfos };
 }) satisfies PageServerLoad;
+

@@ -21,6 +21,7 @@ model ParkingGarage {
   parkingRates   ParkingRate[]
   parkingTickets ParkingTicket[]
   exitTickets    ExitTicket[]
+  customers      Customer[]
 }
 
 model Level {
@@ -37,7 +38,7 @@ model Level {
 model ParkingSpace {
   id          Int      @id @default(autoincrement())
   customer    Customer @relation(fields: [customer_id], references: [id])
-  customer_id Int
+  customer_id String
   level       Level    @relation(fields: [level_id], references: [id])
   level_id    Int
   parkingSpot Int
@@ -46,19 +47,21 @@ model ParkingSpace {
 }
 
 model Customer {
-  id                    Int             @id @default(autoincrement())
+  id                    String          @id @default(uuid())
   is_long_term_customer Boolean
   is_blocked            Boolean
   parkingSpace          ParkingSpace[]
   parkingTickets        ParkingTicket[]
   exitTickets           ExitTicket[]
+  parkingGarages        ParkingGarage   @relation(fields: [parking_garage_id], references: [id])
+  parking_garage_id     Int
 }
 
 model ParkingTicket {
   id                Int           @id @default(autoincrement())
   entry_date        DateTime
   customer          Customer      @relation(fields: [customer_id], references: [id])
-  customer_id       Int
+  customer_id       String
   parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
   parking_garage_id Int
 }
@@ -68,7 +71,7 @@ model ExitTicket {
   exit_date         DateTime
   price             Float
   customer          Customer      @relation(fields: [customer_id], references: [id])
-  customer_id       Int
+  customer_id       String
   parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
   parking_garage_id Int
 }

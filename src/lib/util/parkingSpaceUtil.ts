@@ -4,6 +4,7 @@ import type { Level } from '.prisma/client';
 export interface LevelParkingSpace {
 	parkingSpot: number;
 	occupied: boolean;
+	level_id: number;
 }
 async function getOccupiedParkingSpacesForLevel(level: Level): Promise<Array<number>> {
 	const parkingSpaces = await prisma.parkingSpace.findMany({
@@ -20,7 +21,8 @@ export async function getAllParkingSpacesForLevel(level: Level): Promise<LevelPa
 	for (let i = 0; i < level.parking_spaces; i++) {
 		parkingSpaces.push({
 			parkingSpot: i,
-			occupied: occupiedParkingSpaces.includes(i)
+			occupied: occupiedParkingSpaces.includes(i),
+			level_id: level.id
 		});
 	}
 	return parkingSpaces;

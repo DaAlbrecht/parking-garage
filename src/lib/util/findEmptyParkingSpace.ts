@@ -1,8 +1,9 @@
 import { prisma } from '$lib/server/database';
 import type { ParkingGarage, ParkingSpace, Level } from '.prisma/client';
-import { getAllParkingSpacesForLevel, getOccupancyForLevel } from './parkingSpaceUtil';
+import type { Customer } from '@prisma/client';
+import { getAllParkingSpacesForLevel, getOccupancyForLevel, type LevelParkingSpace } from './parkingSpaceUtil';
 
-export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<ParkingSpace | null> {
+export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<LevelParkingSpace | null> {
 	const levels = await prisma.level.findMany({
 		where: {
 			parking_garage_id: garage.id
@@ -25,25 +26,60 @@ export async function findEmptyParkingSpace(garage: ParkingGarage): Promise<Park
 	
 	//find the first parking space that is not occupied
 	const freeParkingSpace = parkingSpaces.find((parkingSpace) => !parkingSpace.occupied);
-	if (freeParkingSpace) {
-		const parkingSpace = await prisma.parkingSpace.create({
+	
+	if(!freeParkingSpace) return null;
+	
+	return freeParkingSpace;
+}
+
+export async function occupySpot(levelParkingSpace :LevelParkingSpace, garage: ParkingGarage, customer: Customer | null): Promise<ParkingSpace | null> {
+	let parkingSpace: ParkingSpace | null = null;
+
+	console.log("customer: ", customer);
+	if(!customer){
+		customer  = await prisma.customer.create({
 			data: {
-				parkingSpot: freeParkingSpace.parkingSpot,
-				level_id: leastOccupiedLevel.id,
-				customer_id: 1
+				is_long_term_customer: false,
+				is_blocked: false,
+				parking_garage_id: garage.id,
 			}
 		});
-		if(parkingSpace){
-		 	await prisma.parkingTicket.create({
+		 parkingSpace = await prisma.parkingSpace.create({
+			data: {
+				parkingSpot: levelParkingSpace.parkingSpot,
+				level_id: levelParkingSpace.level_id,
+				customer_id: customer.id,
+			}
+		});
+	}
+	else{
+		if (customer.is_blocked) return null;
+
+		parkingSpace = await prisma.parkingSpace.findFirst({
+			where: {
+				customer_id: customer.id
+			}
+		});
+		if (!parkingSpace){
+			 parkingSpace = await prisma.parkingSpace.create({
 				data: {
-					customer_id: 1,
-					entry_date: new Date(),
-					parking_garage_id: garage.id,
+					parkingSpot: levelParkingSpace.parkingSpot,
+					level_id: levelParkingSpace.level_id,
+					customer_id: customer.id,
 				}
 			});
 		}
-		return parkingSpace;
+
 	}
 
-	return null;
+	if(parkingSpace){
+		 await prisma.parkingTicket.create({
+			data: {
+				customer_id: customer.id,
+				entry_date: new Date(),
+				parking_garage_id: garage.id,
+			}
+		});
+	}
+	return parkingSpace;
 }
