@@ -7,6 +7,12 @@
 
 <div>
     {parkingSpaceInfo.level.levelNumber}
+    <div>
+        <p>Report</p>
+        <p>Estimated Revenue: {parkingSpaceInfo.report.estimatedRevenue}</p>
+        <p>Level occupancy: {parkingSpaceInfo.report.occupancy}</p>
+        <p>Permanent Tenants:{parkingSpaceInfo.report.permanentTenants}</p>
+    </div>
 </div>
 {#each parkingSpaceInfo.parking_spaces as parking_space}
 {#if parking_space == true}

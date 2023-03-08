@@ -2,7 +2,7 @@ import { prisma } from '$lib/server/database';
 import type { Customer, Level, ParkingTicket } from '@prisma/client';
 import { getOccupancyForLevel } from './parkingSpaceUtil';
 
-interface Report {
+export interface Report {
     occupancy: number;
     estimatedRevenue: number;
     permanentTenants: number;
