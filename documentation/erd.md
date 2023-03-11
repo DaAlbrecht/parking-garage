@@ -18,23 +18,25 @@ erDiagram
 
   ParkingSpace {
     Int id PK 
-    Int customer_id  
+    String customer_id  
     Int level_id  
     Int parkingSpot  
     }
   
 
   Customer {
-    Int id PK 
+    String id PK 
     Boolean is_long_term_customer  
     Boolean is_blocked  
+    Int parking_garage_id  
     }
   
 
   ParkingTicket {
     Int id PK 
     DateTime entry_date  
-    Int customer_id  
+    String customer_id  
+    Int parking_garage_id  
     }
   
 
@@ -42,7 +44,8 @@ erDiagram
     Int id PK 
     DateTime exit_date  
     Float price  
-    Int customer_id  
+    String customer_id  
+    Int parking_garage_id  
     }
   
 
@@ -63,8 +66,11 @@ erDiagram
     Level o{--|| ParkingGarage : "parkingGarage"
     ParkingSpace o{--|| Customer : "customer"
     ParkingSpace o{--|| Level : "level"
+    Customer o{--|| ParkingGarage : "parkingGarages"
     ParkingTicket o{--|| Customer : "customer"
+    ParkingTicket o{--|| ParkingGarage : "parkingGarage"
     ExitTicket o{--|| Customer : "customer"
+    ExitTicket o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o{--|| RateType : "rateType"
 ```

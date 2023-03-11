@@ -1,13 +1,13 @@
 import { prisma } from '$lib/server/database';
 import { fail, redirect } from '@sveltejs/kit';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
-export const load = async () => {
+export const load = (async () => {
   const garages = await prisma.parkingGarage.findMany();
   return { garages: garages };
-};
+}) satisfies PageServerLoad;
 
-export const actions: Actions = {
+export const actions = {
   createGarage: async ({ request }) => {
     const data = await request.formData();
     const name = data.get('name');
@@ -29,5 +29,24 @@ export const actions: Actions = {
       return fail(422, { error: 'Garage already exists' });
     }
     throw redirect(303, '/admin');
+  },
+  deleteGarage: async ({ request }) => {
+    const data = await request.formData();
+    const id = data.get('id');
+
+    if (!id) return fail(422, { error: 'Missing id' });
+
+    const idNumber = Number(id);
+
+    try {
+      await prisma.parkingGarage.delete({
+        where: {
+          id: idNumber
+        }
+      });
+    } catch (error) {
+      return fail(422, { error: 'Garage does not exist' });
+    }
+    throw redirect(303, '/admin');
   }
-};
+} satisfies Actions;

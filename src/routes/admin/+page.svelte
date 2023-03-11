@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { enhance } from '$app/forms';
   export let data: PageData;
   import AdminLayout from './AdminLayout.svelte';
 </script>
@@ -33,7 +32,7 @@
                 <td>{garage.address}</td>
                 <td class="text-end">
                   <div class="flex justify-end gap-2">
-                    <a class="btn btn-primary btn-square" href="/admin/details/{garage.id}">
+                    <a class="btn-primary btn-square btn" href="/admin/details/{garage.id}">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -49,7 +48,7 @@
                         />
                       </svg>
                     </a>
-                    <a class="btn btn-primary btn-square" href="/admin/edit/{garage.id}">
+                    <a class="btn-primary btn-square btn" href="/admin/edit/{garage.id}">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

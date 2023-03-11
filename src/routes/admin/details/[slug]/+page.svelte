@@ -1,27 +1,18 @@
 <script lang="ts">
   import type { PageData } from './$types';
   export let data: PageData;
+  import AdminChildLayout from '../../AdminChildLayout.svelte';
+  import Level from './Level.svelte';
+  import LevelExpanded from './LevelExpanded.svelte';
+  import type { LevelInfo } from './+page.server';
+  let expandedLevel: LevelInfo | undefined = undefined;
 </script>
 
-{#each data.parkingSpaceInfos as parkingSpaceInfo}
-  <div>
-    {parkingSpaceInfo.level.levelNumber}
-    <div>
-      <p>Report</p>
-      <p>Estimated Revenue: {parkingSpaceInfo.report.estimatedRevenue}</p>
-      <p>Level occupancy: {parkingSpaceInfo.report.occupancy}</p>
-      <p>Permanent Tenants:{parkingSpaceInfo.report.permanentTenants}</p>
-    </div>
+<AdminChildLayout>
+  <div class="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+    {#each data.levelInfo as levelInfo}
+      <Level {levelInfo} on:expand={() => (expandedLevel = levelInfo)} />
+    {/each}
   </div>
-  {#each parkingSpaceInfo.parking_spaces as parking_space}
-    {#if parking_space == true}
-      <div class="bg-red-700">
-        {parking_space}
-      </div>
-    {:else}
-      <div class="bg-green-700">
-        {parking_space}
-      </div>
-    {/if}
-  {/each}
-{/each}
+  <LevelExpanded level={expandedLevel} on:close={() => (expandedLevel = undefined)} />
+</AdminChildLayout>

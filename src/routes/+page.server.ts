@@ -4,7 +4,7 @@ import { findEmptyParkingSpace, occupySpot } from '$lib/util/findEmptyParkingSpa
 import type { Actions, PageServerLoad } from './$types';
 import type { Customer, ParkingGarage } from '@prisma/client';
 
-export const actions: Actions = {
+export const actions = {
   longTermCustomer: async ({ request }) => {
     const data = await request.formData();
 
@@ -49,7 +49,7 @@ export const actions: Actions = {
 
     occupySpot(levelParkingSpace, garage, null);
   }
-};
+} satisfies Actions;
 
 async function getPermanentTenantParkingSpot(garageNumber: number, customer: Customer) {
   const garage = await prisma.parkingGarage.findUnique({
