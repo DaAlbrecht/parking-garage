@@ -1,11 +1,17 @@
-<div class="inset-x-0 top-0 flex justify-center text-center content-center gap-12 pt-5 bg-slate-600 text-white">
-    <nav class="flex gap-4">
-    <a href="/"> <p>garage</p>
-    </a>
-    <a
-      href="/admin"
-    >
-    <p>admin</p>
-    </a>
-  </nav>
+<script lang="ts">
+  export let route: string | null;
+</script>
+
+<div>
+  <div class="navbar bg-base-100">
+    <div class="flex-1">
+      <a href="/" class="btn-ghost btn text-xl normal-case">myGarage</a>
+    </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-1">
+        <li><a class:active={route === '/' || route?.includes('/garage')} href="/">Garage</a></li>
+        <li><a class:active={route?.includes('/admin')} href="/admin">Admin</a></li>
+      </ul>
+    </div>
+  </div>
 </div>

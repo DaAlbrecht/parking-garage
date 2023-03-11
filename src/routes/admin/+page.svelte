@@ -1,36 +1,88 @@
 <script lang="ts">
-    import type { PageData } from './$types';
-    import { enhance } from '$app/forms';
-    export let data: PageData;
-    let showCreateGarageForm = false;
+  import type { PageData } from './$types';
+  import { enhance } from '$app/forms';
+  export let data: PageData;
+  import AdminLayout from './AdminLayout.svelte';
 </script>
 
-<div class="flex flex-col">
-    <div>
-        <button on:click={() => showCreateGarageForm = !showCreateGarageForm}>New garage</button>
+<AdminLayout>
+  <div slot="navbar">
+    <a href="/admin/new" class="btn gap-2">
+      New
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    </a>
+  </div>
+  <div>
+    <div class="flex content-center justify-center gap-5">
+      <div class="w-full overflow-x-auto">
+        <table class="garagetable mx-auto w-full max-w-5xl table-fixed">
+          <tbody>
+            <!-- row 1 -->
+            {#each data.garages as garage}
+              <tr>
+                <td>{garage.name}</td>
+                <td>{garage.address}</td>
+                <td class="text-end">
+                  <div class="flex justify-end gap-2">
+                    <a class="btn btn-primary btn-square" href="/admin/details/{garage.id}">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-6 w-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                        />
+                      </svg>
+                    </a>
+                    <a class="btn btn-primary btn-square" href="/admin/edit/{garage.id}">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-6 w-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="text-center">
-        {#if showCreateGarageForm}
-            <form method="POST" action="?/createGarage" use:enhance>
-                <input type="text" name="name" placeholder="name"/>
-                <input type="text" name="address" placeholder="address"/>
-                <button>add garage</button>
-            </form>
-        {/if}
-    </div>
-    {#each data.garages as garage}
-        <div class="flex justify-center content-center gap-5">
-            <p>{garage.id}</p>
-            <p>{garage.name}</p>
-            <p>{garage.address}</p>
-            <div class="flex justify-center content-center gap-5">
-                <form method="POST" action="?/deleteGarage" use:enhance>
-                    <input type="hidden" name="id" value={garage.id}/>
-                    <button>delete</button>
-                </form>
-                <a href="/admin/edit/{garage.id}">edit</a>
-                <a href="/admin/details/{garage.id}">details</a>
-            </div>
-        </div>
-    {/each}
-</div>
+  </div>
+</AdminLayout>
+
+<style>
+  .garagetable td {
+    /* vertical-align: top; */
+    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+  }
+  .garagetable tr {
+    border-bottom: 1px solid #c4c5c7;
+  }
+</style>
