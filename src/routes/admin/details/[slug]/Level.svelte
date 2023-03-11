@@ -5,6 +5,18 @@
   export let levelInfo: LevelInfo;
 
   const dispatch = createEventDispatcher();
+
+  $: occupencyPercentage = (levelInfo.report.occupancy * 100).toFixed(2);
+
+  function getOccupancyClass() {
+    if (levelInfo.report.occupancy < 0.4) {
+      return 'progress-success';
+    } else if (levelInfo.report.occupancy < 0.85) {
+      return 'progress-warning';
+    } else {
+      return 'progress-error';
+    }
+  }
 </script>
 
 <div
@@ -23,8 +35,15 @@
 
       <div class="stat">
         <div class="stat-title">Level Occupancy</div>
-        <div class="stat-value">{(levelInfo.report.occupancy * 100).toFixed(2)} %</div>
+        <div class="stat-value">{occupencyPercentage} %</div>
         <div class="stat-desc">avg. (22%)</div>
+        <div>
+          <progress
+            class={`progress w-full ${getOccupancyClass()}`}
+            value={occupencyPercentage}
+            max="100"
+          />
+        </div>
       </div>
 
       <div class="stat">

@@ -9,6 +9,11 @@
 </script>
 
 <div class="relative h-full">
+  <p>Select a garage</p>
+  <p>Prompt for anonymous login with register plate or permanent tenant id</p>
+  <p>Check if user is already checked if, if yes, go to checkout</p>
+  <p>Park. You get assigned a spot. On this page prices can be shown</p>
+
   <div class="flex flex-col">
     <div class="text-center">
       <select bind:value={selected}>

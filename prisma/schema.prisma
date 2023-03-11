@@ -78,16 +78,9 @@ model ExitTicket {
 
 model ParkingRate {
   id                Int           @id @default(autoincrement())
-  price             Float
   parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
   parking_garage_id Int
-  rateType          RateType      @relation(fields: [rate_type_id], references: [id])
-  rate_type_id      Int
-}
-
-model RateType {
-  id           Int           @id @default(autoincrement())
+  price             Float
   start_time   DateTime
   end_time     DateTime
-  parkingRates ParkingRate[]
 }

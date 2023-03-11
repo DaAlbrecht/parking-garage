@@ -51,14 +51,8 @@ erDiagram
 
   ParkingRate {
     Int id PK 
-    Float price  
     Int parking_garage_id  
-    Int rate_type_id  
-    }
-  
-
-  RateType {
-    Int id PK 
+    Float price  
     DateTime start_time  
     DateTime end_time  
     }
@@ -72,5 +66,4 @@ erDiagram
     ExitTicket o{--|| Customer : "customer"
     ExitTicket o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o{--|| ParkingGarage : "parkingGarage"
-    ParkingRate o{--|| RateType : "rateType"
 ```
