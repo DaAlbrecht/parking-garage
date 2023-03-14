@@ -32,6 +32,11 @@
         <input type="hidden" name="id" value={selected} />
         <button>get parking spot</button>
       </form>
+      <form method="POST" action="?/exitGarage" use:enhance>
+        <input type="hidden" name="id" value={selected} />
+        <input type="text" name="customerId" value={id} placeholder="customer id" />
+        <button>exit</button>
+      </form>
     </div>
   </div>
 </div>
