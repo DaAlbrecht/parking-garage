@@ -49,6 +49,31 @@ export async function getReportForLevel(level: Level): Promise<Report> {
   };
 }
 
+export async function getReportForGarage(garageId: number): Promise<Report> {
+  const levels = await prisma.level.findMany({
+    where: {
+      parking_garage_id: garageId
+    }
+  });
+
+  let occupancy = 0;
+  let estimatedRevenue = 0;
+  let permanentTenants = 0;
+
+  for (const level of levels) {
+    const report = await getReportForLevel(level);
+    occupancy += report.occupancy;
+    estimatedRevenue += report.estimatedRevenue;
+    permanentTenants += report.permanentTenants;
+  }
+
+  return {
+    occupancy,
+    estimatedRevenue,
+    permanentTenants
+  };
+}
+
 ///TODO: implement
 // async function getReportForTimePeriod(parkingSpace: ParkingSpace, startTime: Date , endTime: Date ): Promise<Report> {
 

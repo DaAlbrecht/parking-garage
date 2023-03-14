@@ -22,6 +22,7 @@ model ParkingGarage {
   parkingTickets ParkingTicket[]
   exitTickets    ExitTicket[]
   customers      Customer[]
+  accountingReports AccountingReport[]
 }
 
 model Level {
@@ -83,4 +84,14 @@ model ParkingRate {
   price             Float
   start_time   DateTime
   end_time     DateTime
+}
+
+model AccountingReport {
+  id                  Int           @id @default(autoincrement())
+  parkingGarage       ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parking_garage_id   Int
+  generationTime      DateTime
+  searchFrom          DateTime
+  searchTo            DateTime
+  price               Float
 }
