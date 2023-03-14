@@ -32,13 +32,13 @@ export const actions = {
   },
   getParkingSpot: async ({ request }) => {
     const data = await request.formData();
+    const garageId = data.get('garage');
     const id = data.get('id');
-    console.log(id);
-    if (!id) return fail(422, { error: 'Missing id' });
-    const idNumber = Number(id);
+    if (!id || !garageId) return fail(422, { error: 'Missing params' });
+
     const garage = await prisma.parkingGarage.findUnique({
       where: {
-        id: idNumber
+        id: Number(garageId)
       }
     });
     if (!garage) return fail(422, { error: 'Garage does not exist' });
@@ -48,50 +48,6 @@ export const actions = {
     if (!levelParkingSpace) return fail(422, { error: 'No parking space available' });
 
     occupySpot(levelParkingSpace, garage, null);
-  },
-  exitGarage: async ({ request }) => {
-    const data = await request.formData();
-    const id = data.get('id');
-    const customerId = data.get('customerId');
-
-    if (!id || !customerId) return fail(422, { error: 'Missing parameters' });
-
-    const customer = await prisma.customer.findFirst({
-      where: {
-        id: customerId.toString(),
-        parking_garage_id: Number(id)
-      }
-    });
-
-    if (!customer) return fail(422, { error: 'Customer does not exist' });
-
-    if (customer.is_long_term_customer && !customer.is_blocked) {
-      await prisma.exitTicket.create({
-        data: {
-          customer_id: customer.id,
-          parking_garage_id: customer.parking_garage_id,
-          price: 0,
-          exit_date: new Date()
-        }
-      });
-
-      return { status: 200 };
-    } else if (!customer.is_long_term_customer) {
-      const exitTicket = await prisma.exitTicket.create({
-        data: {
-          customer_id: customer.id,
-          parking_garage_id: customer.parking_garage_id,
-          price: 0,
-          exit_date: new Date()
-        }
-      });
-
-      await prisma.parkingSpace.deleteMany({
-        where: {
-          customer_id: customer.id
-        }
-      });
-    }
   }
 } satisfies Actions;
 
