@@ -1,6 +1,14 @@
 ```mermaid
 erDiagram
 
+        RateType {
+            WEEKDAY WEEKDAY
+WEEKEND WEEKEND
+HOLIDAY HOLIDAY
+DAYRATE DAYRATE
+MONThRATE MONThRATE
+        }
+    
   ParkingGarage {
     Int id PK 
     String name  
@@ -37,15 +45,8 @@ erDiagram
     DateTime entry_date  
     String customer_id  
     Int parking_garage_id  
-    }
-  
-
-  ExitTicket {
-    Int id PK 
-    DateTime exit_date  
-    Float price  
-    String customer_id  
-    Int parking_garage_id  
+    DateTime exit_date  "nullable"
+    Float finalprice  "nullable"
     }
   
 
@@ -55,6 +56,17 @@ erDiagram
     Float price  
     DateTime start_time  
     DateTime end_time  
+    RateType rateType  
+    }
+  
+
+  AccountingReport {
+    Int id PK 
+    Int parking_garage_id  
+    DateTime generationTime  
+    DateTime searchFrom  
+    DateTime searchTo  
+    Float price  
     }
   
     Level o{--|| ParkingGarage : "parkingGarage"
@@ -63,7 +75,7 @@ erDiagram
     Customer o{--|| ParkingGarage : "parkingGarages"
     ParkingTicket o{--|| Customer : "customer"
     ParkingTicket o{--|| ParkingGarage : "parkingGarage"
-    ExitTicket o{--|| Customer : "customer"
-    ExitTicket o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o{--|| ParkingGarage : "parkingGarage"
+    ParkingRate o|--|| RateType : "enum:rateType"
+    AccountingReport o{--|| ParkingGarage : "parkingGarage"
 ```

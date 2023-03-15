@@ -1,4 +1,5 @@
 import { prisma } from '$lib/server/database';
+import { getInitialParkingRatesForGarage } from '$lib/util/parkingRates';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -19,11 +20,14 @@ export const actions = {
     const addressString = address.toString();
 
     try {
-      await prisma.parkingGarage.create({
+      const garage = await prisma.parkingGarage.create({
         data: {
           name: nameString,
           address: addressString
         }
+      });
+      await prisma.parkingRate.createMany({
+        data: getInitialParkingRatesForGarage(garage.id)
       });
     } catch (error) {
       return fail(422, { error: 'Garage already exists' });

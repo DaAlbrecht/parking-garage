@@ -19,8 +19,7 @@ model ParkingGarage {
   address        String
   levels         Level[]
   parkingRates   ParkingRate[]
-  parkingTickets ParkingTicket[]
-  exitTickets    ExitTicket[]
+  parkingTickets ParkingTicket[]  
   customers      Customer[]
   accountingReports AccountingReport[]
 }
@@ -52,8 +51,7 @@ model Customer {
   is_long_term_customer Boolean
   is_blocked            Boolean
   parkingSpace          ParkingSpace[]
-  parkingTickets        ParkingTicket[]
-  exitTickets           ExitTicket[]
+  parkingTickets        ParkingTicket[]  
   parkingGarages        ParkingGarage   @relation(fields: [parking_garage_id], references: [id])
   parking_garage_id     Int
 }
@@ -65,16 +63,8 @@ model ParkingTicket {
   customer_id       String
   parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
   parking_garage_id Int
-}
-
-model ExitTicket {
-  id                Int           @id @default(autoincrement())
-  exit_date         DateTime
-  price             Float
-  customer          Customer      @relation(fields: [customer_id], references: [id])
-  customer_id       String
-  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
-  parking_garage_id Int
+  exit_date         DateTime?
+  finalprice         Float?
 }
 
 model ParkingRate {
@@ -84,6 +74,15 @@ model ParkingRate {
   price             Float
   start_time   DateTime
   end_time     DateTime
+  rateType     RateType
+}
+
+enum RateType {
+  WEEKDAY
+  WEEKEND
+  HOLIDAY
+  DAYRATE
+  MONThRATE
 }
 
 model AccountingReport {

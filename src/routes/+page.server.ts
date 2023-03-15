@@ -36,6 +36,9 @@ export const actions = {
     const id = data.get('id');
     if (!id || !garageId) return fail(422, { error: 'Missing params' });
 
+    //TODO: check if customer is checked in
+    // IF checked in, skip
+
     const garage = await prisma.parkingGarage.findUnique({
       where: {
         id: Number(garageId)

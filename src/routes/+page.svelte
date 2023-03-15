@@ -15,10 +15,9 @@
           please enter your customer id.
         </p>
         <code>
-          <pre>- Select a garage</pre>
-          <pre>- Prompt for anonymous login with register plate or permanent tenant id</pre>
-          <pre>- Check if user is already checked if, if yes, go to checkout</pre>
-          <pre>- Park. You get assigned a spot. On this page prices can be shown</pre>
+          <pre>MI/DO: Styling finished rates edit & checkin</pre>
+          <pre>FR: Display user page (current price etc.)</pre>
+          <pre>FR: Styling Accounting & Reports</pre>
         </code>
       </div>
       <Login garages={data.garages} />
