@@ -82,7 +82,7 @@ enum RateType {
   WEEKEND
   HOLIDAY
   DAYRATE
-  MONThRATE
+  MONTHRATE
 }
 
 model AccountingReport {
