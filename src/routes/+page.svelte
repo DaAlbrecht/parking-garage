@@ -19,6 +19,12 @@
           <pre>FR: Display user page (current price etc.)</pre>
           <pre>FR: Styling Accounting & Reports</pre>
         </code>
+
+        <code>
+          <pre>Berechnung prices for estim, live and exited tickets</pre>
+          <pre>Check if customer is already checked in</pre>
+          <pre>Create garage with one level, prevent from removing last one</pre>
+        </code>
       </div>
       <Login garages={data.garages} />
     </div>

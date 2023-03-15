@@ -3,26 +3,29 @@
   import type { ParkingGarage } from '@prisma/client';
 
   export let garages: ParkingGarage[];
-  let selected: number | undefined = undefined;
   let registerPlate: string | undefined = undefined;
   let id: string;
+  let selectedGarage: number | undefined = undefined;
 
-  $: canGetSpot = selected !== undefined && registerPlate !== undefined;
+  $: canGetSpot = selectedGarage !== undefined && registerPlate !== undefined;
+  $: canLongTerm = selectedGarage !== undefined && id !== undefined;
 </script>
 
 <div class="card w-1/2 bg-base-100 shadow-2xl">
   <div class="card-body">
     <div class="flex w-full justify-center">
       <div class="flex w-full flex-col gap-4 px-12">
+        <select name="garageId" bind:value={selectedGarage} class="select-bordered select w-full">
+          <option value={undefined} disabled selected>Select garage</option>
+          {#each garages as garage}
+            <option value={garage.id}>
+              {garage.name}
+            </option>
+          {/each}
+        </select>
+        <div class="divider" />
         <form method="POST" action="?/getParkingSpot" use:enhance>
-          <select name="garageId" bind:value={selected} class="select-bordered select w-full">
-            <option value={undefined} disabled selected>Select garage</option>
-            {#each garages as garage}
-              <option value={garage.id}>
-                {garage.name}
-              </option>
-            {/each}
-          </select>
+          <input type="hidden" name="garage" value={selectedGarage} />
           <label class="label" for="id">
             <span class="label-text">Register Plate</span>
           </label>
@@ -39,7 +42,7 @@
         </form>
         <div class="divider">OR</div>
         <form method="POST" action="?/longTermCustomer" use:enhance>
-          <input type="hidden" name="garage" value={selected} />
+          <input type="hidden" name="garage" value={selectedGarage} />
           <label class="label" for="id">
             <span class="label-text">Customer ID</span>
           </label>
@@ -51,7 +54,7 @@
             class="input-bordered input w-full"
           />
           <div class="form-control mt-6">
-            <button disabled={!id} class="btn-info btn">Check in</button>
+            <button disabled={!canLongTerm} class="btn-info btn">Check in</button>
           </div>
         </form>
       </div>
