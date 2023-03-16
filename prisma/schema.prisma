@@ -37,9 +37,9 @@ model Level {
 
 model ParkingSpace {
   id          Int      @id @default(autoincrement())
-  customer    Customer @relation(fields: [customer_id], references: [id])
+  customer    Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade)
   customer_id String
-  level       Level    @relation(fields: [level_id], references: [id])
+  level       Level    @relation(fields: [level_id], references: [id], onDelete: Cascade)
   level_id    Int
   parkingSpot Int
 
@@ -52,16 +52,16 @@ model Customer {
   is_blocked            Boolean
   parkingSpace          ParkingSpace[]
   parkingTickets        ParkingTicket[]  
-  parkingGarages        ParkingGarage   @relation(fields: [parking_garage_id], references: [id])
+  parkingGarages        ParkingGarage   @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id     Int
 }
 
 model ParkingTicket {
   id                Int           @id @default(autoincrement())
   entry_date        DateTime
-  customer          Customer      @relation(fields: [customer_id], references: [id])
+  customer          Customer      @relation(fields: [customer_id], references: [id], onDelete: Cascade)
   customer_id       String
-  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   exit_date         DateTime?
   finalprice         Float?
@@ -69,7 +69,7 @@ model ParkingTicket {
 
 model ParkingRate {
   id                Int           @id @default(autoincrement())
-  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   price             Float
   start_time   DateTime
@@ -87,7 +87,7 @@ enum RateType {
 
 model AccountingReport {
   id                  Int           @id @default(autoincrement())
-  parkingGarage       ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parkingGarage       ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id   Int
   generationTime      DateTime
   searchFrom          DateTime

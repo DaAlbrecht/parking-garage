@@ -67,6 +67,10 @@
                   </div>
                 </td>
               </tr>
+            {:else}
+              <tr>
+                <td colspan="3">No garages found</td>
+              </tr>
             {/each}
           </tbody>
         </table>

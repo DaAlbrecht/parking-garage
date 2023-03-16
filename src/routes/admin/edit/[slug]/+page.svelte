@@ -90,7 +90,7 @@
           </button>
           <form
             method="POST"
-            action="/admin?/deleteGarage"
+            action="?/deleteGarage"
             use:enhance
             class="mt-3 flex flex-col items-center gap-2"
           >

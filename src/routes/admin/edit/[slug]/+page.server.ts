@@ -1,6 +1,6 @@
 import { prisma } from '$lib/server/database';
 import type { Actions, PageServerLoad } from './$types';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
   updateGarage: async ({ request }) => {
@@ -29,6 +29,25 @@ export const actions = {
     return {
       status: 200
     };
+  },
+  deleteGarage: async ({ request }) => {
+    const data = await request.formData();
+    const id = data.get('id');
+
+    if (!id) return fail(422, { error: 'Missing id' });
+
+    const idNumber = Number(id);
+
+    try {
+      await prisma.parkingGarage.delete({
+        where: {
+          id: idNumber
+        }
+      });
+    } catch (error) {
+      return fail(422, { error: 'Garage does not exist' });
+    }
+    throw redirect(303, '/admin');
   },
   deleteLevel: async ({ request }) => {
     const data = await request.formData();

@@ -27,9 +27,13 @@
         >
       {/each}
     </div>
-    <div>
-      <Rates {rates} type={activeTab} />
-    </div>
+    <form>
+      {#each Object.values(RateType) as tab}
+        <div class:hidden={activeTab !== tab}>
+          <Rates {rates} type={activeTab} />
+        </div>
+      {/each}
+    </form>
     <div class="modal-action">
       <!-- 🔵 set false on click -->
       <button class="btn" on:click={() => dispatch('close')}>Close</button>
