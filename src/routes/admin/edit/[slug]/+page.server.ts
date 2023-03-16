@@ -111,15 +111,11 @@ export const load = (async ({ params }) => {
   const garage = await prisma.parkingGarage.findUnique({
     where: {
       id: Number(params.slug)
-    }
-  });
-  const levels = await prisma.level.findMany({
-    where: {
-      parking_garage_id: Number(params.slug)
     },
-    orderBy: {
-      levelNumber: 'asc'
+    include: {
+      levels: true,
+      parkingRates: true
     }
   });
-  return { garage: garage, levels: levels };
+  return { garage: garage };
 }) satisfies PageServerLoad;

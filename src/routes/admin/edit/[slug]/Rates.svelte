@@ -1,40 +1,13 @@
 <script lang="ts">
-  import type { RateTypes } from './EditPrices.svelte';
+  import type { ParkingRate, RateType } from '@prisma/client';
+  import { DateTime } from 'luxon';
 
-  const WEEKDAYS = [
-    { id: 1, start: '00:00', end: '05:59' },
-    { id: 2, start: '06:00', end: '08:59' },
-    { id: 3, start: '09:00', end: '17:59' },
-    { id: 4, start: '18:00', end: '20:59' },
-    { id: 5, start: '21:00', end: '23:59' }
-  ];
+  export let rates: ParkingRate[];
+  export let type: RateType;
 
-  const WEEKENDS = [
-    { id: 1, start: '00:00', end: '08:59' },
-    { id: 2, start: '09:00', end: '17:59' },
-    { id: 3, start: '18:00', end: '23:59' }
-  ];
-
-  export let type: RateTypes;
+  $: activeRates = rates.filter((rate) => rate.rateType === type);
 </script>
 
-{#if type === 'weekdays'}
-  <div>
-    {#each WEEKDAYS as rate}
-      <div>{rate.start} - {rate.end}</div>
-    {/each}
-  </div>
-{/if}
-{#if type === 'weekends'}
-  <div>
-    {#each WEEKENDS as rate}
-      <div>{rate.start} - {rate.end}</div>
-    {/each}
-  </div>
-{/if}
-{#if type === 'holidays'}
-  <div>Select holidays</div>
-{/if}
-{#if type === 'flatrate'}
-  <div>Enter flatrate</div>
-{/if}
+{#each activeRates as rate}
+  <div>{DateTime.fromJSDate(rate.start_time).weekdayLong}:</div>
+{/each}

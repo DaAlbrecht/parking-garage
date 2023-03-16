@@ -118,7 +118,7 @@
         <div class="card rounded-box grid shrink-0 grow justify-center bg-base-300 py-3">
           <h1 class="mb-2 text-center text-xl">Levels</h1>
           <div class="flex flex-col gap-2 text-center">
-            {#each data.levels as level}
+            {#each data.garage.levels as level}
               <div class="flex items-center justify-center gap-1 text-center  ">
                 <p class="mb-0 mr-2">Level: {level.levelNumber}</p>
                 <form method="POST" action="?/parkingSpaces" use:enhance class="flex items-center">
@@ -186,9 +186,13 @@
           </div>
         </div>
       </div>
+      <EditPrices
+        rates={data.garage.parkingRates}
+        show={editingPrices}
+        on:close={() => (editingPrices = false)}
+      />
     {:else}
       <h1>Garage not found</h1>
     {/if}
-    <EditPrices show={editingPrices} on:close={() => (editingPrices = false)} />
   </div>
 </AdminChildLayout>

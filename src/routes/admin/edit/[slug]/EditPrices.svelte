@@ -1,28 +1,25 @@
-<script lang="ts" context="module">
-  const tabs = ['weekdays', 'weekends', 'holidays', 'flatrate'] as const;
-  export type RateTypes = (typeof tabs)[number];
-</script>
-
 <script lang="ts">
+  import { RateType, type ParkingRate } from '@prisma/client';
   import { createEventDispatcher } from 'svelte';
   import Rates from './Rates.svelte';
 
+  export let rates: ParkingRate[];
   export let show: boolean = false;
 
-  let activeTab: RateTypes = 'weekdays';
+  let activeTab: RateType = RateType.WEEKDAY;
 
   const dispatch = createEventDispatcher();
 
-  function setTab(tab: RateTypes) {
+  function setTab(tab: RateType) {
     activeTab = tab;
   }
 </script>
 
 <div class="modal" class:modal-open={show}>
-  <div class="modal-box">
+  <div class="modal-box max-w-xl">
     <h3 class="text-lg font-bold">Edit prices</h3>
     <div class="tabs w-full py-1 px-2">
-      {#each tabs as tab}
+      {#each Object.values(RateType) as tab}
         <button
           class:tab-active={activeTab === tab}
           on:click={() => setTab(tab)}
@@ -31,7 +28,7 @@
       {/each}
     </div>
     <div>
-      <Rates type={activeTab} />
+      <Rates {rates} type={activeTab} />
     </div>
     <div class="modal-action">
       <!-- 🔵 set false on click -->
