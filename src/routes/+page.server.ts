@@ -1,5 +1,5 @@
 import { prisma } from '$lib/server/database';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { findEmptyParkingSpace, occupySpot } from '$lib/util/findEmptyParkingSpace';
 import type { Actions, PageServerLoad } from './$types';
 import type { Customer, ParkingGarage } from '@prisma/client';
@@ -36,9 +36,6 @@ export const actions = {
     const id = data.get('id');
     if (!id || !garageId) return fail(422, { error: 'Missing params' });
 
-    //TODO: check if customer is checked in
-    // IF checked in, skip
-
     const garage = await prisma.parkingGarage.findUnique({
       where: {
         id: Number(garageId)
@@ -46,11 +43,25 @@ export const actions = {
     });
     if (!garage) return fail(422, { error: 'Garage does not exist' });
 
+    const customer = await prisma.customer.findFirst({
+      where: {
+        license_plate: id.toString(),
+        parking_garage_id: Number(garageId)
+      }
+    });
+
+    if(customer){
+      throw redirect(303, '/checkout');
+    }
+
+
     const levelParkingSpace = await findEmptyParkingSpace(garage);
 
     if (!levelParkingSpace) return fail(422, { error: 'No parking space available' });
 
-    occupySpot(levelParkingSpace, garage, null);
+    occupySpot(levelParkingSpace, garage, null, id.toString());
+    
+    throw redirect(303, '/checkout');
   }
 } satisfies Actions;
 
@@ -67,7 +78,7 @@ async function getPermanentTenantParkingSpot(garageNumber: number, customer: Cus
 
   if (!levelParkingSpace) return fail(422, { error: 'No parking space available' });
 
-  occupySpot(levelParkingSpace, garage, customer);
+  occupySpot(levelParkingSpace, garage, customer, null);
 }
 
 export const load = (async () => {

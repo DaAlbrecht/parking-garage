@@ -19,25 +19,36 @@ export const actions = {
     if (!customer) return fail(422, { error: 'Customer does not exist' });
 
     if (customer.is_long_term_customer && !customer.is_blocked) {
-      await prisma.exitTicket.create({
+
+      const parkingTicket = await prisma.parkingTicket.findFirst({
+        where: {
+          customer_id: customer.id
+        },
+        orderBy: {
+          id: 'desc'
+      }});
+
+      if (!parkingTicket) return fail(422, { error: 'Parking ticket does not exist' });
+
+      await prisma.parkingTicket.update({
+        where: {
+          id:  parkingTicket.id
+        },
         data: {
-          customer_id: customer.id,
-          parking_garage_id: customer.parking_garage_id,
-          price: 0,
+          finalprice: 0,
           exit_date: new Date()
         }
       });
-
       return { status: 200 };
     } else if (!customer.is_long_term_customer) {
-      const exitTicket = await prisma.exitTicket.create({
-        data: {
-          customer_id: customer.id,
-          parking_garage_id: customer.parking_garage_id,
-          price: 0,
-          exit_date: new Date()
-        }
-      });
+
+      const parkingTicket = await prisma.parkingTicket.findFirst({
+        where: {
+          customer_id: customer.id
+        },
+        orderBy: {
+          id: 'desc'
+      }});
 
       await prisma.parkingSpace.deleteMany({
         where: {

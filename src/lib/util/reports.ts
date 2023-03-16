@@ -1,5 +1,6 @@
 import { prisma } from '$lib/server/database';
 import type { Customer, Level, ParkingTicket } from '@prisma/client';
+import { calculatePrice } from './accounting';
 import { getOccupancyForLevel } from './parkingSpaceUtil';
 
 export interface Report {
@@ -99,13 +100,8 @@ async function calculateEstimatedForParkingTicket(
   if (timeDifferenceInHours >= 24) {
     return Math.ceil(timeDifferenceInHours / maxHoursBeforeFlatRate) * rate;
   }
-  ///TODO: implement different rates
-  // const rates = await prisma.parkingRate.findFirst({
-  //     where: {
-  //         parking_garage_id: garageId
-  //     }
-  // });
-  // if(!rates) return 0;
+
+  calculatePrice(parkingTicket);
 
   return timeDifferenceInHours * rate;
 }

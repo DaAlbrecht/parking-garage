@@ -14,13 +14,13 @@ generator erd {
 }
 
 model ParkingGarage {
-  id             Int             @id @default(autoincrement())
-  name           String
-  address        String
-  levels         Level[]
-  parkingRates   ParkingRate[]
-  parkingTickets ParkingTicket[]  
-  customers      Customer[]
+  id                Int                @id @default(autoincrement())
+  name              String
+  address           String
+  levels            Level[]
+  parkingRates      ParkingRate[]
+  parkingTickets    ParkingTicket[]
+  customers         Customer[]
   accountingReports AccountingReport[]
 }
 
@@ -30,7 +30,7 @@ model Level {
   parking_spaces    Int
   parkingGarage     ParkingGarage  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
-  occupiedSpaces     ParkingSpace[]
+  occupiedSpaces    ParkingSpace[]
 
   @@unique([parking_garage_id, levelNumber])
 }
@@ -50,8 +50,9 @@ model Customer {
   id                    String          @id @default(uuid())
   is_long_term_customer Boolean
   is_blocked            Boolean
+  license_plate         String?
   parkingSpace          ParkingSpace[]
-  parkingTickets        ParkingTicket[]  
+  parkingTickets        ParkingTicket[]
   parkingGarages        ParkingGarage   @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id     Int
 }
@@ -64,7 +65,7 @@ model ParkingTicket {
   parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   exit_date         DateTime?
-  finalprice         Float?
+  finalprice        Float?
 }
 
 model ParkingRate {
@@ -72,9 +73,9 @@ model ParkingRate {
   parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   price             Float
-  start_time   DateTime
-  end_time     DateTime
-  rateType     RateType
+  start_time        DateTime
+  end_time          DateTime
+  rateType          RateType
 }
 
 enum RateType {
@@ -86,11 +87,11 @@ enum RateType {
 }
 
 model AccountingReport {
-  id                  Int           @id @default(autoincrement())
-  parkingGarage       ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
-  parking_garage_id   Int
-  generationTime      DateTime
-  searchFrom          DateTime
-  searchTo            DateTime
-  price               Float
+  id                Int           @id @default(autoincrement())
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parking_garage_id Int
+  generationTime    DateTime
+  searchFrom        DateTime
+  searchTo          DateTime
+  price             Float
 }
