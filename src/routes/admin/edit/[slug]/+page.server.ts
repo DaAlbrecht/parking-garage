@@ -123,6 +123,13 @@ export const actions = {
     return {
       status: 200
     };
+  },
+  updatePrices: async ({ request }) => {
+    const data = await request.formData();
+    console.log(data);
+    return {
+      status: 200
+    };
   }
 } satisfies Actions;
 

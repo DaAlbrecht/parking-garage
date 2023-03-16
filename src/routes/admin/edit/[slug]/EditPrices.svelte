@@ -27,16 +27,18 @@
         >
       {/each}
     </div>
-    <form>
+    <form method="POST" action="?/updatePrices">
+      <input type="hidden" name="garage" value={rates[0].parking_garage_id} />
       {#each Object.values(RateType) as tab}
         <div class:hidden={activeTab !== tab}>
           <Rates {rates} type={activeTab} />
         </div>
       {/each}
+      <div class="modal-action flex justify-between">
+        <!-- 🔵 set false on click -->
+        <button class="btn" type="button" on:click={() => dispatch('close')}>Close</button>
+        <button class="btn-primary btn" type="submit">Save</button>
+      </div>
     </form>
-    <div class="modal-action">
-      <!-- 🔵 set false on click -->
-      <button class="btn" on:click={() => dispatch('close')}>Close</button>
-    </div>
   </div>
 </div>

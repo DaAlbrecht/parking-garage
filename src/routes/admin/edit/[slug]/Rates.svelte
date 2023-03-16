@@ -26,9 +26,9 @@
           </label>
         {/if}
         <input
-          name="rate"
+          name={rate.id.toString()}
           id={rate.id.toString()}
-          type="number"
+          type="tel"
           value={rate.price}
           class="input-bordered input w-full max-w-xs"
         />
