@@ -1,17 +1,46 @@
 import { prisma } from '$lib/server/database';
-import type { ParkingTicket } from '@prisma/client';
+import { RateType, type ParkingTicket } from '@prisma/client';
 
 export async function calculatePrice(parkingTicket: ParkingTicket) {
+  const customer = await prisma.customer.findFirst({
+    where: {
+      id: parkingTicket.customer_id
+    }
+  });
+
+  if (!customer) {
+    throw new Error('No customer found for this parking ticket');
+  }
+
+  if (customer.is_long_term_customer) {
+    return 0;
+  }
+
   const rates = await prisma.parkingRate.findMany({
     where: {
       parking_garage_id: parkingTicket.parking_garage_id
     }
   });
 
-  const maxHoursBeforeFlatRate = 24;
+  let isHoliday: boolean | null = null;
   const timeNow = new Date();
 
-  ///TODO: fix timezones UTC -> UTC+1
+  const timeDifferenceInHours = Math.ceil(
+    (Date.now() - parkingTicket.entry_date.getTime()) / 1000 / 60 / 60
+  );
+
+  const days = Math.floor(timeDifferenceInHours / 24);
+
+  if (!rates) {
+    throw new Error('No rates found for this parking garage');
+  }
+
+  const dayRate = rates.find((rate) => rate.rateType === RateType.DAYRATE);
+
+  if (!dayRate) {
+    throw new Error('No day rate found for this parking garage');
+  }
+
   const matchingRatesHourSlots = rates.filter((element) => {
     let startTime = element.start_time.getHours();
     let endTime = element.end_time.getHours();
@@ -22,8 +51,6 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
 
     return startTime <= timeNow.getHours() && endTime >= timeNow.getHours();
   });
-
-  let isHoliday: boolean | null = null;
 
   //https://date.nager.at/swagger/index.html
 
@@ -40,25 +67,20 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
 
   isHoliday = false;
 
-  const timeDifferenceInHours = Math.ceil(
-    (Date.now() - parkingTicket.entry_date.getTime()) / 1000 / 60 / 60
-  );
-
-  if (timeDifferenceInHours < 24) {
-    if (isHoliday) {
-      const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'HOLIDAY');
-      return timeDifferenceInHours * rate[0].price;
-    }
-
-    //weekdays
-    if (timeNow.getDay() < 6) {
-      const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKDAY');
-      return timeDifferenceInHours * rate[0].price;
-    }
-    //weekends
-    if (timeNow.getDay() >= 6) {
-      const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKEND');
-      return timeDifferenceInHours * rate[0].price;
-    }
+  if (isHoliday) {
+    const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'HOLIDAY');
+    return timeDifferenceInHours * rate[0].price + days * dayRate.price;
   }
+
+  //weekdays
+  if (timeNow.getDay() < 6) {
+    const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKDAY');
+    return timeDifferenceInHours * rate[0].price + days * dayRate.price;
+  }
+  //weekends
+  if (timeNow.getDay() >= 6) {
+    const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKEND');
+    return timeDifferenceInHours * rate[0].price + days * dayRate.price;
+  }
+  return 0;
 }

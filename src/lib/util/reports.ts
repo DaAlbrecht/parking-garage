@@ -37,11 +37,7 @@ export async function getReportForLevel(level: Level): Promise<Report> {
 
     if (Customer.is_long_term_customer) permanentTenants++;
 
-    estimatedRevenue += await calculateEstimatedForParkingTicket(
-      parkingTicket,
-      Customer,
-      level.parking_garage_id
-    );
+    estimatedRevenue += await calculatePrice(parkingTicket);
   }
   return {
     occupancy: occupancy,
@@ -74,39 +70,3 @@ export async function getReportForGarage(garageId: number): Promise<Report> {
     permanentTenants
   };
 }
-
-///TODO: implement
-// async function getReportForTimePeriod(parkingSpace: ParkingSpace, startTime: Date , endTime: Date ): Promise<Report> {
-
-//get all exit tickets in time period
-//calculate revenue
-//add curent occupaied parking spaces (they dont have an exit ticket yet)
-// }
-
-async function calculateEstimatedForParkingTicket(
-  parkingTicket: ParkingTicket,
-  customer: Customer,
-  garageId: number
-): Promise<number> {
-  const rate = 5;
-  const maxHoursBeforeFlatRate = 24;
-
-  if (customer.is_long_term_customer) return 0;
-
-  //always round up
-  const timeDifferenceInHours = Math.ceil(
-    (Date.now() - parkingTicket.entry_date.getTime()) / 1000 / 60 / 60
-  );
-  if (timeDifferenceInHours >= 24) {
-    return Math.ceil(timeDifferenceInHours / maxHoursBeforeFlatRate) * rate;
-  }
-
-  calculatePrice(parkingTicket);
-
-  return timeDifferenceInHours * rate;
-}
-
-///TODO: implement rates and cap at daily rate
-// function calculateRates(){
-
-// }
