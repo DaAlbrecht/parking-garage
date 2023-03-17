@@ -13,12 +13,15 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
 
   ///TODO: fix timezones UTC -> UTC+1
   const matchingRatesHourSlots = rates.filter((element) => {
-    const startHour = new Date(element.start_time).getHours();
-    const endHour = new Date(element.end_time).getHours();
-    return startHour <= timeNow.getHours() && endHour >= timeNow.getHours();
-  });
+    let startTime = element.start_time.getHours();
+    let endTime = element.end_time.getHours();
 
-  console.log(matchingRatesHourSlots);
+    if (endTime === 0) {
+      endTime = 24;
+    }
+
+    return startTime <= timeNow.getHours() && endTime >= timeNow.getHours();
+  });
 
   let isHoliday: boolean | null = null;
 
@@ -48,12 +51,12 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
     }
 
     //weekdays
-    if (timeNow.getDate() < 6) {
+    if (timeNow.getDay() < 6) {
       const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKDAY');
       return timeDifferenceInHours * rate[0].price;
     }
     //weekends
-    if (timeNow.getDate() >= 6) {
+    if (timeNow.getDay() >= 6) {
       const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKEND');
       return timeDifferenceInHours * rate[0].price;
     }
