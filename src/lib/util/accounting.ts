@@ -53,19 +53,14 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
   });
 
   //https://date.nager.at/swagger/index.html
+  const request = await fetch('https://date.nager.at/api/v3/IsTodayPublicHoliday/CH?offset=0', {
+    method: 'GET',
+    headers: {
+      accept: '*/*'
+    }
+  });
 
-  //   const request = await fetch('https://date.nager.at/api/v3/IsTodayPublicHoliday/CH?offset=0', {
-  //     method: 'GET',
-  //     headers: {
-  //       accept: '*/*'
-  //     }
-  //   });
-
-  //   const data = await request.json();
-
-  //   isHoliday = data.status === 200 ? true : data.status === 204 ? false : null;
-
-  isHoliday = false;
+  isHoliday = request.status === 200 ? true : request.status === 204 ? false : null;
 
   if (isHoliday) {
     const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'HOLIDAY');
