@@ -19,7 +19,6 @@ model ParkingGarage {
   address           String
   levels            Level[]
   parkingRates      ParkingRate[]
-  parkingTickets    ParkingTicket[]
   customers         Customer[]
   accountingReports AccountingReport[]
 }
@@ -59,15 +58,23 @@ model Customer {
   parking_garage_id     Int
 }
 
-model ParkingTicket {
+model AccountingReport {
   id                Int           @id @default(autoincrement())
-  entry_date        DateTime
-  customer          Customer      @relation(fields: [customer_id], references: [id], onDelete: Cascade)
-  customer_id       String
   parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
-  exit_date         DateTime?
-  finalprice        Float?
+  generationTime    DateTime
+  searchFrom        DateTime
+  searchTo          DateTime
+  price             Float
+}
+
+model ParkingTicket {
+  id          Int       @id @default(autoincrement())
+  entry_date  DateTime
+  customer    Customer  @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  customer_id String
+  exit_date   DateTime?
+  finalprice  Float?
 }
 
 model ParkingRate {
@@ -86,14 +93,4 @@ enum RateType {
   HOLIDAY
   DAYRATE
   MONTHRATE
-}
-
-model AccountingReport {
-  id                Int           @id @default(autoincrement())
-  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
-  parking_garage_id Int
-  generationTime    DateTime
-  searchFrom        DateTime
-  searchTo          DateTime
-  price             Float
 }

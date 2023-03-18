@@ -40,7 +40,8 @@ export async function findEmptyParkingSpace(
 export async function occupySpot(
   levelParkingSpace: LevelParkingSpace,
   garage: ParkingGarage,
-  customer: Customer | null, numberPlate: string | null
+  customer: Customer | null,
+  numberPlate: string | null
 ): Promise<ParkingSpace | null> {
   let parkingSpace: ParkingSpace | null = null;
 
@@ -83,8 +84,7 @@ export async function occupySpot(
     await prisma.parkingTicket.create({
       data: {
         customer_id: customer.id,
-        entry_date: new Date(),
-        parking_garage_id: garage.id
+        entry_date: new Date()
       }
     });
   }

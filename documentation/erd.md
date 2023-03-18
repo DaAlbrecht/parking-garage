@@ -43,11 +43,20 @@ MONTHRATE MONTHRATE
     }
   
 
+  AccountingReport {
+    Int id PK 
+    Int parking_garage_id  
+    DateTime generationTime  
+    DateTime searchFrom  
+    DateTime searchTo  
+    Float price  
+    }
+  
+
   ParkingTicket {
     Int id PK 
     DateTime entry_date  
     String customer_id  
-    Int parking_garage_id  
     DateTime exit_date  "nullable"
     Float finalprice  "nullable"
     }
@@ -62,23 +71,12 @@ MONTHRATE MONTHRATE
     RateType rateType  
     }
   
-
-  AccountingReport {
-    Int id PK 
-    Int parking_garage_id  
-    DateTime generationTime  
-    DateTime searchFrom  
-    DateTime searchTo  
-    Float price  
-    }
-  
     Level o{--|| ParkingGarage : "parkingGarage"
     ParkingSpace o{--|| Customer : "customer"
     ParkingSpace o{--|| Level : "level"
     Customer o{--|| ParkingGarage : "parkingGarages"
+    AccountingReport o{--|| ParkingGarage : "parkingGarage"
     ParkingTicket o{--|| Customer : "customer"
-    ParkingTicket o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o|--|| RateType : "enum:rateType"
-    AccountingReport o{--|| ParkingGarage : "parkingGarage"
 ```

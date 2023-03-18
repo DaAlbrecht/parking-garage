@@ -18,7 +18,7 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
 
   const rates = await prisma.parkingRate.findMany({
     where: {
-      parking_garage_id: parkingTicket.parking_garage_id
+      parking_garage_id: customer.parking_garage_id
     }
   });
 

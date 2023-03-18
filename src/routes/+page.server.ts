@@ -86,17 +86,3 @@ export const load = (async () => {
   const garages = await prisma.parkingGarage.findMany();
   return { garages: garages };
 }) satisfies PageServerLoad;
-
-async function calculateParkingPrice(customer: Customer, garage: ParkingGarage) {
-  const parkingTicket = await prisma.parkingTicket.findFirst({
-    where: {
-      customer_id: customer.id,
-      parking_garage_id: garage.id
-    },
-    orderBy: {
-      entry_date: 'desc'
-    }
-  });
-
-  if (!parkingTicket) return fail(422, { error: 'No parking ticket found' });
-}
