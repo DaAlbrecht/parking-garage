@@ -15,6 +15,11 @@ urlcolor: "blue"
 
 # Project summery
 
+The company ParkingTown requires a new development of their in house parking management software solution because the old system is out of date and has a lot of technical debt. The decision was made to not use any already existing software solution but to develope a new application. The proof of concept prototype will take around three months to develop. The new Application will allow the parking garage account managers from ParkingTown to have a better overview of their garages. The accounting team from ParkingTown will benefit from the new improved report generation system to have more automated billing and cash flow overview.
+The parking house customers benefit from a easier to use and prettier user experience.
+
+This prototype is an important next step in the digitalization and strategy of ParkingTown.
+
 # Project initialization
 
 ## Initial situation
@@ -176,6 +181,8 @@ The documentation phase involves technical documentation, and other materials to
 ### Conclusion
 
 The Parking Garage project requires a comprehensive approach that involves planning, analysis, design, implementation, verification, and documentation. The Gantt chart provides a detailed overview of the key activities involved in each phase of the project.
+
+# Risk analysis
 
 # Development plan
 

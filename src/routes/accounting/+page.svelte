@@ -15,6 +15,11 @@
     <input type="number" name="id" value={id} placeholder="garage" />
     <input type="date" name="from" />
     <input type="date" name="to" />
+    <select name="customerType">
+      <option value="true">Permanent tenant</option>
+      <option value="false">Occasional users</option>
+    </select>
     <button>Generate report</button>
   </form>
+  <!-- ADD: yearly report button, should split view on a monthly basis, prob implement /accounting/yearlyReport in the backend that returns a list of monthly reports -->
 </div>

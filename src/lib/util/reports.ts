@@ -1,5 +1,5 @@
 import { prisma } from '$lib/server/database';
-import type { Customer, Level, ParkingTicket } from '@prisma/client';
+import type { Level } from '@prisma/client';
 import { calculatePrice } from './accounting';
 import { getOccupancyForLevel } from './parkingSpaceUtil';
 

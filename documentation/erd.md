@@ -36,6 +36,9 @@ MONTHRATE MONTHRATE
     String id PK 
     Boolean is_long_term_customer  
     Boolean is_blocked  
+    String license_plate  "nullable"
+    DateTime last_payment  "nullable"
+    DateTime created_at  
     Int parking_garage_id  
     }
   

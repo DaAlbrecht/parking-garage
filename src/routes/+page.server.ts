@@ -26,6 +26,8 @@ export const actions = {
 
     if (!customer) return fail(422, { error: 'Customer does not exist' });
 
+    if (customer.is_blocked) return fail(422, { error: 'Customer is blocked' });
+
     getPermanentTenantParkingSpot(garageNumber, customer);
 
     return { status: 20 };
@@ -50,17 +52,16 @@ export const actions = {
       }
     });
 
-    if(customer){
+    if (customer) {
       throw redirect(303, '/checkout');
     }
-
 
     const levelParkingSpace = await findEmptyParkingSpace(garage);
 
     if (!levelParkingSpace) return fail(422, { error: 'No parking space available' });
 
     occupySpot(levelParkingSpace, garage, null, id.toString());
-    
+
     throw redirect(303, '/checkout');
   }
 } satisfies Actions;

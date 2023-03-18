@@ -51,6 +51,8 @@ model Customer {
   is_long_term_customer Boolean
   is_blocked            Boolean
   license_plate         String?
+  last_payment          DateTime?
+  created_at            DateTime        @default(now())
   parkingSpace          ParkingSpace[]
   parkingTickets        ParkingTicket[]
   parkingGarages        ParkingGarage   @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
