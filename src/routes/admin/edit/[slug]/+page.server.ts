@@ -126,7 +126,30 @@ export const actions = {
   },
   updatePrices: async ({ request }) => {
     const data = await request.formData();
-    console.log(data);
+    const garageId = data.get('garage');
+
+    if (!garageId) return fail(422, { error: 'Missing data' });
+
+    const rates = await prisma.parkingRate.findMany({
+      where: {
+        parking_garage_id: Number(garageId)
+      }
+    });
+
+    for (const rate of rates) {
+      const price = data.get(rate.id.toString());
+      if (price) {
+        await prisma.parkingRate.update({
+          where: {
+            id: rate.id
+          },
+          data: {
+            price: Number(price)
+          }
+        });
+      }
+    }
+    console.log(garageId);
     return {
       status: 200
     };
