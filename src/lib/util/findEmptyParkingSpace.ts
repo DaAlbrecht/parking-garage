@@ -1,15 +1,9 @@
 import { prisma } from '$lib/server/database';
 import type { ParkingGarage, ParkingSpace, Level } from '.prisma/client';
 import type { Customer } from '@prisma/client';
-import {
-  getAllParkingSpacesForLevel,
-  getOccupancyForLevel,
-  type LevelParkingSpace
-} from './parkingSpaceUtil';
+import { getAllParkingSpacesForLevel, getOccupancyForLevel } from './parkingSpaceUtil';
 
-export async function findEmptyParkingSpace(
-  garage: ParkingGarage
-): Promise<LevelParkingSpace | null> {
+export async function findEmptyParkingSpace(garage: ParkingGarage) {
   const levels = await prisma.level.findMany({
     where: {
       parking_garage_id: garage.id
@@ -38,7 +32,12 @@ export async function findEmptyParkingSpace(
 }
 
 export async function occupySpot(
-  levelParkingSpace: LevelParkingSpace,
+  levelParkingSpace: {
+    parkingSpot: any;
+    occupied?: boolean;
+    level_id: any;
+    permanentTenant?: boolean;
+  },
   garage: ParkingGarage,
   customer: Customer | null,
   numberPlate: string | null
@@ -84,7 +83,8 @@ export async function occupySpot(
     await prisma.parkingTicket.create({
       data: {
         customer_id: customer.id,
-        entry_date: new Date()
+        entry_date: new Date(),
+        parking_garage_id: garage.id
       }
     });
   }
