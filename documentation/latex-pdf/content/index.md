@@ -15,8 +15,8 @@ urlcolor: "blue"
 
 # Project summery
 
-The company ParkingTown requires a new development of their in house parking management software solution because the old system is out of date and has a lot of technical debt. The decision was made to not use any already existing software solution but to develope a new application. The proof of concept prototype will take around three months to develop. The new Application will allow the parking garage account managers from ParkingTown to have a better overview of their garages. The accounting team from ParkingTown will benefit from the new improved report generation system to have more automated billing and cash flow overview.
-The parking house customers benefit from a easier to use and prettier user experience.
+The company ParkingTown requires a new development of their in-house parking management software solution because the old system is out of date and has a lot of technical debt. The decision was made to not use any already existing software solution but to develop a new application. The proof of concept prototype will take around three months to develop. The new Application will allow the parking garage account managers from ParkingTown to have a better overview of their garages. The accounting team from ParkingTown will benefit from the new improved report generation system to have a more automated billing and cash flow overview.
+The parking house customers benefit from an easier to use and prettier user experience.
 
 This prototype is an important next step in the digitalization and strategy of ParkingTown.
 
@@ -24,8 +24,8 @@ This prototype is an important next step in the digitalization and strategy of P
 
 ## Initial situation
 
-The company ParkinTown currently manages five multi-storey parking lots at different locations on behalf of several customers. The IT system used for this purpose was developed by a former employee who carries out the necessary maintenance work on a contract basis. The system is getting on in years and will have to be replaced in the near future in view of the company's planned expansion plans.
-The managing director of ParkinTown has evaluated several IT solutions for the management of parking garages, but considers them all too complicated. He prefers a simple solution tailored to ParkinTown's needs. He is aware of the risks involved in developing it himself and therefore, before placing the order for the development of the entire application, he wants to have a prototype developed that simulates the operation of the parking garages.
+The company ParkinTown currently manages five multi-story parking lots at different locations on behalf of several customers. The IT system used for this purpose was developed by a former employee who carries out the necessary maintenance work on a contract basis. The system is getting on in years and will have to be replaced in the near future in view of the company's planned expansion plans.
+The managing director of ParkinTown has evaluated several IT solutions for the management of parking garages but considers them all too complicated. He prefers a simple solution tailored to ParkinTown's needs. He is aware of the risks involved in developing it himself and therefore, before placing the order for the development of the entire application, he wants to have a prototype developed that simulates the operation of the parking garages.
 Based on the information in this document, a specification for the prototype must first be created. The information in this document must be checked for completeness and supplemented if necessary. Then a prototype of the IT system must be built on the basis of the specifications.
 
 ## Situation analysis
@@ -34,7 +34,7 @@ The current software is already old and becoming harder to maintain. ParkingTown
 
 ### Product situation
 
-The parking garage manager from ParkingTown is a tool that supports the companies employee in their daily tasks involving the management of parking garages on behalf of their clients.
+The parking garage manager from ParkingTown is a tool that supports the company's employee in their daily tasks involving the management of parking garages on behalf of their clients.
 
 The new Software should be tailored to the processes of ParkingTown and support the employees in their daily tasks. 
 
@@ -48,7 +48,7 @@ The prototype should be a functional system that simulates the operation of the 
 
 The success of the prototype will depend on how well it meets the requirements of the company and its customers. It must be able to handle the volume of parking transactions effectively, and it should also be reliable and secure.
 
-Overall, the development of a prototype for the IT system used in managing the parking garages is a critical step towards the success of ParkinTown's expansion plans. It will help the company to identify any gaps in the current system and ensure that the new system meets all the requirements of the company and its customers.
+Overall, the development of a prototype for the IT system used in managing the parking garages is a critical step toward the success of ParkinTown's expansion plans. It will help the company to identify any gaps in the current system and ensure that the new system meets all the requirements of the company and its customers.
 
 ### Competitive situation
 
@@ -81,7 +81,7 @@ ParkinTown requires a new parking garage management tool.
 4. Design: A detailed design specification should be created based on the requirements gathered in the previous step. This design should include all aspects of the system, including user interfaces, database design, and system architecture.
 5. Quality Assurance: A quality assurance process should be put in place to ensure that the new IT system is of high quality and meets the required standards. This should include testing and validation of the system to ensure that it works as intended.
 6. Documentation: All aspects of the development process, including design decisions, testing results, and system specifications, should be documented. This will allow for future maintenance and updates to be carried out more easily.
-7. Training and Support: Training and support should be provided to all users of the new IT system to ensure that they are able to use it effectively. This should include user manuals and training sessions.
+7. Training and Support: Training and support should be provided to all users of the new IT system to ensure that they can use it effectively. This should include user manuals and training sessions.
 8. Data Privacy and Security: The new IT system should be designed with data privacy and security in mind. Measures should be put in place to ensure that customer data is protected and that the system is secure from external threats. This may include encryption of sensitive data and regular security updates.
 
 ### Product-related general conditions
@@ -104,9 +104,10 @@ Table: Product-related general conditions \label{tab:prodgencon}
 4. Timeframe: The project will focus on the development and implementation of the IT system, rather than the long-term maintenance or evolution of the system over time.
 5. Budget constraints: The system will be designed to meet specific budgetary constraints, which may limit the scope or functionality of the system.
 6. Parking garage configurations: The system will be designed to support a specific range of parking garage configurations, and may not be easily adaptable to other configurations or designs.
-7. User categories: The system will be designed to support two specific categories of users (casual users and permanent tenants), and may not be applicable to other categories of users.
-8. Parking rates and tariffs: The system will be designed to support a specific range of parking rates and tariffs, which may not be applicable or adaptable to other contexts or markets.
+7. User categories: The system will be designed to support two specific categories of users (casual users and permanent tenants), and may not apply to other categories of users.
+8. Parking rates and tariffs: The system will be designed to support a specific range of parking rates and tariffs, which may not apply or adaptable to other contexts or markets.
 9. Algorithm for parking space allocation: The system will use a specific algorithm to allocate parking spaces for occasional users, which may not be easily adaptable to other algorithms or methods of allocation.
+10. Onboarding of new customers to long-term customers and automatically billing/blocking them is not implemented, an API for integration in accounting or IAM tools is provided.
 
 ## Stakeholder analysis
 
@@ -126,7 +127,7 @@ Table: List of Stakeholders and their abbreviation \label{tab:stakeholder}
 
 ## Project planning
 
-The Parking Garage project aims to develop a software system that automates the management of parking garages. The project requires a comprehensive approach that involves planning, analysis, design, implementation, verification, and documentation. The Gantt chart  outlines the key activities involved in the project.
+The Parking Garage project aims to develop a software system that automates the management of parking garages. The project requires a comprehensive approach that involves planning, analysis, design, implementation, verification, and documentation. The Gantt chart outlines the key activities involved in the project.
 
 ![Gantt \label{fig:gantt}](images/gantt.png "Gantt")
 
@@ -138,7 +139,7 @@ The project initiation phase involves defining the scope and objectives of the p
 1. Initial Situation (1 day): This activity involves setting up the project, defining the project team, and identifying the project's objectives.
 2. Situation Analysis (1 day): This activity involves analyzing the current parking system in place, including identifying the strengths and weaknesses of the current system.
 3. General Conditions (3 days): This activity involves defining the constraints, assumptions, and dependencies of the project.
-4. Delimitations (1 day): This activity involves setting the boundaries of the project, defining what is included and excluded.
+4. Delimitations (1 day): This activity involves setting the boundaries of the project, and defining what is included and excluded.
 5. Project Planning (1 day): This activity involves creating a detailed project plan, including timelines, resources, and budgets.
    
 ### Requirement Engineering
@@ -183,6 +184,10 @@ The documentation phase involves technical documentation, and other materials to
 The Parking Garage project requires a comprehensive approach that involves planning, analysis, design, implementation, verification, and documentation. The Gantt chart provides a detailed overview of the key activities involved in each phase of the project.
 
 # Risk analysis
+
+![risk analysis \label{fig:risk}](images/risk%20analysis.png)
+
+The risk analysis indicates, that it needed to work with a third-party support company. The parking garage is open 24/7 and it's necessary, that if a customer would be trapped inside that they can call a support hotline for help. Otherwise, the risks are not too high since the application is more used to present data and not as an accounting tool for the customers.
 
 # Development plan
 
@@ -252,10 +257,10 @@ Table: Non-Functional requirements \label{tab:nonefuncreq}
 
 # System architecture and design
 
-The new parking garage software for ParkingTown is a web based sveltekit  application. [@svelte]
-The Application wil be delivered as a state of the art OCI compliant container image. [@OCI] Database access is handled by the ORM [@ORM] prisma [@prisma]
+The new parking garage software for ParkingTown is a web-based sveltekit  application. [@svelte]
+The Application will be delivered as a state-of-the-art OCI-compliant container image. [@OCI] Database access is handled by the ORM [@ORM] prisma [@prisma]
 
-prisma allows a wide variety of SQL based database providers.
+Prisma allows a wide variety of SQL-based database providers.
 
 ## Svelte / Sveltekit
 
@@ -292,7 +297,7 @@ SvelteKit builds on the strengths of Svelte and provides a powerful and efficien
 
 ### Why Sveltekit instead of other fullstack javascript frameworks
 
-One of the main reasons sveltekit was chosen for this project is, that i wanted to learn this technology for a long time. This project was a perfect learning opportunity to get hands on experience with a new up and coming javascript framework.
+One of the main reasons sveltekit was chosen for this project is, that I wanted to learn this technology for a long time. This project was a perfect learning opportunity to get hands-on experience with a new up-and-coming javascript framework.
 
 According to the biggest javascript survey, Svelte / Sveltekit is amongst the most loved frameworks. [@StateOfJS]
 
@@ -338,14 +343,14 @@ Some of the benefits of using containers include:
 
 - **Portability:** Containers can be run on any host that supports the container runtime, making them a great option for deploying applications across different environments (like development, staging, and production).
 - **Consistency:** Since each container contains all the dependencies required to run the application, you can be sure that the application will run consistently across different hosts.
-- **Scalability:** Containers can be easily scaled up or down to meet changing demand, since they are lightweight and don't require a lot of resources.
+- **Scalability:** Containers can be easily scaled up or down to meet changing demand since they are lightweight and don't require a lot of resources.
 - **Isolation:** Since each container runs in its own process space, containers provide a degree of isolation between different applications, reducing the risk of conflicts or security vulnerabilities.
 
 [@OsLevelVirtualization]
 
 ### OCI Containers
 
-The OCI is a collaborative project hosted by the Linux Foundation, with the goal of creating open standards for container formats and runtimes. The OCI was founded in 2015 by Docker and other industry leaders, in response to a growing need for interoperability and standardization in the container ecosystem.
+The OCI is a collaborative project hosted by the Linux Foundation, to create open standards for container formats and runtime. The OCI was founded in 2015 by Docker and other industry leaders, in response to a growing need for interoperability and standardization in the container ecosystem.
 
 The OCI is focused on two main specifications: the Image Format Specification and the Runtime Specification. These specifications define how containers should be packaged, distributed, and run, and are designed to be vendor-neutral and interoperable.
 
@@ -353,9 +358,9 @@ The Image Format Specification defines a standard format for container images, w
 
 The Runtime Specification defines a standard interface between the container image and the host operating system, which allows the container to be run in a consistent and portable way across different environments. This specification includes details like how the container should be started and stopped, how it should interact with the host filesystem and network, and how resources like CPU and memory should be managed.
 
-Both specifications are designed to be flexible and extensible, allowing for innovation and customization while maintaining interoperability. The OCI also includes tools and utilities for working with container images and runtimes, like the OCI Image Tool and the OCI Runtime Tool.
+Both specifications are designed to be flexible and extensible, allowing for innovation and customization while maintaining interoperability. The OCI also includes tools and utilities for working with container images and runtime, like the OCI Image Tool and the OCI Runtime Tool.
 
-One of the main goals of the OCI is to foster collaboration and interoperability in the container ecosystem. By creating open standards that are supported by a broad community of vendors and developers, the OCI aims to reduce fragmentation and increase adoption of containers as a standard way to package, distribute, and run applications.
+One of the main goals of the OCI is to foster collaboration and interoperability in the container ecosystem. By creating open standards that are supported by a broad community of vendors and developers, the OCI aims to reduce fragmentation and increase the adoption of containers as a standard way to package, distribute, and run applications.
 
 [@OpenContainerInitiative]
 
@@ -372,26 +377,25 @@ Docker Desktop is a desktop application for Windows and macOS that provides an e
 [@docker]
 
 #### When to use Docker
+Docker at present is the most widely used container runtime/platform. The Docker Platform is easy to use and comes with a feature-rich GUI. Docker is mostly used in development setups. Docker was one of the first implementations of Linux cgroup containers under windows and contributed with this massively to the success of containerization.
 
-Docker in present is the most widely used container runtime / platform. The Docker Platform is easy to use and comes with a feature rich GUI. Docker is mostly used in development setups. Docker was one of the first implementations of linux cgroup containers under windows and contributed with this massively to the success of containerization.
-
-With the majority of containers and container orchestration tools like kubernetes rising in popularity docker is no longer the industry leader for building, packaging and running production grade containers.
+With the majority of containers and container orchestration tools like Kubernetes rising in popularity, docker is no longer the industry leader for building, packaging and running production-grade containers.
 
 Some of the reasons are:
 
-- **Kubernetes:** kubernetes drooped the docker runtime support in kubernetes version v1.24  [@KubernetesDockerRuntime] (Docker containers still run on kubernetes since they are OCI compliant)
-- **Develope close to production:** With most container running in a Kubernetes Cluster developers started using local kubernetes clusters like mininkube [@Minikube] or rancher desktop [@RancherDesktop] as development environments. This enables the developers to be as close to the production infrastructure as possible.
-- **Docker in Docker:** In order to build docker images from inside docker (for example CI pipeline) the docker demon is required to run as root. This is a potential security risk for the toolchain and its recommended to use different tools like kaniko [@Kaniko] to build your production container images.
+- **Kubernetes:** Kubernetes drooped the docker runtime support in Kubernetes version v1.24  [@KubernetesDockerRuntime] (Docker containers still run on Kubernetes since they are OCI compliant)
+- **Develope close to production:** With most containers running in a Kubernetes Cluster developers started using local Kubernetes clusters like mininkube [@Minikube] or rancher desktop [@RancherDesktop] as development environments. This enables the developers to be as close to the production infrastructure as possible.
+- **Docker in Docker:** In order to build docker images from inside docker (for example CI pipeline) the docker demon is required to run as root. This is a potential security risk for the toolchain and it's recommended to use different tools like kaniko [@Kaniko] to build your production container images.
 
 ## Prisma
 
-Prisma is an open-source tool that simplifies database access for developers. It provides a type-safe and scalable ORM (Object-Relational Mapping) layer that enables developers to interact with their database in a more intuitive and efficient manner.
+Prisma is an open-source tool that simplifies database access for developers. It provides a type-safe and scalable ORM (Object-Relational Mapping) layer that enables developers to interact with their database more intuitively and efficiently.
 
 With Prisma, developers can define their data models in a declarative schema language called Prisma Schema. This schema defines the structure of the database and the relationships between tables. Prisma Schema also supports various data types, such as strings, numbers, booleans, and timestamps.
 
-Prisma generates a set of CRUD (Create, Read, Update, Delete) operations based on the defined schema. These operations are generated as TypeScript or JavaScript functions that can be called directly from the application code. This removes the need to write SQL queries manually, and also makes the codebase more maintainable and readable.
+Prisma generates a set of CRUD (Create, Read, Update, Delete) operations based on the defined schema. These operations are generated as TypeScript or JavaScript functions that can be called directly from the application code. This removes the need to write SQL queries manually and also makes the codebase more maintainable and readable.
 
-Prisma is designed to work with multiple database engines such as  MySQL, PostgreSQL, and MongoDB and other SQL based databases. With the abstraction provided by Prisma switching between different databases is achievable without having to rewrite their application code.
+Prisma is designed to work with multiple database engines such as  MySQL, PostgreSQL, MongoDB and other SQL-based databases. With the abstraction provided by Prisma switching between different databases is achievable without having to rewrite their application code.
 
 Prisma also provides advanced features such as data validation, query optimization, and transaction management. These features ensure that the data stored in the database is consistent and secure.
 
@@ -451,28 +455,28 @@ The ParkingSpace entity only represents occupied spaces.
 
 The Customer entity represents a customer who can use the parking garage. Each customer has a universally unique identifier (uuid) and can be marked as a long-term customer or blocked from using the parking garage. Additionally, each customer is associated with a specific parking garage, represented by the parking_garage_id foreign key, which references the id of the ParkingGarage entity.
 
-The ParkingTicket entity represents a ticket that a customer receives upon entering the parking garage. Each ticket has a unique identifier (id), an entry date and time, a reference to the customer who received the ticket, and a reference to the parking garage the ticket was issued in. The customer_id and parking_garage_id foreign keys reference the id of the Customer and ParkingGarage entities, respectively.
+The ParkingTicket entity represents a ticket that a customer receives upon entering the parking garage. Each ticket has a unique identifier (id), an entry date and time, a reference to the customer who received the ticket, and a reference to the parking garage in which the ticket was issued. The customer_id and parking_garage_id foreign keys reference the id of the Customer and ParkingGarage entities, respectively.
 
-The ExitTicket entity represents a ticket that a customer receives upon exiting the parking garage. Each ticket has a unique identifier (id), an exit date and time, a price for the parking duration, a reference to the customer who received the ticket, and a reference to the parking garage the ticket was issued in. The customer_id and parking_garage_id foreign keys reference the id of the Customer and ParkingGarage entities, respectively.
+The ExitTicket entity represents a ticket that a customer receives upon exiting the parking garage. Each ticket has a unique identifier (id), an exit date and time, a price for the parking duration, a reference to the customer who received the ticket, and a reference to the parking garage in which the ticket was issued. The customer_id and parking_garage_id foreign keys reference the id of the Customer and ParkingGarage entities, respectively.
 
-The ParkingRate entity represents the hourly rate for parking in a specific parking garage during a specific time range. Each rate has a unique identifier (id), a reference to the parking garage it applies to, a price per hour, a start time, and an end time. The parking_garage_id foreign key references the id of the ParkingGarage entity. For the prototype only specific hardcoded time ranges are supported
+The ParkingRate entity represents the hourly rate for parking in a specific parking garage during a specific time range. Each rate has a unique identifier (id), a reference to the parking garage it applies to, a price per hour, a start time, and an end time. The parking_garage_id foreign key references the id of the ParkingGarage entity. For the prototype, only specific hardcoded time ranges are supported
 
 # Implementation
 
-For this project it was of importance to have the git repository as single source of truth. 
-The git repository keeps this entire documentation as well. In the following sections are often code snippets used but they can all be found in completion on [GitHub](https://github.com/DaAlbrecht/parking-garage/tree/main)
+For this project, it was important to have the git repository as a single source of truth. 
+The git repository keeps this entire documentation as well. The following sections are often code snippets used but they can all be found in completion on [GitHub](https://github.com/DaAlbrecht/parking-garage/tree/main)
 
 ## Documentation workflow
 
-In the Company i work we create SaMD (Software as Medical Device). Software that classifies as medical device needs to be developed with specific regulations in mind and requires to follow specific process. Present we use Microsoft Word to write the required documentation but this raises a few challenges.
+In the Company, I work we create SaMD (Software as Medical Device). Software that classifies as a medical device needs to be developed with specific regulations in mind and requires following a specific process. At present we use Microsoft Word to write the required documentation but this raises a few challenges.
 
 1. Word is not as easy to generate from within a pipeline (For example openAPI specification)
 2. Word is not as easy to Lint inside a pipeline
 3. Including Code or Project specific references in good looking format is not possible
 4. Word is slow and the formatting is tedious
 
-With this Project i wanted to try if its possible to write large project documentation using Markdown and export the written documentation in a professional looking PDF.
-In order to achieve this the following software is used:
+With this Project, I wanted to try if it's possible to write large project documentation using Markdown and export the written documentation in a professional-looking PDF.
+To achieve this the following software is used:
 
 1. **Pandoc:** used to convert the markdown into LaTex format and print a PDF [@Pandoc]
     
@@ -480,14 +484,14 @@ In order to achieve this the following software is used:
     brew install pandoc
     ```
 
-2. **LaTeX:** Pandoc rquires LaTeX to be installed in order to generate the PDF [@LaTeX]
+2. **LaTeX**:** Pandoc requires LaTeX to be installed to generate the PDF [@LaTeX]
 
     ```zsh
     brew install --cask mactex
     ```
 ### Folder Structure
 
-In order to generate an academic looking paper the following folder structure is used
+To generate an academic-looking paper the following folder structure is used
 ```
 latex-pdf
  |assets
@@ -503,7 +507,7 @@ latex-pdf
  |-Makefile
  |-build.sh
 ```
-- **assets:**  Used for third party styles, in this case how to style the citations
+- **assets:**  Used for third-party styles, in this case how to style the citations
 - **build:** The output directory where the PDF will be generated to
 - **content** Holds the full markdown file, all used figures and the bibliography
 - **layouts:** Pandoc can convert the markdown into different output formats, in the layout folder could the different formats specify some individual layouts
@@ -558,11 +562,11 @@ chmod +x build.sh #allow the script to be executed
 ```
 ### Index.md
 
-The ```index.md``` is the markdown file that is specified in the [build.sh](#buildscript) file to converted into PDF.
+The ```index.md``` is the markdown file that is specified in the [build.sh](#buildscript) file to convert into PDF.
 
-Pandoc uses a yaml based syntax in the header to configure the default conversion behavior.
+Pandoc uses a yaml-based syntax in the header to configure the default conversion behavior.
 
-The following configuration was mande
+The following configuration was made
 
 ```yaml
 title: "Parking Garage"
@@ -578,8 +582,8 @@ link-citations: true
 urlcolor: "blue"
 ```
 
-1. **title:** Sets the Document title on the cover sheet
-2. **date:** Sets the Date on the cover sheet
+1. **title:** Set the Document title on the cover sheet
+2. **date:** Set the Date on the cover sheet
 3. **author:** Sets the author on the cover sheet
 4. **numbersections:** Enables the numbering of the headings
 5. **toc:** Creates a table of content at the beginning of the document
@@ -593,16 +597,16 @@ urlcolor: "blue"
 
 ## Development environment
 
-For a local development environment the following of the shelf software is used:
+For a local development environment, the following off-the-shelf software is used:
 
-1. **Visual studio Code:**  VS code is used as primary code editor
+1. **Visual Studio Code:**  VS code is used as the primary code editor
 2. **nvm:** nvm is used to manage the specific node versions
 3. **Nodejs:** JavaScript runtime
 4. **Docker:** For PostgreSQL database
 
 ### Setup Development environment
 
-The project is developed on a MacBook m2 Pro. The installation guide for the development setup is therefore written for apple silicon but all used software components are available for windows and linux. 
+The project is developed on a MacBook m2 Pro. The installation guide for the development setup is therefore written for apple silicon but all used software components are available for windows and Linux. 
 
 1. Install [Visual Studio Code](https://code.visualstudio.com/download) [@VsCode]
 2. Install nvm [@nvm]
@@ -662,9 +666,9 @@ The project is developed on a MacBook m2 Pro. The installation guide for the dev
 
 ### Cloud development environments (CDEs)
 
-The project is setup to support Cloud development environments. GitHub CodeSpaces [@GitHubCodespaces] as well as Gitpod [@Gitpod] work. For Gitpod some additional configuration is added to the repository to have a better out of the box experience.
+The project is set up to support Cloud development environments. GitHub CodeSpaces [@GitHubCodespaces] as well as Gitpod [@Gitpod] work. For Gitpod some additional configuration is added to the repository to have a better out of the box experience.
 
-Gitpod allows the configuration of the workspace through a ```.gitpod.yml``` file. Following configuration is added additionally
+Gitpod allows the configuration of the workspace through a `.gitpod.yml` file. The following configuration is added additionally
 
 ```yaml
 tasks:
@@ -672,7 +676,7 @@ tasks:
     command: docker-compose up -d && npm run dev
 ```
 
-1. Install all node  node modules
+1. Install all node node modules
 2. start docker containers (PostgreSQL database)
 3. start the svelte application
 
@@ -709,7 +713,7 @@ TODO: describe structure
 
 ## Prisma Schema
 
-The ```schema.prisma``` file describes the configuration and model of the database.
+The `schema.prisma` file describes the configuration and model of the database.
 
 The first part of the schema file is responsible for handling the connection to the database. It requires two parameter
 
@@ -722,7 +726,7 @@ Here's a short explanation of each component from [@ConnectPrisma]:
 
 - USER: The name of your database user
 - PASSWORD: The password for your database user
-- HOST: The name of your host name (for the local environment, it is localhost)
+- HOST: The name of your hostname (for the local environment, it is localhost)
 - PORT: The port where your database server is running (typically 5432 for PostgreSQL)
 - DATABASE: The name of the database
 - SCHEMA: The name of the schema inside the database
@@ -736,16 +740,15 @@ datasource db {
 }
 ```
 
-The next section is responsible for generating the prisma client
+The next section is responsible for generating the Prisma client
 
 ```js
 generator client {
   provider = "prisma-client-js"
 }
-
 ```
 
-Additionally on schema creation an erd diagram with the mermaid syntax should be created
+Additionally on schema creation, an erd diagram with the mermaid syntax should be created
 
 ```js
 generator erd {
@@ -773,7 +776,7 @@ model ParkingGarage {
 }
 ```
 
-1. **id:** this is the primary key and is marked to be automatically created / incremented
+1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **name:** the name of the garage
 3. **levels:** One-to-many (1-n) relation with the record "Level"
 4. **parkingRates:** One-to-many (1-n) relation with the record "ParkingRate"
@@ -796,20 +799,20 @@ model Level {
 }
 ```
 
-1. **id:** this is the primary key and is marked to be automatically created / incremented
+1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **levelNumber:** floor number of the Level
-3. **parking_spaces:** amount of parking spaces this level can hold
+3. **parking_spaces:** the number of parking spaces this level can hold
 4. **parkingGarage:** one-to-many (1-n) relation with the record "ParkingGarage"
-5. **parking_garage_id:** the foreignkey to the ParkingGarage record
+5. **parking_garage_id:** the foreign key to the ParkingGarage record
 6. **occupiedSpaces:** one-to-many (1-n) relation with the record "ParkingSpace"
 
-A parking garage can not have a level twice, to ensure this prisma uses the following syntax:
+A parking garage can not have a level twice, to ensure this Prisma uses the following syntax:
 
 ```js
 @@unique([parking_garage_id, levelNumber])
 ```
 
-This insures that the combination of the attributes ```parking_garage_id``` and ```levelNumber``` are unique
+This ensures that the combination of the attributes ```parking_garage_id``` and ```levelNumber``` are unique
 
 #### ParkingSpace
 
@@ -826,14 +829,14 @@ model ParkingSpace {
 }
 ```
 
-1. **id:** this is the primary key and is marked to be automatically created / incremented
+1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **customer:** one-to-one (1-1) relation with the Customer record
-3. **customer_id:** the foreignkey to the Customer record
+3. **customer_id:** the foreign key to the Customer record
 4. **level:** one-to-one (1-1) relation with the Level record
-5. **level_id:** the foreignkey to the Level record
+5. **level_id:** the foreign key to the Level record
 6. **parkingSpot:** the number of the spot
 
-The model ParkingSpace represents a occupied parking space. If there are no parking spots occupied, then this table is empty.
+The model ParkingSpace represents an occupied parking space. If there are no parking spots occupied, then this table is empty.
 
 One ```ParkingSpace``` can not have the same combination of the level and parking spot twice. 
 
@@ -855,14 +858,14 @@ model Customer {
 }
 ```
 
-1. **id:** this is the primary key and is marked to be automatically created / incremented
+1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **is_long_term_customer:** indicates if the user is a casual user or a permanent tenant
-3. **is_blocked:** indicates if the user has payed the monthly fee if its a permanent tenant
+3. **is_blocked:** indicates if the user has paid the monthly fee if its a permanent tenant
 4. **parkingSpace:** one-to-many (1-n) relation with the ParkingSpace record
 5. **parkingTickets:** one-to-many (1-n) relation with the ParkingTicket record
 6. **exitTickets:** one-to-many (1-n) relation with the ExitTicket record
 7. **parkingGarages:** tne-to-many (1-n) relation with the ParkingGarage record
-8. **parking_garage_id:** the foreignkey to the ParkingGarage record
+8. **parking_garage_id:** the foreign key to the ParkingGarage record
 
 Instead of using:  
 
@@ -870,11 +873,11 @@ Instead of using:
 @id @default(autoincrement())
 ```
 
-for indexing the primary key, for the customer a universally unique identifier (UUID) is used. A UUID is a 128 bit label.
+for indexing the primary key, for the customer, a universally unique identifier (UUID) is used. A UUID is a 128-bit label.
 
 When generated according to the standard methods, UUIDs are, for practical purposes, unique. Their uniqueness does not depend on a central registration authority or coordination between the parties generating them, unlike most other numbering schemes. [@UUID]
 
-The "randomness" of the UUID gives a additional security and does not let other customers guess other customers id. This is crucial because the primary key is also used for permanent tenants to open the entry and exit barrier.
+The "randomness" of the UUID gives additional security and does not let other customers guess other customers' IDs. This is crucial because the primary key is also used for permanent tenants to open the entry and exit barrier.
 
 #### ParkingTicket
 
@@ -889,12 +892,12 @@ model ParkingTicket {
 }
 ```
 
-1. **id:** this is the primary key and is marked to be automatically created / incremented
+1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **entry_date:** the timestamp when a user entered the entry barrier.
-3. **customer:** tne-to-many (1-n) relation with the ParkingSpace record
-4. **customer_id:** the foreignkey to the Customer record
-5. **parkingGarages:** tne-to-many (1-n) relation with the ParkingGarage record
-6. **parking_garage_id:** the foreignkey to the ParkingGarage record
+3. **customer:** one-to-many (1-n) relation with the ParkingSpace record
+4. **customer_id:** the foreign key to the Customer record
+5. **parkingGarages:** one-to-many (1-n) relation with the ParkingGarage record
+6. **parking_garage_id:** the foreign key to the ParkingGarage record
 
 
 #### ExitTicket
@@ -911,12 +914,12 @@ model ExitTicket {
 }
 ```
 
-1. **id:** this is the primary key and is marked to be automatically created / incremented
+1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **exit_date:** the timestamp when a user left the garage
-3. **customer:** tne-to-many (1-n) relation with the ParkingSpace record
-4. **customer_id:** the foreignkey to the Customer record
-5. **parkingGarages:** tne-to-many (1-n) relation with the ParkingGarage record
-6. **parking_garage_id:** the foreignkey to the ParkingGarage record
+3. **customer:** one-to-many (1-n) relation with the ParkingSpace record
+4. **customer_id:** the foreign key to the Customer record
+5. **parkingGarages:** one-to-many (1-n) relation with the ParkingGarage record
+6. **parking_garage_id:** the foreign key to the ParkingGarage record
 
 #### ParkingRate
 
@@ -931,18 +934,18 @@ model ParkingRate {
 }
 ```
 
-1. **id:** this is the primary key and is marked to be automatically created / incremented
+1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **parkingGarage:** One-to-many (1-n) relation with the ParkingGarage record
-3. **parking_garage_id:** the foreignkey to the ParkingGarage record
+3. **parking_garage_id:** the foreign key to the ParkingGarage record
 4. **price:** the hourly price
 5. **start_time:** start time
 6. **end_time:** end time
 
 ## Algorithm
 
-When a new customer (permanent tenant with no fix parking spot or a occasional customer) request a parking spot the method ```findEmptyParkingSpace``` is called.
+When a new customer (permanent tenant with no fixed parking spot or an occasional customer) requests a parking spot the method ```findEmptyParkingSpace``` is called.
 
-The method requires to pass the garage, for which a parkingspace should be found to be passed as function argument. The function returns a new parkingspace on the level that has the least percentage of occupied parking spots.
+The method requires passing the garage, for which a parking space should be found to be passed as a function argument. The function returns a new parking space on the level that has the least percentage of occupied parking spots.
 
 ### Imports
 
@@ -958,7 +961,7 @@ import {
 
 The is using the ES6 module syntax to import the following modules:
 
-1. **prisma:** object from the database module inside the $lib/server directory. This likely refers to an instance of the Prisma Client, which is a type-safe database client for TypeScript and Node.js applications. The database module is probably a custom module that exports the prisma object after initializing it with the necessary configuration options.
+1. **prisma:** object from the database module inside the $lib/server directory. This likely refers to an instance of the Prisma Client, which is a type-safe database client for TypeScript and Node.js applications. The database module is probably a custom module that exports the Prisma object after initializing it with the necessary configuration options.
    
 2. **ParkingGarage, ParkingSpace, Level, Customer:** type from the .prisma/client module. This module is generated by Prisma based on your database schema and contains TypeScript types that correspond to your database tables and columns. In other words, it provides a strongly typed interface to interact with your database using Prisma Client.
 
@@ -1042,7 +1045,7 @@ async function getOccupiedParkingSpacesForLevel(level: Level): Promise<Array<num
 }
 ```
 
-To get all occupied parking spaces a database query gets all entries in the `parkingSpace` table [ParkingSpace table](#parkingspace). Afterwards the array gets filtered to only include the parking spot number.
+To get all occupied parking spaces a database query gets all entries in the `parkingSpace` table [ParkingSpace table](#parkingspace). Afterward, the array gets filtered to only include the parking spot number.
 
 1. Get all parking spots for this level
 
@@ -1069,9 +1072,9 @@ Promise<LevelParkingSpace[]> {
 ```
 
 - this function first gets all the occupied parking spots
-- creates new array of type `LevelParkingSpace` gets created
+- creates a new array of the type `LevelParkingSpace` gets created
 - loop from 0 to the maximum number of parking spaces for this level
-- push a new element to the array that includes the parking spot, if its occupied and the corresponding level
+- push a new element to the array that includes the parking spot, if it's occupied and the corresponding level
 - return the array
 
 6. Find a parking space in the array that is not occupied
@@ -1087,13 +1090,30 @@ if (!freeParkingSpace) return null;
 return freeParkingSpace;
 ```
 
+## Customer UI
+
+The customer UI is separated into two vies
+
+1. Entry barrier (Welcome page)
+2. Exit barrier (Checkout)
+
+### Entry barrier
+
+![Entry barrier \label{fig:welcome}](images/welcome.png)
+
+This view simulates the entry barrier for a parking garage. First, a garage needs to be selected from the dropdown menu, then either the customer id (if the customer is a permanent tenant) or the license plate needs to be entered. If a license plate gets entered that is not currently occupying one of the parking spots, one of the free parking spots will be assigned according to the algorithm [implementation](#algorithm)
+
+If a license plate or a customer id that is representing a permanent tenant, the user gets redirected to the [checkout](#checkout)
+
+## Checkout
+
 ## Admin UI
 
 The admin UI is responsible for creating, updating and deleting garages as well as levels. The Admin UI is split into three different views.
 
 1. **Garages overview:** this view lists all garages
-2. **Garage edit:** the edit view allows of editing already created garages as well as adding additional levels and more parking spots
-3. **Garage details:** Gives an overview about the garage, lists all parking spots, the occupancy and the estimated revenue for each level
+2. **Garage edit:** the edit view allows for editing already created garages as well as adding additional levels and more parking spots
+3. **Garage details:** Gives an overview of the garage, lists all parking spots, the occupancy and the estimated revenue for each level
 
 ### Garage overview
 
@@ -1115,14 +1135,14 @@ Svelte has default layout called `+layout.svelte`. This layout describes the def
 </div>
 ```
 
-This specifies the default view as following:
+This specifies the default view as follows:
 
 1. Render the Header (Navbar)
 2. Embed all components 
 
-Svelte does not allow the creation of named slots on the default layout. In order to do this its possible to create scoped layouts for each rout.
+Svelte does not allow the creation of named slots on the default layout. To do this it's possible to create scoped layouts for each route.
 
-To get a seamless experience in the admin ui an additional layout file is created
+To get a seamless experience in the admin UI an additional layout file is created
 
 `AdminLayout.svelte`
 
@@ -1137,7 +1157,7 @@ To get a seamless experience in the admin ui an additional layout file is create
 </div>
 ```
 
-This layout can be imported into any svelte component and allows to style the components fast.
+This layout can be imported into any svelte component and allows styling the components fast.
 
 The landing page for the admin UI is `/admin`
 
@@ -1188,8 +1208,8 @@ export let data: PageData;
 import AdminLayout from './AdminLayout.svelte';
 ```
 
-1. **import PageData:** this allows to pass the server side rendered data to the component
-2. **let data:** creates the variable, on which the server side rendered data will be accessable
+1. **import PageData:** this allows to pass the server-side rendered data to the component
+2. **let data:** creates the variable, on which the server-side rendered data will be accessible
 3. **AdminLayout** imports the custom layout
 
 ```html
@@ -1215,7 +1235,7 @@ Here the `AdminLayout` component gets filled. The navigation button to create a 
 
 ## Parking rates
 
-In the requirements from the ParkingTown AG its specified that the prototype should support change of the parking rates. Its not specified on how these rates should be implemented. To keep the prototype simple the rates have the following time slots that can not be modified. What can be modified is the `Price per hour`.
+In the requirements from ParkingTown AG, it's specified that the prototype should support changes in the parking rates. It's not specified how these rates should be implemented. To keep the prototype simple the rates have the following time slots that can not be modified. What can be modified is the `Price per hour`.
 
 A default value is implemented following the tables listed here:
 
@@ -1243,7 +1263,7 @@ Table: Parking rates weekdays \label{tab:ratesweekdays}
 
 Table: Parking rates weekends \label{tab:ratesweekends}
 
-Additonally to these timeslots there is a `daily rate` and a `monthly rate`
+Additionally to these timeslots, there is a `daily rate` and a `monthly rate`
 
 
 
