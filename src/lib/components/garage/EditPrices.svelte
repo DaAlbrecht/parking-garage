@@ -29,11 +29,7 @@
     </div>
     <form method="POST" action="?/updatePrices">
       <input type="hidden" name="garage" value={rates[0].parking_garage_id} />
-      {#each Object.values(RateType) as tab}
-        <div class:hidden={activeTab !== tab}>
-          <Rates {rates} type={activeTab} />
-        </div>
-      {/each}
+      <Rates {rates} type={activeTab} />
       <div class="modal-action flex justify-between">
         <!-- 🔵 set false on click -->
         <button class="btn" type="button" on:click={() => dispatch('close')}>Close</button>

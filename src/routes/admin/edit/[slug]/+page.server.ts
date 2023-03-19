@@ -149,7 +149,6 @@ export const actions = {
         });
       }
     }
-    console.log(garageId);
     return {
       status: 200
     };
