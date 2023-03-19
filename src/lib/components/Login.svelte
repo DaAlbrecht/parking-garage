@@ -7,8 +7,8 @@
   let id: string;
   let selectedGarage: number | undefined = undefined;
 
-  $: canGetSpot = selectedGarage !== undefined && registerPlate !== undefined;
-  $: canLongTerm = selectedGarage !== undefined && id !== undefined;
+  $: canGetSpot = selectedGarage !== undefined && registerPlate;
+  $: canLongTerm = selectedGarage !== undefined && id;
 </script>
 
 <div class="card w-1/2 bg-base-100 shadow-2xl">
