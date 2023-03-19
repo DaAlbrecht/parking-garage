@@ -261,12 +261,12 @@ Table: Non-Functional requirements \label{tab:nonefuncreq}
 
 # System architecture and design
 
-The new parking garage software for ParkingTown is a web-based sveltekit  application. [@svelte]
+The new parking garage software for ParkingTown is a web-based SvelteKit  application. [@svelte]
 The Application will be delivered as a state-of-the-art OCI-compliant container image. [@OCI] Database access is handled by the ORM [@ORM] prisma [@prisma]
 
 Prisma allows a wide variety of SQL-based database providers.
 
-## Svelte / Sveltekit
+## Svelte / SvelteKit
 
 ### What is Svelte
 
@@ -470,7 +470,9 @@ The ParkingRate entity represents the hourly rate for parking in a specific park
 For this project, it was important to have the git repository as a single source of truth. 
 The git repository keeps this entire documentation as well. The following sections are often code snippets used but they can all be found in completion on [GitHub](https://github.com/DaAlbrecht/parking-garage/tree/main)
 
-To keep the code snippets shown in the subsections readable, the HTML part (`+page.svelte`) is most the time not included because HTML tends to become large skeletons of boilerplate code. If a specific piece of code is not shown kindly refer to the [folder [structure](#folder-structure) explanation to find the code fast on GitHub.
+The Application is hosted [here](https://parking-garage-production.up.railway.app)
+
+To keep the code snippets shown in the subsections readable, the HTML part (`+page.svelte`) is most of the time not included because HTML tends to become large skeletons of boilerplate code. If a specific piece of code is not shown kindly refer to the folder [structure](#folder-structure) explanation to find the code fast on GitHub.
 
 ## Documentation workflow
 
@@ -754,7 +756,7 @@ generator client {
 }
 ```
 
-Additionally on schema creation, an erd diagram with the mermaid syntax should be created
+Additionally, on schema creation, an erd diagram with the mermaid syntax should be created
 
 ```js
 generator erd {
@@ -1934,6 +1936,18 @@ The calculation multiplies the time difference with the hourly rate and adds the
 
 # Verification and validation
 
+| ID | Trace from | Test Case |Should be| Is|
+|----|:----------:|-----------------------------|----------------------|:---:|
+|V101|R101|Go to the admin page and create a new garage|The configuration of parking garages allows the number of levels and parking spaces per floor being freely definable|OK|
+|V102|R102|Add a new floor to the garage created in V101 and add a different number of parking spaces|The number of parking spaces per level can be different and changed per level basis|OK|
+|V103|R107|On the garaage view, slect the garage created in V101 and enter a random number as license plate, press the entrance button|The view redirected to the checkot view, a parking ticket is created|OK|
+|V104|R108|In the Database management tool, enable the customer created in V103 to be a permenant tenant, past his id in the garage view|he view redirected to the checkot view, a parking ticket is created|OK|
+|V105|R109 R114| checkout as the customer from V104|exit ticket gets created|OK|
+|V106|R110 R111 R112 R113 R114| Enter as a new occacional user, checkout again| parking ticket gets created|OK|
+|V107|R115|Create a new report for both customer types in the accounting tab| Report get generated, saved in the history and cost is caluclated|OK|
+|V108|R116 R117 R118 R119 R120 R123 R124|In the edit view of the garage created in V101, change the default rates| The rates are changed and saved|OK|
+|V109|R121 R122| In the detail view of the garage created in V101, click on a level| A view of the levels and their occupied parking spots is visible|OK|
+
 # Configuration manual
 
 This section describes the configuration management process used in the project. It covers the creation of the working environment, the project structure, the tools and frameworks used, and what to consider when modifying project files.
@@ -1961,22 +1975,59 @@ The entire source code can be found on [GitHub](https://github.com/DaAlbrecht/pa
 ## Issues
 
 Issues are used to track changes to the source code. An issue is created on GitHub.
-The issue should describe what should be changed or implemented. Issues can be used for all changes (e.g. add feature, adjust configuration, reminder, etc.).
+The issue should describe what should be changed or implemented. Issues can be used for all changes (e.g. add a feature, adjust configuration, reminder, etc.).
 
 # Hosting
 
+The source code repository is publicly available therefore I want to also host the application. I already used different free hosting providers like Vercel [@Vercel] or Netlify [@Netlify].
+Since the application is using a database it's sadly not possible to use Vercel's free plan since that only allows edge deployment.
+
+I already used Railway [@Railway] for a personal project once and it was pretty simple to host an application for free with decent uptime.
+
+## SvelteKit on Railway
+
+The following configuration needs to be changed to run SvelteKit on Railway
+
+`package.json`
+
+1. add the following line to `scripts`
+
+  ```
+  "start": "node build",
+  ```
+2. add node adapter
+
+  ```console
+  npm i -D @sveltejs/adapter-node
+  ```
+3. change the adapter in `svelte.config.js`
+
+  ```typescript
+  import adapter from '@sveltejs/adapter-node';
+  ```
+4. change vite config to resolve prisma enums
+
+  ```typescript
+  resolve: {
+      alias: {
+        '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js'
+      }
+    }
+  ```
+
+Then go to [Railway]((https://railway.app/new)) select deploy from GitHub and choose the repository.
+
+After choosing the repository a new environment gets created, Railway tries to create and deploy the application but a database needs to be added first.
+From the service catalog, a postgreSQL database can be deployed, after successfully deploying the database add the variables to the app with the new [database reference varaibles](https://blog.railway.app/p/database-reference-variables) from Railway. After this, the application will be built and deployed.
+
+
 # Conclusion
 
-# Glossary
+I chose to use a framework and language I'm not familiar with to learn something new. Additionally, I also wanted to test if writing large documentation and academic papers in markdown is suited or if it becomes slow and unmanageable when the documentation grows.
+
+I learned a lot about SvelteKit and typescript and would say I'm now more comfortable with using both. I enjoyed writing the documentation in markdown and using pandoc to convert it to a pdf. I noticed that pandoc has its limitation and that if you want to highly customize the built pdf it's maybe easier to just use LaTeX from the start. I will for sure use this setup in a future project again, but will spend more time on fine-tuning the pandoc output to my needs.
+
 
 # References
 
-
-## notes
-
-not clear
-
-- how should report look
-- customer onboarding
-- customers (can you be customer of multiple garages)
   
