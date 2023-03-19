@@ -13,10 +13,10 @@ urlcolor: "blue"
 ---
 
 
-# Project summery
+# Project summary
 
 The company ParkingTown requires a new development of their in-house parking management software solution because the old system is out of date and has a lot of technical debt. The decision was made to not use any already existing software solution but to develop a new application. The proof of concept prototype will take around three months to develop. The new Application will allow the parking garage account managers from ParkingTown to have a better overview of their garages. The accounting team from ParkingTown will benefit from the new improved report generation system to have a more automated billing and cash flow overview.
-The parking house customers benefit from an easier to use and prettier user experience.
+The parking house customers benefit from an easier-to-use and prettier user experience.
 
 This prototype is an important next step in the digitalization and strategy of ParkingTown.
 
@@ -34,7 +34,7 @@ The current software is already old and becoming harder to maintain. ParkingTown
 
 ### Product situation
 
-The parking garage manager from ParkingTown is a tool that supports the company's employee in their daily tasks involving the management of parking garages on behalf of their clients.
+The parking garage manager from ParkingTown is a tool that supports the company's employees in their daily tasks involving the management of parking garages on behalf of their clients.
 
 The new Software should be tailored to the processes of ParkingTown and support the employees in their daily tasks. 
 
@@ -189,7 +189,11 @@ The Parking Garage project requires a comprehensive approach that involves plann
 
 The risk analysis indicates, that it needed to work with a third-party support company. The parking garage is open 24/7 and it's necessary, that if a customer would be trapped inside that they can call a support hotline for help. Otherwise, the risks are not too high since the application is more used to present data and not as an accounting tool for the customers.
 
-# Development plan
+# Change management process
+
+Change in the software and the business processes is handled according to the change management process
+
+![change management process \label{fig:risk}](images/change-management.png)
 
 # Stakeholder requirements
 
@@ -465,6 +469,8 @@ The ParkingRate entity represents the hourly rate for parking in a specific park
 
 For this project, it was important to have the git repository as a single source of truth. 
 The git repository keeps this entire documentation as well. The following sections are often code snippets used but they can all be found in completion on [GitHub](https://github.com/DaAlbrecht/parking-garage/tree/main)
+
+To keep the code snippets shown in the subsections readable, the HTML part (`+page.svelte`) is most the time not included because HTML tends to become large skeletons of boilerplate code. If a specific piece of code is not shown kindly refer to the [folder [structure](#folder-structure) explanation to find the code fast on GitHub.
 
 ## Documentation workflow
 
@@ -1089,6 +1095,7 @@ if (!freeParkingSpace) return null;
 
 return freeParkingSpace;
 ```
+\pagebreak
 
 ## Customer UI
 
@@ -1099,13 +1106,131 @@ The customer UI is separated into two vies
 
 ### Entry barrier
 
-![Entry barrier \label{fig:welcome}](images/welcome.png){ width=50% }
+![Entry barrier \label{fig:welcome}](images/welcome.png){ width=100% }
 
 This view simulates the entry barrier for a parking garage. First, a garage needs to be selected from the dropdown menu, then either the customer id (if the customer is a permanent tenant) or the license plate needs to be entered. If a license plate gets entered that is not currently occupying one of the parking spots, one of the free parking spots will be assigned according to the algorithm [implementation](#algorithm)
 
 If a license plate or a customer id that is representing a permanent tenant, the user gets redirected to the [checkout](#checkout)
 
-## Checkout
+\pagebreak
+
+#### Implementation
+
+To preload, the dropdown for the garages with information, the data gets rendered server side.
+
+```typescript
+export const load = (async () => {
+  const garages = await prisma.parkingGarage.findMany({
+    where: {
+      levels: {
+        some: {}
+      }
+    }
+  });
+  return { garages: garages };
+}) satisfies PageServerLoad;
+```
+In sveltekit, the load function is used to do server-side rendering, on the client, the data can be accessed as following
+
+```html
+<script lang="ts">
+  import type { PageData } from './$types';
+  import Login from '$lib/components/Login.svelte';
+
+  export let data: PageData;
+</script>
+```
+
+##### permanent tenant parking spot
+
+When a permanent tenant enters their customer id the following form gets sent
+
+```html
+<form method="POST" action="?/longTermCustomer" use:enhance>
+  <input type="hidden" name="garage" value={selectedGarage} />
+  <label class="label" for="id">
+    <span class="label-text">Customer ID</span>
+  </label>
+  <input
+    type="number"
+    name="id"
+    bind:value={id}
+    placeholder="Customer ID"
+    class="input-bordered input w-full"
+  />
+  <div class="form-control mt-6">
+    <button disabled={!canLongTerm} class="btn-info btn">Check in</button>
+  </div>
+</form>
+```
+
+The form sends the form data to the `/longTermCustomer` function. This function is located in the `+page.server.ts` file.
+
+\pagebreak
+
+```typescript
+longTermCustomer: async ({ request }) => {
+  const data = await request.formData();
+
+  const id = data.get('id');
+  const garage = data.get('garage');
+
+  if (!id) return fail(422, { error: 'Missing id' });
+  if (!garage) return fail(422, { error: 'Missing parkingGarages' });
+
+  const idString = id.toString();
+  const garageNumber = Number(garage);
+
+  const customer = await prisma.customer.findFirst({
+    where: {
+      id: idString,
+      parking_garage_id: garageNumber
+    }
+  });
+
+  if (!customer) return fail(422, { error: 'Customer does not exist' });
+
+  if (customer.is_blocked) return fail(422, { error: 'Customer is blocked' });
+
+  getPermanentTenantParkingSpot(garageNumber, customer);
+
+  return { status: 20 };
+}
+```
+
+This function checks if the send form data is complete and if a customer for the given id exists and that they are a permanent tenant. If the customer exists and they are not blocked, a utility method gets called to either check the customer to their corresponding parking spot, or if they do not yet have a fixed parking spot the [algorithm](#algorithm) to find new parking spaces is used to find an empty spot.
+
+\pagebreak
+
+##### occasional user parking spot 
+
+When an occasional user, entries their license plate, the following form gets sent
+
+```html
+<form method="POST" action="?/getParkingSpot" use:enhance>
+  <input type="hidden" name="garage" value={selectedGarage} />
+  <label class="label" for="id">
+    <span class="label-text">Register Plate</span>
+  </label>
+  <input
+    type="number"
+    name="id"
+    bind:value={registerPlate}
+    placeholder="Register Plate"
+    class="input-bordered input w-full"
+  />
+  <div class="form-control mt-6">
+    <button disabled={!canGetSpot} class="btn-primary btn">Get parking spot</button>
+  </div>
+</form>
+```
+
+This form sends the form data to the `/getParkingSpot` function. This function is located in the `+page.server.ts` file.
+
+The function occupies a new parking spot according to the [algorithm](#algorithm)
+
+
+### Checkout
 
 The Checkout UI simulates the exit barrier. It's not only the exit barrier where you would put in the parking ticket, but also the machine, where you pay the parking fee.
 
@@ -1120,6 +1245,48 @@ For Permanent tenants, the view shows the garage, their user status and the park
 The checkout view shows the current garage as well as the spot where the parked car is. Additionally, the entry time and the current price is displayed. 
 
 If the checkout button is pressed, the exit barrier opens. For long-term customers nothing else happens, while for occasional users, the user in the database gets deleted and the parking spot entry as well and therefore freeing the parking spot.
+
+#### Implementation
+
+```typescript
+import { prisma } from '$lib/server/database';
+import type { PageServerLoad } from './$types';
+import { calculatePrice } from '$lib/util/accounting';
+
+export const load = (async ({ params }) => {
+  const customer = await prisma.customer.findFirst({
+    where: {
+      id: params.slug
+    },
+    include: {
+      parkingGarage: true,
+      parkingSpace: true,
+      parkingTickets: true
+    }
+  });
+
+  const price =
+    customer && customer.is_long_term_customer === false
+      ? await calculatePrice(customer.parkingTickets[0])
+      : undefined;
+  return { customer: customer, price: price };
+}) satisfies PageServerLoad;
+```
+The checkout view requires information from the [parkingGarage](#parkingGarage), [parkingSpace](#parkingSpace) and [parkingTickets](#parkingTicket). The information gets read out from the database and send to the client.
+
+```typescript
+  import { onDestroy } from 'svelte';
+  import { invalidateAll } from '$app/navigation';
+  import { enhance } from '$app/forms';
+
+  const interval = setInterval(invalidateAll, 1000 * 60 * 60);
+
+  onDestroy(() => {
+    clearInterval(interval);
+  });
+```
+
+To trigger a rerender the built-it function from sveltekit `invalidateAll` is called periodically that triggers a rerender of the checkout component.
 
 ## Admin UI
 
@@ -1143,6 +1310,19 @@ When a garage is added, this view shows a list of the garage's name and address.
 2. Show details for a garage
 3. Edit a garage
 
+#### Implementation
+
+```typescript
+import { prisma } from '$lib/server/database';
+import type { PageServerLoad } from './$types';
+
+export const load = (async () => {
+  const garages = await prisma.parkingGarage.findMany();
+  return { garages: garages };
+}) satisfies PageServerLoad;
+```
+The overview of the garages does only need to retrieve the information for all garages from the database.
+
 ### Add garages
 
 To add a new garage, it's required to fill in the name and the address of the garage.
@@ -1151,7 +1331,149 @@ To add a new garage, it's required to fill in the name and the address of the ga
 
 After pressing the button, the user will be redirected to the [garage overview](#garage-overview)
 
-## Edit Garages
+#### Implementation
+
+```html
+<form method="POST" action="?/createGarage" class="flex flex-col items-center gap-2">
+  <input
+    type="text"
+    bind:value={name}
+    name="name"
+    placeholder="Name"
+    class="input w-full max-w-xs"
+  />
+  <input
+    type="text"
+    bind:value={address}
+    name="address"
+    placeholder="Address"
+    class="input w-full max-w-xs"
+  />
+  <button disabled={!name || !address} class="btn-success btn mt-4">add garage</button>
+</form>
+```
+
+When creating a new garage, the following form data is sent to `/new/createGarage` and executes the following function on the server
+
+```typescript
+createGarage: async ({ request }) => {
+  const data = await request.formData();
+  const name = data.get('name');
+  const address = data.get('address');
+
+  if (!name || !address) return fail(422, { error: 'Missing name or address' });
+
+  const nameString = name.toString();
+  const addressString = address.toString();
+
+  try {
+    const garage = await prisma.parkingGarage.create({
+      data: {
+        name: nameString,
+        address: addressString
+      }
+    });
+    await prisma.parkingRate.createMany({
+      data: getInitialParkingRatesForGarage(garage.id)
+    });
+  } catch (error) {
+    return fail(422, { error: 'Garage already exists' });
+  }
+  throw redirect(303, '/admin');
+}
+```
+This function checks if the form data is complete, if so it creates a new entry in the database. After creating a new entry for a parking garage, a default set of parking rates get created for this parking garage.
+
+**Default set of rates** 
+
+```typescript
+import type { ParkingRate } from '@prisma/client';
+
+export const getInitialParkingRatesForGarage: (garageId: number) => 
+Omit<ParkingRate, 'id'>[] = (
+  garageId
+) => [
+  {
+    price: 1.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-04T00:00:00.000Z'),
+    end_time: new Date('2021-01-04T05:59:00.000Z'),
+    rateType: 'WEEKDAY'
+  },
+  {
+    price: 1.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-04T06:00:00.000Z'),
+    end_time: new Date('2021-01-04T08:59:00.000Z'),
+    rateType: 'WEEKDAY'
+  },
+  {
+    price: 1.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-04T09:00:00.000Z'),
+    end_time: new Date('2021-01-04T17:59:00.000Z'),
+    rateType: 'WEEKDAY'
+  },
+  {
+    price: 1.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-04T18:00:00.000Z'),
+    end_time: new Date('2021-01-04T20:59:00.000Z'),
+    rateType: 'WEEKDAY'
+  },
+  {
+    price: 1.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-04T21:00:00.000Z'),
+    end_time: new Date('2021-01-04T23:59:00.000Z'),
+    rateType: 'WEEKDAY'
+  },
+  {
+    price: 1.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-09T00:00:00.000Z'),
+    end_time: new Date('2021-01-09T08:59:00.000Z'),
+    rateType: 'WEEKEND'
+  },
+  {
+    price: 1.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-09T09:00:00.000Z'),
+    end_time: new Date('2021-01-09T17:59:00.000Z'),
+    rateType: 'WEEKEND'
+  },
+  {
+    price: 1.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-09T18:00:00.000Z'),
+    end_time: new Date('2021-01-09T23:59:00.000Z'),
+    rateType: 'WEEKEND'
+  },
+  {
+    price: 3.5,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-12-24T00:00:00.000Z'),
+    end_time: new Date('2021-12-25T23:59:00.000Z'),
+    rateType: 'HOLIDAY'
+  },
+  {
+    price: 40,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-04T00:00:00.000Z'),
+    end_time: new Date('2021-01-04T23:59:00.000Z'),
+    rateType: 'DAYRATE'
+  },
+  {
+    price: 400,
+    parking_garage_id: garageId,
+    start_time: new Date('2021-01-04T00:00:00.000Z'),
+    end_time: new Date('2021-01-04T23:59:00.000Z'),
+    rateType: 'MONTHRATE'
+  }
+];
+```
+
+### Edit Garages
 
 The edit view is split vertically into two sections. On the left is the garage meta information like name and address, and on the right is the information for the levels.
 
@@ -1159,121 +1481,301 @@ The edit view is split vertically into two sections. On the left is the garage m
 
 In the level section left, it's possible to add or remove parking spaces or entire levels.
 
-Svelte has default layout called `+layout.svelte`. This layout describes the default structure of all routes. 
+by pressing the `edit prices` button, it's possible to edit the prices for a garage in the given predefined timeslots.
 
-```html
-<script>
-  import '../app.css';
-  import Header from './Header.svelte';
-  //subscribe to the page store. This allows to read page data like the active rout for highlighting in the navbar
-  import { page } from '$app/stores';
-</script>
+![edit prices \label{fig:editprice}](images/edit_prices.png)
 
-<div class={`flex h-full flex-col`}>
-  <Header route={$page.route.id} />
-  <div class="container mx-auto px-4 pt-8">
-    <slot />
-  </div>
-</div>
+#### Implementation
+
+**Update garage**
+
+```typescript
+updateGarage: async ({ request }) => {
+  const data = await request.formData();
+  const id = data.get('id');
+  const name = data.get('name');
+  const address = data.get('address');
+
+  if (!id) return fail(422, { error: 'Missing id' });
+
+  const idNumber = Number(id);
+
+  try {
+    await prisma.parkingGarage.update({
+      where: {
+        id: idNumber
+      },
+      data: {
+        name: name?.toString(),
+        address: address?.toString()
+      }
+    });
+  } catch (error) {
+    return fail(422, { error: 'Garage does not exist' });
+  }
+  return {
+    status: 200
+  };
+},
 ```
 
-This specifies the default view as follows:
+This function checks if the given form data is complete, and updates the entry with the new information.
 
-1. Render the Header (Navbar)
-2. Embed all components 
+**Delete Garage**
 
-Svelte does not allow the creation of named slots on the default layout. To do this it's possible to create scoped layouts for each route.
+```typescript
+deleteGarage: async ({ request }) => {
+  const data = await request.formData();
+  const id = data.get('id');
 
-To get a seamless experience in the admin UI an additional layout file is created
+  if (!id) return fail(422, { error: 'Missing id' });
 
-`AdminLayout.svelte`
+  const idNumber = Number(id);
 
-```html
-<div class="flex flex-col">
-  <div class="mb-4"><slot name="navbar" /></div>
-  <div
-    class="rounded-box mx-2 w-72 place-items-center gap-4 bg-neutral p-4 py-8 shadow-xl xl:mx-0 xl:w-full"
-  >
-    <slot />
-  </div>
-</div>
+  try {
+    await prisma.parkingGarage.delete({
+      where: {
+        id: idNumber
+      }
+    });
+  } catch (error) {
+    return fail(422, { error: 'Garage does not exist' });
+  }
+  throw redirect(303, '/admin');
+}
 ```
 
-This layout can be imported into any svelte component and allows styling the components fast.
+This function checks if the given form data is complete, and deletes the entry from the database.
 
-The landing page for the admin UI is `/admin`
 
-![admin landing page \label{fig:adminlanding}](images/admin1.jpeg)
+**Delete level**
 
-The svelte component `/src/routes/admin/+page.svelte` implements the skeleton for this view
+```typescript
+deleteLevel: async ({ request }) => {
+  const data = await request.formData();
+  const id = data.get('id');
+
+  if (!id) return fail(422, { error: 'Missing id' });
+
+  const idNumber = Number(id);
+
+  try {
+    await prisma.level.delete({
+      where: {
+        id: idNumber
+      }
+    });
+  } catch (error) {
+    return fail(422, { error: 'Level does not exist' });
+  }
+  return {
+    status: 200
+  };
+},
+```
+
+This function checks if the given form data is complete, and deletes the entry from the database.
+
+**Add level**
+
+```typescript
+addLevel: async ({ request }) => {
+  const data = await request.formData();
+  const parkingGarageId = data.get('garageId');
+  if (!parkingGarageId) {
+    return fail(422, { error: 'Missing data' });
+  }
+
+  const parkingGarageIdNumber = Number(parkingGarageId);
+  const highestLevel = await prisma.level.findFirst({
+    where: {
+      parking_garage_id: parkingGarageIdNumber
+    },
+    orderBy: {
+      levelNumber: 'desc'
+    }
+  });
+  try {
+    await prisma.level.create({
+      data: {
+        levelNumber: highestLevel ? highestLevel.levelNumber + 1 : 1,
+        parking_spaces: 10,
+        parking_garage_id: parkingGarageIdNumber
+      }
+    });
+  } catch (error) {
+    return fail(422, { error: 'Level already exists' });
+  }
+  return {
+    status: 200
+  };
+}
+```
+
+This function first checks if the given form data is complete, then requests the database for all levels for the given garage and orders them descending and returns the first element, this element is representative of the highest level currently in the database. Afterwards a new level gets created that has the level number incremented by one and has a default number of parking spaces of 10 parking spots.
+
+**Update the number of parking spaces**
+
+```typescript
+parkingSpaces: async ({ request }) => {
+  const data = await request.formData();
+  const id = data.get('id');
+  const parkingSpaces = data.get('parking_spaces');
+
+  if (!id || !parkingSpaces) return fail(422, { error: 'Missing data' });
+
+  try {
+    await prisma.level.update({
+      where: {
+        id: Number(id)
+      },
+      data: {
+        parking_spaces: Number(parkingSpaces)
+      }
+    });
+  } catch (error) {
+    return fail(422, { error: 'Level does not exist' });
+  }
+  return {
+    status: 200
+  };
+}
+```
+This function checks if the form data is complete, then updates the number of parking spaces for the given level.
+
+**Update parking rates**
+
+```typescript
+updatePrices: async ({ request }) => {
+  const data = await request.formData();
+  const garageId = data.get('garage');
+
+  if (!garageId) return fail(422, { error: 'Missing data' });
+
+  const rates = await prisma.parkingRate.findMany({
+    where: {
+      parking_garage_id: Number(garageId)
+    }
+  });
+
+  for (const rate of rates) {
+    const price = data.get(rate.id.toString());
+    if (price) {
+      await prisma.parkingRate.update({
+        where: {
+          id: rate.id
+        },
+        data: {
+          price: Number(price)
+        }
+      });
+    }
+  }
+  return {
+    status: 200
+  };
+}
+```
+
+This function first checks if the given form data is complete, afterwards all rates for the given garage are requested from the database. Then for each rate, the corresponding value from the form data is read and updated in the database.
+
+### Garage details
+
+The detailed view gives an overview of all levels of this garage. Each level is represented as a card and has some basic information displayed like the level number, the estimated revenue from the currently occupied parking spots and how many permanent tenants on this level exist.
+
+
+![garage details \label{fig:garagedetail}](images/garage_details.png)
+
+A detailed view of a specific level can be shown by clicking on a level.
+
+![level details \label{fig:detaillevel}](images/level_detail.png)
+
+The detailed level view shows all the parking spaces this level has with the following color code:
+
+- **Green:** This spot is free
+
+- **Yellow:** This spot is occupied by a permanent tenant and will not be free
+  
+- **Red:** This spot is currently occupied by an occasional customer but will be free once they leave.
+
+#### Implementation
+
+```typescript
+import { prisma } from '$lib/server/database';
+import { getAllParkingSpacesForLevel } from '$lib/util/parkingSpaceUtil';
+import { getReportForLevel } from '$lib/util/reports';
+import type { PageServerLoad } from './$types';
+
+export const load = (async ({ params }) => {
+  const levels = await prisma.level.findMany({
+    where: {
+      parking_garage_id: Number(params.slug)
+    },
+    orderBy: {
+      levelNumber: 'asc'
+    }
+  });
+
+  const levelInfo = await Promise.all(
+    levels.map(async (level) => {
+      const report = await getReportForLevel(level);
+      const parkingSpaces = await getAllParkingSpacesForLevel(level);
+      return {
+        level: level,
+        parking_spaces: parkingSpaces.map((parkingSpace) => ({
+          occupied: parkingSpace.occupied,
+          permanentTenant: parkingSpace.permanentTenant
+        })),
+        report: report
+      };
+    })
+  );
+
+  return { levelInfo };
+}) satisfies PageServerLoad;
+```
+
+The detail view first loads all information needed for both views. There are no actions so there only exists a `load` function. The information is retrieved using the same utility method as used to create [reports](#report)
+
+The reactive element (clicking on a level) is made using the `dispatch` function
 
 ```html
 <script lang="ts">
-  import type { PageData } from './$types';
-  export let data: PageData;
-  import AdminLayout from './AdminLayout.svelte';
+  import { createEventDispatcher } from 'svelte';
+  import type { LevelInfo } from '../../../routes/admin/details/[slug]/+page.svelte';
+  import ParkingSpace from './ParkingSpace.svelte';
+
+  export let level: LevelInfo | undefined = undefined;
+  let inner: HTMLElement | undefined = undefined;
+  const dispatch = createEventDispatcher();
+
+  function close(e: KeyboardEvent | MouseEvent) {
+    if (e.target === inner) return;
+    dispatch('close');
+  }
 </script>
 
-<AdminLayout>
-  <div slot="navbar">
-    <a href="/admin/new" class="btn gap-2">
-            {#each data.garages as garage}
-              <tr>
-                <td>{garage.name}</td>
-                <td>{garage.address}</td>
-              </tr>
-            {/each}
-          </tbody>
-        </table>
+<div class="modal" class:modal-open={level}
+ on:click={(e) => close(e)} on:keydown={(e) => close(e)}>
+  <div class="modal-box" bind:this={inner}>
+    {#if level}
+      <h3 class="text-lg font-bold">Level: {level.level.levelNumber}</h3>
+      <div class="grid grid-cols-4 gap-1 py-4">
+        {#each level.parking_spaces as parking_space, i}
+          <ParkingSpace
+            occupied={parking_space.occupied}
+            permanant={parking_space.permanentTenant}
+            label={i + 1}
+          />
+        {/each}
       </div>
-    </div>
+      <div class="modal-action">
+        <button class="btn" on:click={() => dispatch('close')}>Close</button>
+      </div>
+    {/if}
   </div>
-</AdminLayout>
-
-<style>
-  .garagetable td {
-    /* vertical-align: top; */
-    padding-bottom: 1rem;
-    padding-top: 0.5rem;
-  }
-  .garagetable tr {
-    border-bottom: 1px solid #c4c5c7;
-  }
-</style>
-
+</div>
 ```
-Trimmed down version of the component with the most important parts, for a complete overview check [GitHub admin component](https://github.com/DaAlbrecht/parking-garage/blob/main/src/routes/admin/%2Bpage.svelte)
-
-```typescript
-import type { PageData } from './$types';
-export let data: PageData;
-import AdminLayout from './AdminLayout.svelte';
-```
-
-1. **import PageData:** this allows to pass the server-side rendered data to the component
-2. **let data:** creates the variable, on which the server-side rendered data will be accessible
-3. **AdminLayout** imports the custom layout
-
-```html
-<AdminLayout>
-  <div slot="navbar">
-    <a href="/admin/new" class="btn gap-2">
-  </div>
-  <table class="garagetable mx-auto w-full max-w-5xl table-fixed">
-    <tbody>
-      {#each data.garages as garage}
-        <tr>
-          <td>{garage.name}</td>
-          <td>{garage.address}</td>
-        </tr>
-      {/each}
-    </tbody>
-  </table>
-</AdminLayout>
-```
-
-Here the `AdminLayout` component gets filled. The navigation button to create a new garage is set in the `slot` called `navbar`. This slot comes from the `AdminLayout`
-
 
 ## Parking rates
 
@@ -1305,11 +1807,161 @@ Table: Parking rates weekdays \label{tab:ratesweekdays}
 
 Table: Parking rates weekends \label{tab:ratesweekends}
 
-Additionally to these timeslots, there is a `daily rate` and a `monthly rate`
+Additionally to these timeslots, there is a `daily rate = 40` and a `monthly rate = 400`
 
+### Implementation
 
+The price is calculated using a utility method called `calculatePrice`. The logic that handles the finding of the correct time slot is written without using any library. Modern JavaScript time libraries like Luxon [@Luxon] could simplify the logic immensely.
+
+```typescript
+export async function calculatePrice(parkingTicket: ParkingTicket) {...}
+```
+
+The function first checks if the [parkingTicket](#parkingticket) is for a permanent tenant or an occasional user.
+
+```typescript
+if (parkingTicket.customer_id !== null) {
+  const customer = await prisma.customer.findFirst({
+    where: {
+      id: parkingTicket.customer_id
+    }
+  });
+
+  if (!customer) {
+    throw new Error('No customer found for this parking ticket');
+  }
+
+  if (customer.is_long_term_customer) {
+    return 0;
+  }
+}
+```
+
+if the user is a permanent tenant, no cost for their visit needs to be added, therefore the function returns early.
+
+If the customer is an occasional user a few constants get defined.
+
+```typescript
+const rates = await prisma.parkingRate.findMany({
+  where: {
+    parking_garage_id: parkingTicket.parking_garage_id
+  }
+});
+
+let isHoliday: boolean | null = null;
+const timeNow = new Date();
+
+let timeDifferenceInHours = Math.ceil(
+  (Date.now() - parkingTicket.entry_date.getTime()) / 1000 / 60 / 60
+);
+
+const days = Math.floor(timeDifferenceInHours / 24);
+
+if (days > 0) {
+  timeDifferenceInHours = timeDifferenceInHours - days * 24;
+}
+
+if (!rates) {
+  throw new Error('No rates found for this parking garage');
+}
+
+const dayRate = rates.find((rate) => rate.rateType === RateType.DAYRATE);
+
+if (!dayRate) {
+  throw new Error('No day rate found for this parking garage');
+}
+```
+
+This code first gets all the rates for this parking garage. Then a new Date object gets created that represents the current day. Afterward, the difference between the entry date and the current date is calculated and rounded up in hours. The next step is to get the daily rate for this parking garage, check if it exists and if not throw an error.
+
+```typescript
+const matchingRatesHourSlots = rates.filter((element) => {
+  const startTime = element.start_time.getHours();
+  let endTime = element.end_time.getHours();
+
+  if (endTime === 0) {
+    endTime = 24;
+  }
+
+  return startTime <= timeNow.getHours() && endTime >= timeNow.getHours();
+});
+```
+
+Then on the retrieved rates, a filter gets applied that filters the array and returns a new array with the elements that fulfill the condition.
+The filter first gets the start time of the rate and the rate slot and converts the date object to a number corresponding to the hours. The same is done for the end time, with the special case that JavaScript `getHours()` returns 0 when its midnight. To handle this special case the hours get manually set to `24` to allow an easy comparison of timeslots.
+After the filter is run, the `matchingRatesHourSlots` contains all slots that match the given time frame but it's not yet filtered based on the `rate.type` (weekday, weekends etc)
+
+```typescript
+//https://date.nager.at/swagger/index.html
+const request = await fetch('https://date.nager.at/api/v3/IsTodayPublicHoliday/CH?offset=0', {
+  method: 'GET',
+  headers: {
+    accept: '*/*'
+  }
+});
+
+isHoliday = request.status === 200 ? true : request.status === 204 ? false : null;
+```
+
+In order to check if today is a holiday in Switzerland a free API is used. This could be hard-coded but is tedious and would need to be changed every year.
+The API returns 200 if today is a holiday and 204 if it's not.
+
+```typescript
+if (isHoliday) {
+  const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'HOLIDAY');
+  return timeDifferenceInHours * rate[0].price + days * dayRate.price;
+}
+
+//weekdays
+if (timeNow.getDay() < 6 && timeNow.getDay() > 0) {
+  const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKDAY');
+  return timeDifferenceInHours * rate[0].price + days * dayRate.price;
+}
+//weekends
+if (timeNow.getDay() == 6 || timeNow.getDay() == 0) {
+  const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKEND');
+  return timeDifferenceInHours * rate[0].price + days * dayRate.price;
+}
+```
+
+If it's not a holiday, `getDay()` returns the current weekday as a (0-6) based on that the `matchingRatesHourSlots` array gets filtered a second time to only return the matching time and type.
+
+```typescript
+timeDifferenceInHours * rate[0].price + days * dayRate.price;
+```
+
+The calculation multiplies the time difference with the hourly rate and adds the daily rate for each day spend extra.
 
 # Verification and validation
+
+# Configuration manual
+
+This section describes the configuration management process used in the project. It covers the creation of the working environment, the project structure, the tools and frameworks used, and what to consider when modifying project files.
+
+## Configuration elements
+
+| Element| Description                                                                                                                                                                                                                                                                                                                |
+|--------|-------------|
+|Technical Documentation (TD)|Project documents which are created within the framework of software development and maintenance according to the process specifications|
+|sveltekit project code| The entire non-third-party svelte code|
+|Docker| container runtime 20.10.23|
+|Prisma| ORM 4.10|
+|Railway| Hosting provider|
+|PostgreSQL| Database engine|
+
+## Project environment
+
+The entire source code can be found on [GitHub](https://github.com/DaAlbrecht/parking-garage)
+
+|Branch|Description|
+|------|-------------|
+|main|Main branch. Protected. A commit is not possible. Changes must be realized via pull requests|
+|`IssueId`-`issue-name`|Development branches generated from tickets|
+
+## Issues
+
+Issues are used to track changes to the source code. An issue is created on GitHub.
+The issue should describe what should be changed or implemented. Issues can be used for all changes (e.g. add feature, adjust configuration, reminder, etc.).
 
 # Hosting
 
