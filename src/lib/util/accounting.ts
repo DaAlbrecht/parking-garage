@@ -27,11 +27,15 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
   let isHoliday: boolean | null = null;
   const timeNow = new Date();
 
-  const timeDifferenceInHours = Math.ceil(
+  let timeDifferenceInHours = Math.ceil(
     (Date.now() - parkingTicket.entry_date.getTime()) / 1000 / 60 / 60
   );
 
   const days = Math.floor(timeDifferenceInHours / 24);
+
+  if (days > 0) {
+    timeDifferenceInHours = timeDifferenceInHours - days * 24;
+  }
 
   if (!rates) {
     throw new Error('No rates found for this parking garage');
