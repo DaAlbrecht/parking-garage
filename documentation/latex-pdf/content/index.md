@@ -1099,13 +1099,27 @@ The customer UI is separated into two vies
 
 ### Entry barrier
 
-![Entry barrier \label{fig:welcome}](images/welcome.png)
+![Entry barrier \label{fig:welcome}](images/welcome.png){ width=50% }
 
 This view simulates the entry barrier for a parking garage. First, a garage needs to be selected from the dropdown menu, then either the customer id (if the customer is a permanent tenant) or the license plate needs to be entered. If a license plate gets entered that is not currently occupying one of the parking spots, one of the free parking spots will be assigned according to the algorithm [implementation](#algorithm)
 
 If a license plate or a customer id that is representing a permanent tenant, the user gets redirected to the [checkout](#checkout)
 
 ## Checkout
+
+The Checkout UI simulates the exit barrier. It's not only the exit barrier where you would put in the parking ticket, but also the machine, where you pay the parking fee.
+
+The Checkout has separate views for permanent tenants and occasional users
+
+![exit barrier permanent tenants \label{fig:exitperm}](images/checkout_perm.png){ width=100% }
+
+For Permanent tenants, the view shows the garage, their user status and the parking spot.
+
+![exit barrier \label{fig:exit}](images/checkout.png){ width=100% }
+
+The checkout view shows the current garage as well as the spot where the parked car is. Additionally, the entry time and the current price is displayed. 
+
+If the checkout button is pressed, the exit barrier opens. For long-term customers nothing else happens, while for occasional users, the user in the database gets deleted and the parking spot entry as well and therefore freeing the parking spot.
 
 ## Admin UI
 
@@ -1116,6 +1130,34 @@ The admin UI is responsible for creating, updating and deleting garages as well 
 3. **Garage details:** Gives an overview of the garage, lists all parking spots, the occupancy and the estimated revenue for each level
 
 ### Garage overview
+
+![garage overview \label{fig:garageoverviewempty}](images/admin.png){ width=100% }
+
+On startup, no garage exists. The overview list is empty. 
+
+![overview with sample data\label{fig:garageoverviewsample}](images/garage_over_view.png){ width=100% }
+
+When a garage is added, this view shows a list of the garage's name and address. The following options exist:
+
+1. Create new garage
+2. Show details for a garage
+3. Edit a garage
+
+### Add garages
+
+To add a new garage, it's required to fill in the name and the address of the garage.
+
+![new garage form \label{fig:addgarage}](images/add_garage.png){ width=100% }
+
+After pressing the button, the user will be redirected to the [garage overview](#garage-overview)
+
+## Edit Garages
+
+The edit view is split vertically into two sections. On the left is the garage meta information like name and address, and on the right is the information for the levels.
+
+![edit garage \label{fig:editgarage}](images/edit_garage.png){ width=100% }
+
+In the level section left, it's possible to add or remove parking spaces or entire levels.
 
 Svelte has default layout called `+layout.svelte`. This layout describes the default structure of all routes. 
 

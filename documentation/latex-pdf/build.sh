@@ -14,6 +14,7 @@ pdf_print() {
     mkdir "${BUILDDIR}"
     echo "Creating pdf-print output"
     pandoc "${CONTENTDIR}/${FILENAME}.md" \
+        -H disable_float.tex \
         --resource-path="${CONTENTDIR}" \
         --citeproc \
         --csl="${ASSETSDIR}/citation-style.csl" \
