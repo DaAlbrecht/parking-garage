@@ -1,25 +1,65 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
   import type { PageData } from './$types';
+  import AdminLayout from '../admin/AdminLayout.svelte';
 
   let data: PageData;
-  let id: number;
 </script>
 
-<div>
-  <p>New report generate</p>
-  <p>Check old reports</p>
-  <p>Reports display earning for longer periods. Levels only display current month</p>
-
-  <form method="POST" action="?/generateReport" use:enhance>
-    <input type="number" name="id" value={id} placeholder="garage" />
-    <input type="date" name="from" />
-    <input type="date" name="to" />
-    <select name="customerType">
-      <option value="true">Permanent tenant</option>
-      <option value="false">Occasional users</option>
-    </select>
-    <button>Generate report</button>
-  </form>
-  <!-- ADD: yearly report button, should split view on a monthly basis, prob implement /accounting/yearlyReport in the backend that returns a list of monthly reports -->
-</div>
+<AdminLayout>
+  <div slot="navbar">
+    <a href="/accounting/new" class="btn gap-2">
+      New Report
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-6 w-6"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    </a>
+  </div>
+  <div>
+    <div class="flex content-center justify-center gap-5">
+      <div class="w-full overflow-x-auto">
+        <table class="garagetable mx-auto w-full max-w-5xl table-fixed">
+          <tbody>
+            {#each Array(10) as report}
+              <tr>
+                <td>blabla</td>
+                <td>blabla</td>
+                <td class="text-end">
+                  <div class="flex justify-end gap-2">
+                    <a class="btn-primary btn-square btn" href="/accounting/reports/{report}">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-6 w-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            {:else}
+              <tr>
+                <td colspan="3">No reports yet</td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- ADD: yearly report button, should split view on a monthly basis, prob implement /accounting/yearlyReport in the backend that returns a list of monthly reports -->
+  </div>
+</AdminLayout>

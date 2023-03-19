@@ -2,7 +2,7 @@
   import { enhance } from '$app/forms';
   import type { PageData } from './$types';
   export let data: PageData;
-  import AdminChildLayout from '../../AdminChildLayout.svelte';
+  import AdminChildLayout from '../../../ChildLayout.svelte';
   import EditPrices from './EditPrices.svelte';
 
   let editingPrices = false;

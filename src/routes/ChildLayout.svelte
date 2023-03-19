@@ -1,10 +1,11 @@
 <script lang="ts">
-  import AdminLayout from './AdminLayout.svelte';
+  import AdminLayout from './admin/AdminLayout.svelte';
+  export let backLink = '/admin';
 </script>
 
 <AdminLayout>
   <div slot="navbar">
-    <a class="btn gap-2" href="/admin">
+    <a class="btn gap-2" href={backLink}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

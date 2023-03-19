@@ -1,6 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import AdminChildLayout from '../AdminChildLayout.svelte';
+  import AdminChildLayout from '../../ChildLayout.svelte';
 
   let name: string;
   let address: string;

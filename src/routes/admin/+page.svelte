@@ -78,14 +78,3 @@
     </div>
   </div>
 </AdminLayout>
-
-<style>
-  .garagetable td {
-    /* vertical-align: top; */
-    padding-bottom: 1rem;
-    padding-top: 0.5rem;
-  }
-  .garagetable tr {
-    border-bottom: 1px solid #c4c5c7;
-  }
-</style>

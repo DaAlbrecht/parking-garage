@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   export let data: PageData;
-  import AdminChildLayout from '../../AdminChildLayout.svelte';
+  import AdminChildLayout from '../../../ChildLayout.svelte';
   import Level from './Level.svelte';
   import LevelExpanded from './LevelExpanded.svelte';
   import type { LevelInfo } from './+page.server';
