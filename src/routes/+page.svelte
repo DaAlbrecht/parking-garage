@@ -8,23 +8,15 @@
 <div class="relative h-full">
   <div class="bg-base-200 p-20">
     <div class="flex justify-between gap-12">
-      <div class="mt-24 w-1/2">
+      <div class="flex w-1/2 flex-col justify-around">
         <h1 class="text-5xl font-bold">Welcome!</h1>
-        <p class="py-6">
-          Select your garage, then provide your register plate number. If you are a permanent tenant
-          please enter your customer id.
-        </p>
-        <code>
-          <pre>MI/DO: Styling finished rates edit & checkin</pre>
-          <pre>FR: Display user page (current price etc.)</pre>
-          <pre>FR: Styling Accounting & Reports</pre>
-        </code>
-
-        <code>
-          <pre>Berechnung prices for estim, live and exited tickets</pre>
-          <pre>Check if customer is already checked in</pre>
-          <pre>Create garage with one level, prevent from removing last one</pre>
-        </code>
+        <div class="flex flex-col justify-between">
+          <p class="py-6">
+            Select your garage, then provide your register plate number. If you are a permanent
+            tenant please enter your customer id.
+          </p>
+          <p>info@parkinggarages.ch | +41 00 000 00 00</p>
+        </div>
       </div>
       <Login garages={data.garages} />
     </div>
