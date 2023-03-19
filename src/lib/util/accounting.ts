@@ -2,23 +2,25 @@ import { prisma } from '$lib/server/database';
 import { RateType, type ParkingTicket } from '@prisma/client';
 
 export async function calculatePrice(parkingTicket: ParkingTicket) {
-  const customer = await prisma.customer.findFirst({
-    where: {
-      id: parkingTicket.customer_id
+  if (parkingTicket.customer_id !== null) {
+    const customer = await prisma.customer.findFirst({
+      where: {
+        id: parkingTicket.customer_id
+      }
+    });
+
+    if (!customer) {
+      throw new Error('No customer found for this parking ticket');
     }
-  });
 
-  if (!customer) {
-    throw new Error('No customer found for this parking ticket');
-  }
-
-  if (customer.is_long_term_customer) {
-    return 0;
+    if (customer.is_long_term_customer) {
+      return 0;
+    }
   }
 
   const rates = await prisma.parkingRate.findMany({
     where: {
-      parking_garage_id: customer.parking_garage_id
+      parking_garage_id: parkingTicket.parking_garage_id
     }
   });
 

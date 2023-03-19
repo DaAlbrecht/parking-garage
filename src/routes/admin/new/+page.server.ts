@@ -25,7 +25,6 @@ export const actions = {
         data: getInitialParkingRatesForGarage(garage.id)
       });
     } catch (error) {
-      console.error(error);
       return fail(422, { error: 'Garage already exists' });
     }
     throw redirect(303, '/admin');
