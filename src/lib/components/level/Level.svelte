@@ -2,6 +2,7 @@
   import './level.css';
   import type { LevelInfo } from '../../../routes/admin/details/[slug]/+page.server';
   import { createEventDispatcher } from 'svelte';
+  import { DateTime } from 'luxon';
   export let levelInfo: LevelInfo;
 
   const dispatch = createEventDispatcher();
@@ -30,13 +31,11 @@
       <div class="stat">
         <div class="stat-title">Estimated Revenue</div>
         <div class="stat-value">{levelInfo.report.estimatedRevenue}</div>
-        <div class="stat-desc">Jan 1st - Feb 1st</div>
       </div>
 
       <div class="stat">
         <div class="stat-title">Level Occupancy</div>
         <div class="stat-value">{occupencyPercentage} %</div>
-        <div class="stat-desc">avg. (22%)</div>
         <div>
           <progress
             class={`progress w-full ${getOccupancyClass()}`}
@@ -49,7 +48,6 @@
       <div class="stat">
         <div class="stat-title">Permanent Tenants</div>
         <div class="stat-value">{levelInfo.report.permanentTenants}</div>
-        <div class="stat-desc">↘︎ 90 (14%)</div>
       </div>
     </div>
   </div>
