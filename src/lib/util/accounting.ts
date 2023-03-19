@@ -70,12 +70,12 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
   }
 
   //weekdays
-  if (timeNow.getDay() < 6) {
+  if (timeNow.getDay() < 6 && timeNow.getDay() > 0) {
     const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKDAY');
     return timeDifferenceInHours * rate[0].price + days * dayRate.price;
   }
   //weekends
-  if (timeNow.getDay() >= 6) {
+  if (timeNow.getDay() == 6 || timeNow.getDay() == 0) {
     const rate = matchingRatesHourSlots.filter((rate) => rate.rateType === 'WEEKEND');
     return timeDifferenceInHours * rate[0].price + days * dayRate.price;
   }
