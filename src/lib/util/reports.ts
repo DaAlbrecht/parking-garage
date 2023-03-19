@@ -25,7 +25,7 @@ export async function getReportForLevel(level: Level): Promise<Report> {
         customer_id: parkingSpace.customer_id
       }
     });
-    if (!parkingTicket) continue;
+    if (!parkingTicket?.customer_id) continue;
 
     const Customer = await prisma.customer.findFirst({
       where: {
