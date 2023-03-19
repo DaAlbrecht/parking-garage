@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-table td {
+th {
+  text-align: left;
+}
+tbody td {
   /* vertical-align: top; */
   padding-bottom: 1rem;
   padding-top: 0.5rem;
 }
-table tr {
+tbody tr {
   border-bottom: 1px solid #c4c5c7;
 }

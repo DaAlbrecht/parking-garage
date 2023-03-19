@@ -25,6 +25,13 @@
     <div class="flex content-center justify-center gap-5">
       <div class="w-full overflow-x-auto">
         <table class="garagetable mx-auto w-full max-w-5xl table-fixed">
+          <thead>
+            <tr>
+              <th>Generation Time</th>
+              <th>Garage name</th>
+              <th class="text-end">Details</th>
+            </tr>
+          </thead>
           <tbody>
             {#each data.reports as report}
               <tr>
@@ -32,7 +39,7 @@
                 <td>{report.parkingGarage.name}</td>
                 <td class="text-end">
                   <div class="flex justify-end gap-2">
-                    <a class="btn-primary btn-square btn" href="/accounting/reports/{report}">
+                    <a class="btn-primary btn-square btn" href="/accounting/report/{report.id}">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
