@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import Login from './Login.svelte';
+  import Login from '$lib/components/Login.svelte';
 
   export let data: PageData;
 </script>

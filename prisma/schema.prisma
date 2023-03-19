@@ -35,12 +35,12 @@ model Level {
 }
 
 model ParkingSpace {
-  id          Int      @id @default(autoincrement())
-  customer    Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade)
-  customer_id String
-  level       Level    @relation(fields: [level_id], references: [id], onDelete: Cascade)
+  id          Int       @id @default(autoincrement())
+  level       Level     @relation(fields: [level_id], references: [id], onDelete: Cascade)
   level_id    Int
   parkingSpot Int
+  customer    Customer? @relation(fields: [customer_id], references: [id], onDelete: SetNull)
+  customer_id String?   @unique
 
   @@unique([level_id, parkingSpot])
 }
@@ -52,9 +52,9 @@ model Customer {
   license_plate         String?
   last_payment          DateTime?
   created_at            DateTime        @default(now())
-  parkingSpace          ParkingSpace[]
+  parkingSpace          ParkingSpace?
   parkingTickets        ParkingTicket[]
-  parkingGarages        ParkingGarage   @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parkingGarage         ParkingGarage   @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id     Int
 }
 
@@ -71,8 +71,8 @@ model AccountingReport {
 model ParkingTicket {
   id          Int       @id @default(autoincrement())
   entry_date  DateTime
-  customer    Customer  @relation(fields: [customer_id], references: [id], onDelete: Cascade)
-  customer_id String
+  customer    Customer?  @relation(fields: [customer_id], references: [id], onDelete: SetNull)
+  customer_id String?
   exit_date   DateTime?
   finalprice  Float?
 }

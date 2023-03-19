@@ -42,7 +42,7 @@ export async function calculatePrice(parkingTicket: ParkingTicket) {
   }
 
   const matchingRatesHourSlots = rates.filter((element) => {
-    let startTime = element.start_time.getHours();
+    const startTime = element.start_time.getHours();
     let endTime = element.end_time.getHours();
 
     if (endTime === 0) {

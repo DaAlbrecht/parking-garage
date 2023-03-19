@@ -26,9 +26,9 @@ MONTHRATE MONTHRATE
 
   ParkingSpace {
     Int id PK 
-    String customer_id  
     Int level_id  
     Int parkingSpot  
+    String customer_id  "nullable"
     }
   
 
@@ -56,7 +56,7 @@ MONTHRATE MONTHRATE
   ParkingTicket {
     Int id PK 
     DateTime entry_date  
-    String customer_id  
+    String customer_id  "nullable"
     DateTime exit_date  "nullable"
     Float finalprice  "nullable"
     }
@@ -72,11 +72,11 @@ MONTHRATE MONTHRATE
     }
   
     Level o{--|| ParkingGarage : "parkingGarage"
-    ParkingSpace o{--|| Customer : "customer"
     ParkingSpace o{--|| Level : "level"
-    Customer o{--|| ParkingGarage : "parkingGarages"
+    ParkingSpace o|--|o Customer : "customer"
+    Customer o{--|| ParkingGarage : "parkingGarage"
     AccountingReport o{--|| ParkingGarage : "parkingGarage"
-    ParkingTicket o{--|| Customer : "customer"
+    ParkingTicket o{--|o Customer : "customer"
     ParkingRate o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o|--|| RateType : "enum:rateType"
 ```

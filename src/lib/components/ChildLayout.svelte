@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AdminLayout from './admin/AdminLayout.svelte';
+  import AdminLayout from './AdminLayout.svelte';
   export let backLink = '/admin';
 </script>
 

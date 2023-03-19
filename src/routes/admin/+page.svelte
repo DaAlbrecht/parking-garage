@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   export let data: PageData;
-  import AdminLayout from './AdminLayout.svelte';
+  import AdminLayout from '$lib/components/AdminLayout.svelte';
 </script>
 
 <AdminLayout>

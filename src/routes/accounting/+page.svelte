@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import AdminLayout from '../admin/AdminLayout.svelte';
+  import AdminLayout from '$lib/components/AdminLayout.svelte';
 
   let data: PageData;
 </script>

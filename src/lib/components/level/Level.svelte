@@ -1,6 +1,6 @@
 <script lang="ts">
   import './level.css';
-  import type { LevelInfo } from './+page.server';
+  import type { LevelInfo } from '../../../routes/admin/details/[slug]/+page.server';
   import { createEventDispatcher } from 'svelte';
   export let levelInfo: LevelInfo;
 

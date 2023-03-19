@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import AdminChildLayout from '../../ChildLayout.svelte';
+  import AdminChildLayout from '$lib/components/ChildLayout.svelte';
 </script>
 
 <AdminChildLayout backLink="/accounting">
