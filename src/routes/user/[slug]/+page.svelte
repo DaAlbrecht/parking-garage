@@ -66,7 +66,7 @@
           </div>
         {/if}
         <form method="POST" action="/?/exitGarage" use:enhance>
-          <input type="hidden" name="customer_id" value={data.customer.id} />
+          <input type="hidden" name="customerId" value={data.customer.id} />
           <button class="btn-primary btn">Checkout</button>
         </form>
       </div>

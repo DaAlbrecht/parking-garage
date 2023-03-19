@@ -72,15 +72,13 @@ export const actions = {
   },
   exitGarage: async ({ request }) => {
     const data = await request.formData();
-    const id = data.get('id');
     const customerId = data.get('customerId');
 
-    if (!id || !customerId) return fail(422, { error: 'Missing parameters' });
+    if (!customerId) return fail(422, { error: 'Missing parameters' });
 
     const customer = await prisma.customer.findFirst({
       where: {
-        id: customerId.toString(),
-        parking_garage_id: Number(id)
+        id: customerId.toString()
       }
     });
     if (!customer) return fail(422, { error: 'Customer does not exist' });
@@ -114,7 +112,7 @@ export const actions = {
       });
     }
 
-    return { status: 200 };
+    throw redirect(303, `/`);
   }
 } satisfies Actions;
 
