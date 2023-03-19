@@ -1,12 +1,6 @@
 import { prisma } from '$lib/server/database';
 import type { Level } from '.prisma/client';
 
-export interface LevelParkingSpace {
-  parkingSpot: number;
-  occupied: boolean;
-  level_id: number;
-  permanentTenant: boolean;
-}
 async function getOccupiedParkingSpacesForLevel(level: Level): Promise<Array<number>> {
   const parkingSpaces = await prisma.parkingSpace.findMany({
     where: {
@@ -16,9 +10,9 @@ async function getOccupiedParkingSpacesForLevel(level: Level): Promise<Array<num
   return parkingSpaces.map((parkingSpace) => parkingSpace.parkingSpot);
 }
 
-export async function getAllParkingSpacesForLevel(level: Level): Promise<LevelParkingSpace[]> {
+export async function getAllParkingSpacesForLevel(level: Level) {
   const occupiedParkingSpaces = await getOccupiedParkingSpacesForLevel(level);
-  const parkingSpaces = new Array<LevelParkingSpace>();
+  const parkingSpaces = [];
   for (let i = 0; i < level.parking_spaces; i++) {
     if (occupiedParkingSpaces.includes(i)) {
       const parkingSpace = await prisma.parkingSpace.findFirst({
@@ -28,6 +22,7 @@ export async function getAllParkingSpacesForLevel(level: Level): Promise<LevelPa
         }
       });
       if (!parkingSpace) continue;
+      if (parkingSpace.customer_id === null) continue;
 
       const customer = await prisma.customer.findFirst({
         where: {

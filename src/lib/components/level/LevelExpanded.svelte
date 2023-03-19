@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import type { LevelInfo } from './+page.server';
+  import type { LevelInfo } from '../../../routes/admin/details/[slug]/+page.svelte';
   import ParkingSpace from './ParkingSpace.svelte';
 
   export let level: LevelInfo | undefined = undefined;
@@ -19,7 +19,11 @@
       <h3 class="text-lg font-bold">Level: {level.level.levelNumber}</h3>
       <div class="grid grid-cols-4 gap-1 py-4">
         {#each level.parking_spaces as parking_space, i}
-          <ParkingSpace occupied={parking_space} label={i + 1} />
+          <ParkingSpace
+            occupied={parking_space.occupied}
+            permanant={parking_space.permanentTenant}
+            label={i + 1}
+          />
         {/each}
       </div>
       <div class="modal-action">

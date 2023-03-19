@@ -1,14 +1,8 @@
 import { prisma } from '$lib/server/database';
 import { getAllParkingSpacesForLevel } from '$lib/util/parkingSpaceUtil';
-import { getReportForLevel, type Report } from '$lib/util/reports';
-import type { Level } from '@prisma/client';
+import { getReportForLevel } from '$lib/util/reports';
 import type { PageServerLoad } from './$types';
 
-export type LevelInfo = {
-  level: Level;
-  parking_spaces: boolean[];
-  report: Report;
-};
 export const load = (async ({ params }) => {
   const levels = await prisma.level.findMany({
     where: {
@@ -25,7 +19,10 @@ export const load = (async ({ params }) => {
       const parkingSpaces = await getAllParkingSpacesForLevel(level);
       return {
         level: level,
-        parking_spaces: parkingSpaces.map((parkingSpace) => parkingSpace.occupied),
+        parking_spaces: parkingSpaces.map((parkingSpace) => ({
+          occupied: parkingSpace.occupied,
+          permanentTenant: parkingSpace.permanentTenant
+        })),
         report: report
       };
     })
