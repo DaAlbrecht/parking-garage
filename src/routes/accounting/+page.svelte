@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import AdminLayout from '$lib/components/AdminLayout.svelte';
 
-  let data: PageData;
+  export let data: PageData;
 </script>
 
 <AdminLayout>
@@ -26,10 +26,10 @@
       <div class="w-full overflow-x-auto">
         <table class="garagetable mx-auto w-full max-w-5xl table-fixed">
           <tbody>
-            {#each Array(10) as report}
+            {#each data.reports as report}
               <tr>
-                <td>blabla</td>
-                <td>blabla</td>
+                <td>{report.generationTime.toLocaleDateString('de-CH')}</td>
+                <td>{report.parkingGarage.name}</td>
                 <td class="text-end">
                   <div class="flex justify-end gap-2">
                     <a class="btn-primary btn-square btn" href="/accounting/reports/{report}">

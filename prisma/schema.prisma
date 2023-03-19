@@ -21,6 +21,7 @@ model ParkingGarage {
   parkingRates      ParkingRate[]
   customers         Customer[]
   accountingReports AccountingReport[]
+  ParkingTicket     ParkingTicket[]
 }
 
 model Level {
@@ -69,12 +70,14 @@ model AccountingReport {
 }
 
 model ParkingTicket {
-  id          Int       @id @default(autoincrement())
-  entry_date  DateTime
-  customer    Customer?  @relation(fields: [customer_id], references: [id], onDelete: SetNull)
-  customer_id String?
-  exit_date   DateTime?
-  finalprice  Float?
+  id                Int           @id @default(autoincrement())
+  entry_date        DateTime
+  customer          Customer?     @relation(fields: [customer_id], references: [id], onDelete: SetNull)
+  customer_id       String?
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parking_garage_id Int
+  exit_date         DateTime?
+  finalprice        Float?
 }
 
 model ParkingRate {

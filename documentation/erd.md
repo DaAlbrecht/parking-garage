@@ -57,6 +57,7 @@ MONTHRATE MONTHRATE
     Int id PK 
     DateTime entry_date  
     String customer_id  "nullable"
+    Int parking_garage_id  
     DateTime exit_date  "nullable"
     Float finalprice  "nullable"
     }
@@ -77,6 +78,7 @@ MONTHRATE MONTHRATE
     Customer o{--|| ParkingGarage : "parkingGarage"
     AccountingReport o{--|| ParkingGarage : "parkingGarage"
     ParkingTicket o{--|o Customer : "customer"
+    ParkingTicket o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o{--|| ParkingGarage : "parkingGarage"
     ParkingRate o|--|| RateType : "enum:rateType"
 ```

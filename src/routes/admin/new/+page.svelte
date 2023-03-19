@@ -9,6 +9,7 @@
 <AdminChildLayout>
   <div>
     <div class="text-center">
+      <h1 class="mb-3 text-3xl">New Garage</h1>
       <form method="POST" action="?/createGarage" class="flex flex-col items-center gap-2">
         <input
           type="text"
