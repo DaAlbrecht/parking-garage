@@ -1149,7 +1149,7 @@ When a permanent tenant enters their customer id the following form gets sent
 
 ```html
 <form method="POST" action="?/longTermCustomer" use:enhance>
-  <input type="hidden" name="garage" value={selectedGarage} />
+  <input type="hidden" name="garage" value={selectedGarage} />`
   <label class="label" for="id">
     <span class="label-text">Customer ID</span>
   </label>
@@ -1172,35 +1172,66 @@ The form sends the form data to the `/longTermCustomer` function. This function 
 
 ```typescript
 longTermCustomer: async ({ request }) => {
-  const data = await request.formData();
+    const data = await request.formData();
 
-  const id = data.get('id');
-  const garage = data.get('garage');
+    const id = data.get('id');
+    const garage = data.get('garage');
 
-  if (!id) return fail(422, { error: 'Missing id' });
-  if (!garage) return fail(422, { error: 'Missing parkingGarages' });
+    if (!id) return fail(422, { error: 'Missing id' });
+    if (!garage) return fail(422, { error: 'Missing parkingGarages' });
 
-  const idString = id.toString();
-  const garageNumber = Number(garage);
+    const idString = id.toString();
+    const garageNumber = Number(garage);
 
-  const customer = await prisma.customer.findFirst({
-    where: {
-      id: idString,
-      parking_garage_id: garageNumber
+    const customer = await prisma.customer.findFirst({
+      where: {
+        id: idString,
+        parking_garage_id: garageNumber
+      }
+    });
+
+    if (!customer) return fail(422, { error: 'Customer does not exist' });
+
+    if (customer.last_payment === null) return fail(422, { error: 'Customer has not paid yet' });
+
+    const date = new Date();
+
+    if (date.getDate() > 15 && customer.last_payment.getMonth() !== date.getMonth()) {
+      await prisma.customer.update({
+        where: {
+          id: idString
+        },
+        data: {
+          is_blocked: true
+        }
+      });
+      return fail(422, { error: 'Customer is blocked' });
     }
-  });
 
-  if (!customer) return fail(422, { error: 'Customer does not exist' });
+    if (customer.is_blocked) {
+      if (customer.last_payment.getMonth() == date.getMonth()) {
+        await prisma.customer.update({
+          where: {
+            id: idString
+          },
+          data: {
+            is_blocked: false
+          }
+        });
+      } else {
+        return fail(422, { error: 'Customer is blocked' });
+      }
+    }
 
-  if (customer.is_blocked) return fail(422, { error: 'Customer is blocked' });
+    getPermanentTenantParkingSpot(garageNumber, customer);
 
-  getPermanentTenantParkingSpot(garageNumber, customer);
-
-  return { status: 20 };
-}
+    throw redirect(303, `/user/${customer.id}`);
+  }
 ```
 
 This function checks if the send form data is complete and if a customer for the given id exists and that they are a permanent tenant. If the customer exists and they are not blocked, a utility method gets called to either check the customer to their corresponding parking spot, or if they do not yet have a fixed parking spot the [algorithm](#algorithm) to find new parking spaces is used to find an empty spot.
+
+If the Customer exists, but has not yet paid the monthly fee and its already past the 15. of the month, the customer gets blocked. If the customer was blocked but has payed the fee the customer gets unblocked.
 
 \pagebreak
 
