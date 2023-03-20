@@ -25,13 +25,13 @@ This prototype is an important next step in the digitalization and strategy of P
 
 ## Initial situation
 
-The company ParkinTown currently manages five multi-story parking lots at different locations on behalf of several customers. The IT system used for this purpose was developed by a former employee who carries out the necessary maintenance work on a contract basis. The system is getting on in years and will have to be replaced in the near future in view of the company's planned expansion plans.
-The managing director of ParkinTown has evaluated several IT solutions for the management of parking garages but considers them all too complicated. He prefers a simple solution tailored to ParkinTown's needs. He is aware of the risks involved in developing it himself and therefore, before placing the order for the development of the entire application, he wants to have a prototype developed that simulates the operation of the parking garages.
-Based on the information in this document, a specification for the prototype must first be created. The information in this document must be checked for completeness and supplemented if necessary. Then a prototype of the IT system must be built on the basis of the specifications.
+The company ParkinTown currently manages five multi-story parking garages at different locations on behalf of several customers. The IT system used for this purpose was developed by a former employee who carries out the necessary maintenance work on a contract basis. The system is getting on in years and will have to be replaced in the near future, given the company's planned expansion plans.
+The managing director of ParkinTown has evaluated several IT solutions for the management of parking garages but considers them all too complicated. He prefers a simple solution tailored to ParkinTown's needs. He is aware of the risks involved in developing it himself and therefore, before the development of the entire application, he wants to have a prototype developed that simulates the operation of the parking garages.
+Based on the information in this document, a specification for the prototype must first be created. The information in this document must be checked for completeness and extended if necessary. Then a prototype of the IT system must be built based on the specifications.
 
 ## Situation analysis
 
-The current software is already old and becoming harder to maintain. ParkingTown does not have the necessary development capabilities and is therefore searching for a external company that handles the development, maintenance and hosting of the new Software.
+The current software is already old and becoming harder to maintain. To follow ParkingTown's business strategy, new management software is needed.
 
 ### Product situation
 
@@ -41,7 +41,7 @@ The new Software should be tailored to the processes of ParkingTown and support 
 
 ParkinTown is a company that manages multiple parking lots for various clients. Currently, the company uses an IT system that was developed by a former employee and requires maintenance work to keep it functioning. However, the system is outdated and needs to be replaced to accommodate the company's future expansion plans.
 
-The managing director of ParkinTown has evaluated several IT solutions but has found them to be too complicated. Therefore, he desires a simple solution that is tailored to the company's specific needs. However, he is aware of the risks involved in developing an IT system in-house and wants to have a prototype developed to simulate the operation of the parking garages before placing an order for the development of the entire application.
+The managing director of ParkinTown has evaluated several IT solutions but has found them to be too complicated. Therefore, he desires a simple solution that is tailored to the company's specific needs. However, he is aware of the risks involved in developing an IT system in-house and wants to have a prototype developed to simulate the operation of the parking garages before the development of the entire application.
 
 The prototype must be developed based on a comprehensive specification that needs to be created. The specification must take into account all the requirements and operational needs of the parking garages managed by ParkinTown. It must also consider the different locations and customers of the company.
 
@@ -49,7 +49,7 @@ The prototype should be a functional system that simulates the operation of the 
 
 The success of the prototype will depend on how well it meets the requirements of the company and its customers. It must be able to handle the volume of parking transactions effectively, and it should also be reliable and secure.
 
-Overall, the development of a prototype for the IT system used in managing the parking garages is a critical step toward the success of ParkinTown's expansion plans. It will help the company to identify any gaps in the current system and ensure that the new system meets all the requirements of the company and its customers.
+The development of a prototype for the IT system used in managing the parking garages is a critical step toward the success of ParkinTown's expansion plans. It will help the company to identify any gaps in the current system and ensure that the new system meets all the requirements of the company and its customers.
 
 ### Competitive situation
 
@@ -81,7 +81,7 @@ ParkinTown requires a new parking garage management tool.
 4. Design: A detailed design specification should be created based on the requirements gathered in the previous step. This design should include all aspects of the system, including user interfaces, database design, and system architecture.
 5. Quality Assurance: A quality assurance process should be put in place to ensure that the new IT system is of high quality and meets the required standards. This should include testing and validation of the system to ensure that it works as intended.
 6. Documentation: All aspects of the development process, including design decisions, testing results, and system specifications, should be documented. This will allow for future maintenance and updates to be carried out more easily.
-7. Training and Support: Training and support should be provided to all users of the new IT system to ensure that they can use it effectively. This should include user manuals and training sessions.
+7. Training and Support: Training and support should be provided to all users of the new IT system to ensure that they can use it effectively.
 8. Data Privacy and Security: The new IT system should be designed with data privacy and security in mind. Measures should be put in place to ensure that customer data is protected and that the system is secure from external threats. This may include encryption of sensitive data and regular security updates.
 
 \pagebreak
@@ -269,7 +269,7 @@ Table: Non-Functional requirements \label{tab:nonefuncreq}
 
 # System architecture and design
 
-The new parking garage software for ParkingTown is a web-based SvelteKit  application. [@svelte]
+The new parking garage software for ParkingTown is a web-based SvelteKit application. [@svelte]
 The Application will be delivered as a state-of-the-art OCI-compliant container image. [@OCI] Database access is handled by the ORM [@ORM] prisma [@prisma]
 
 Prisma allows a wide variety of SQL-based database providers.
@@ -282,7 +282,7 @@ Svelte is a front-end JavaScript framework that allows developers to build web a
 
 In Svelte, components are defined using a syntax similar to HTML and CSS, making it easy for developers to create reusable and reactive UI elements. Svelte's compiler then generates efficient code that updates the DOM directly, resulting in fast and smooth user experiences.
 
-Svelte provides several built-in features that make it easier for developers to build web applications quickly. These features include:
+Svelte provides several built-in features that make it easier for developers to build web applications. These features include:
 
 - Reactivity: Svelte provides a reactive system that allows components to update automatically when data changes.
 - Scoped CSS: Svelte allows developers to define CSS styles that are scoped to a specific component, reducing the risk of CSS conflicts.
@@ -295,9 +295,9 @@ Svelte provides several built-in features that make it easier for developers to 
 
 SvelteKit is a high-performance web application framework built on top of Svelte. It was released in 2021 and provides several built-in features that make it easier to build server-rendered web applications. SvelteKit is designed to create highly optimized web applications with minimal overhead.
 
-SvelteKit provides several key features that make it a compelling choice for web application development:
+SvelteKit provides several key features such as:
 
-- Server-side rendering: SvelteKit allows developers to render components on the server, reducing the initial load time of your web application.
+- Server-side rendering: SvelteKit allows you to render components on the server, reducing the initial load time of your web application.
 - Automatic code splitting: SvelteKit automatically splits your code into smaller chunks, reducing the amount of code that needs to be downloaded by the client.
 - File-based routing: SvelteKit allows you to define routes for your web application using a file-based routing system, making it easier to organize your code and routes.
 - API routes: SvelteKit provides an easy-to-use API for defining server-side routes and interacting with databases and other services.
@@ -307,13 +307,13 @@ SvelteKit builds on the strengths of Svelte and provides a powerful and efficien
 
 [@SvelteKit]
 
-### Why Sveltekit instead of other fullstack javascript frameworks
+### Why Sveltekit instead of other full-stack javascript frameworks
 
-One of the main reasons sveltekit was chosen for this project is, that I wanted to learn this technology for a long time. This project was a perfect learning opportunity to get hands-on experience with a new up-and-coming javascript framework.
+One of the main reasons SvelteKit was chosen for this project is, that I wanted to learn this framework for a long time. This project was a perfect learning opportunity to get hands-on experience with a new up-and-coming javascript framework.
 
 According to the biggest javascript survey, Svelte / Sveltekit is amongst the most loved frameworks. [@StateOfJS]
 
-Some of the reasons why sveltekit is so loved are:
+Some of the reasons why SvelteKit is so loved are:
 
 1. **Performance**
 One of the primary benefits of using SvelteKit is its performance. SvelteKit is designed to create highly optimized web applications with minimal overhead. It does this by using a unique feature called the "Svelte Compiler" that compiles your code during the build process, resulting in highly optimized and lightweight code.
@@ -329,8 +329,6 @@ SvelteKit is highly flexible and customizable, making it an excellent choice for
 
 5. **Great community support**
 SvelteKit has a great community that is continually improving and contributing to the framework. The community provides excellent documentation, resources, and support to help you get started and overcome any challenges you may encounter.
-
-In conclusion, SvelteKit is an excellent choice for web development projects, providing high performance, ease of use, built-in features and integrations, flexibility, and great community support.
 
 ## Containers
 
@@ -411,8 +409,6 @@ Prisma is designed to work with multiple database engines such as  MySQL, Postgr
 
 Prisma also provides advanced features such as data validation, query optimization, and transaction management. These features ensure that the data stored in the database is consistent and secure.
 
-In addition to its core features, Prisma also has a growing ecosystem of plugins and integrations that make it even more powerful. For example, Prisma Migrate enables developers to manage database schema changes in a version-controlled manner, while Prisma Client allows for real-time data synchronization between the client and server.
-
 [@prisma]
 
 ### ORM
@@ -439,8 +435,6 @@ PostgreSQL's support for advanced indexing and querying is another key strength.
 
 PostgreSQL is also known for its focus on data security and reliability. It provides robust authentication and encryption mechanisms, as well as support for backup and recovery operations. PostgreSQL's focus on data security and reliability makes it a popular choice for applications that require high levels of data security and availability, such as healthcare systems and government agencies.
 
-These are some of the reasons why PostgreSQL is used as a database, running inside a container.
-
 [@Postgres]
 
 ## ERD
@@ -459,9 +453,8 @@ The ParkingSpace entity only represents occupied spaces.
 
 The Customer entity represents a customer who can use the parking garage. Each customer has a universally unique identifier (uuid) and can be marked as a long-term customer or blocked from using the parking garage. Additionally, each customer is associated with a specific parking garage, represented by the parking_garage_id foreign key, which references the id of the ParkingGarage entity.
 
-The ParkingTicket entity represents a ticket that a customer receives upon entering the parking garage. Each ticket has a unique identifier (id), an entry date and time, a reference to the customer who received the ticket, and a reference to the parking garage in which the ticket was issued. The customer_id and parking_garage_id foreign keys reference the id of the Customer and ParkingGarage entities, respectively.
+The ParkingTicket entity represents a ticket that a customer receives upon entering the parking garage. Each ticket has a unique identifier (id), an entry date and time, an exit date and time, a price, a reference to the customer who received the ticket, and a reference to the parking garage in which the ticket was issued. The customer_id and parking_garage_id foreign keys reference the id of the Customer and ParkingGarage entities, respectively.
 
-The ExitTicket entity represents a ticket that a customer receives upon exiting the parking garage. Each ticket has a unique identifier (id), an exit date and time, a price for the parking duration, a reference to the customer who received the ticket, and a reference to the parking garage in which the ticket was issued. The customer_id and parking_garage_id foreign keys reference the id of the Customer and ParkingGarage entities, respectively.
 
 The ParkingRate entity represents the hourly rate for parking in a specific parking garage during a specific time range. Each rate has a unique identifier (id), a reference to the parking garage it applies to, a price per hour, a start time, and an end time. The parking_garage_id foreign key references the id of the ParkingGarage entity. For the prototype, only specific hardcoded time ranges are supported
 
@@ -860,12 +853,12 @@ model Customer {
 2. **is_long_term_customer:** indicates if the user is a casual user or a permanent tenant
 3. **is_blocked:** indicates if the user has paid the monthly fee if its a permanent tenant
 4. **license_plate:** represents the license plate of an occasional customer
-5. **last_payment:** the date, where a permanent tenant paid last.
+5. **last_payment:** the date, when a permanent tenant paid last.
 6. **created_at:** gets set automatically when a new entry is created
 7. **parkingSpace:** one-to-many (1-n) relation with the ParkingSpace record
 8. **parkingTickets:** one-to-many (1-n) relation with the ParkingTicket record
 9. **exitTickets:** one-to-many (1-n) relation with the ExitTicket record
-10. **parkingGarages:** tne-to-many (1-n) relation with the ParkingGarage record
+10. **parkingGarages:** one-to-many (1-n) relation with the ParkingGarage record
 11. **parking_garage_id:** the foreign key to the ParkingGarage record
 
 Instead of using:  
@@ -874,7 +867,7 @@ Instead of using:
 @id @default(autoincrement())
 ```
 
-for indexing the primary key, for the customer, a universally unique identifier (UUID) is used. A UUID is a 128-bit label.
+for indexing, the primary key, for the customer, a universally unique identifier (UUID) is used. A UUID is a 128-bit label.
 
 When generated according to the standard methods, UUIDs are, for practical purposes, unique. Their uniqueness does not depend on a central registration authority or coordination between the parties generating them, unlike most other numbering schemes. [@UUID]
 
@@ -2045,6 +2038,31 @@ I chose to use a framework and language I'm not familiar with to learn something
 
 I learned a lot about SvelteKit and typescript and would say I'm now more comfortable with using both. I enjoyed writing the documentation in markdown and using pandoc to convert it to a pdf. I noticed that pandoc has its limitation and that if you want to highly customize the built pdf it's maybe easier to just use LaTeX from the start. I will for sure use this setup in a future project again, but will spend more time on fine-tuning the pandoc output to my needs to get a cleaned and more polished look.
 
+# Declaration of Independence 
+
+Work that is demonstrably taken over in full or in the essential parts unchanged or without correct reference to the source is considered prefabricated and will not be evaluated.
+
+I confirm that I have written this thesis independently and have marked all sources used. This thesis has not been submitted to an examination board before, neither in the same nor in a similar form.
+
+Name / First name:
+
+\
+\
+\
+
+
+Place / Date / Signature:
+
+\
+\
+\
+
+\pagebreak
+  
+
+ 
+
+ 
 
 # References
 
