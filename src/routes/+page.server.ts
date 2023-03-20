@@ -4,6 +4,7 @@ import { findEmptyParkingSpace, occupySpot } from '$lib/util/findEmptyParkingSpa
 import type { Actions, PageServerLoad } from './$types';
 import type { Customer } from '@prisma/client';
 import { calculatePrice } from '$lib/util/accounting';
+import { DateTime } from 'luxon';
 
 export const actions = {
   longTermCustomer: async ({ request }) => {
@@ -27,11 +28,40 @@ export const actions = {
 
     if (!customer) return fail(422, { error: 'Customer does not exist' });
 
-    if (customer.is_blocked) return fail(422, { error: 'Customer is blocked' });
+    if (customer.last_payment === null) return fail(422, { error: 'Customer has not paid yet' });
+
+    const date = new Date();
+
+    if (date.getDate() > 15 && customer.last_payment.getMonth() !== date.getMonth()) {
+      await prisma.customer.update({
+        where: {
+          id: idString
+        },
+        data: {
+          is_blocked: true
+        }
+      });
+      return fail(422, { error: 'Customer is blocked' });
+    }
+
+    if (customer.is_blocked) {
+      if (customer.last_payment.getMonth() == date.getMonth()) {
+        await prisma.customer.update({
+          where: {
+            id: idString
+          },
+          data: {
+            is_blocked: false
+          }
+        });
+      } else {
+        return fail(422, { error: 'Customer is blocked' });
+      }
+    }
 
     getPermanentTenantParkingSpot(garageNumber, customer);
 
-    return { status: 20 };
+    throw redirect(303, `/user/${customer.id}`);
   },
   getParkingSpot: async ({ request }) => {
     const data = await request.formData();
