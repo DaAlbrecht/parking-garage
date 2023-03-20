@@ -4,7 +4,7 @@
 
   export let garages: ParkingGarage[];
   let registerPlate: string | undefined = undefined;
-  let id: string;
+  let id: string | undefined = undefined;
   let selectedGarage: number | undefined = undefined;
 
   $: canGetSpot = selectedGarage !== undefined && registerPlate;
@@ -47,7 +47,7 @@
             <span class="label-text">Customer ID</span>
           </label>
           <input
-            type="number"
+            type="text"
             name="id"
             bind:value={id}
             placeholder="Customer ID"
