@@ -12,6 +12,7 @@ link-citations: true
 urlcolor: "blue"
 ---
 
+\pagebreak
 
 # Project summary
 
@@ -66,7 +67,6 @@ Compared to these competitors, ParkinTown's current IT system is outdated and la
 
 Therefore, the success of ParkinTown's new IT system will depend on how well it meets the specific needs of the company and its customers. ParkinTown may have an advantage over its competitors in terms of the personalized service it can offer to its customers. Additionally, if the new system is user-friendly and easy to use, it may help ParkinTown differentiate itself from its competitors and attract more customers.
 
-### Sales situation
 
 
 ## General conditions
@@ -83,6 +83,8 @@ ParkinTown requires a new parking garage management tool.
 6. Documentation: All aspects of the development process, including design decisions, testing results, and system specifications, should be documented. This will allow for future maintenance and updates to be carried out more easily.
 7. Training and Support: Training and support should be provided to all users of the new IT system to ensure that they can use it effectively. This should include user manuals and training sessions.
 8. Data Privacy and Security: The new IT system should be designed with data privacy and security in mind. Measures should be put in place to ensure that customer data is protected and that the system is secure from external threats. This may include encryption of sensitive data and regular security updates.
+
+\pagebreak
 
 ### Product-related general conditions
 
@@ -108,6 +110,8 @@ Table: Product-related general conditions \label{tab:prodgencon}
 8. Parking rates and tariffs: The system will be designed to support a specific range of parking rates and tariffs, which may not apply or adaptable to other contexts or markets.
 9. Algorithm for parking space allocation: The system will use a specific algorithm to allocate parking spaces for occasional users, which may not be easily adaptable to other algorithms or methods of allocation.
 10. Onboarding of new customers to long-term customers and automatically billing/blocking them is not implemented, an API for integration in accounting or IAM tools is provided.
+
+\pagebreak
 
 ## Stakeholder analysis
 
@@ -185,7 +189,7 @@ The Parking Garage project requires a comprehensive approach that involves plann
 
 # Risk analysis
 
-![risk analysis \label{fig:risk}](images/risk%20analysis.png)
+![Risk analysis \label{fig:risk}](images/risk%20analysis.png)
 
 The risk analysis indicates, that it needed to work with a third-party support company. The parking garage is open 24/7 and it's necessary, that if a customer would be trapped inside that they can call a support hotline for help. Otherwise, the risks are not too high since the application is more used to present data and not as an accounting tool for the customers.
 
@@ -193,7 +197,9 @@ The risk analysis indicates, that it needed to work with a third-party support c
 
 Change in the software and the business processes is handled according to the change management process
 
-![change management process \label{fig:risk}](images/change-management.png)
+![Change management process \label{fig:risk}](images/change_process.png)
+
+\pagebreak
 
 # Stakeholder requirements
 
@@ -207,6 +213,8 @@ Change in the software and the business processes is handled according to the ch
 
 
 Table: List of Stakeholders and their abbreviation \label{tab:stakeholderreqs}
+
+\pagebreak
 
 # System requirements
 
@@ -435,14 +443,6 @@ These are some of the reasons why PostgreSQL is used as a database, running insi
 
 [@Postgres]
 
-## Context diagram
-
-
-
-## Sequence diagram
-
-## Class diagram
-
 ## ERD
 
 The ERD represents a database schema for a parking garage management system. It consists of several entities, namely ParkingGarage, Level, ParkingSpace, Customer, ParkingTicket, ExitTicket, and ParkingRate, and the relationships between them.
@@ -464,6 +464,8 @@ The ParkingTicket entity represents a ticket that a customer receives upon enter
 The ExitTicket entity represents a ticket that a customer receives upon exiting the parking garage. Each ticket has a unique identifier (id), an exit date and time, a price for the parking duration, a reference to the customer who received the ticket, and a reference to the parking garage in which the ticket was issued. The customer_id and parking_garage_id foreign keys reference the id of the Customer and ParkingGarage entities, respectively.
 
 The ParkingRate entity represents the hourly rate for parking in a specific parking garage during a specific time range. Each rate has a unique identifier (id), a reference to the parking garage it applies to, a price per hour, a start time, and an end time. The parking_garage_id foreign key references the id of the ParkingGarage entity. For the prototype, only specific hardcoded time ranges are supported
+
+\pagebreak
 
 # Implementation
 
@@ -497,6 +499,9 @@ To achieve this the following software is used:
     ```zsh
     brew install --cask mactex
     ```
+
+\pagebreak
+
 ### Folder Structure
 
 To generate an academic-looking paper the following folder structure is used
@@ -510,6 +515,7 @@ latex-pdf
  | -images
  | -bibliography.bib
  | -index.md
+ | -disable_float.tex
  |-layouts
  | -print.tex
  |-Makefile
@@ -517,12 +523,14 @@ latex-pdf
 ```
 - **assets:**  Used for third-party styles, in this case how to style the citations
 - **build:** The output directory where the PDF will be generated to
-- **content** Holds the full markdown file, all used figures and the bibliography
+- **content** Holds the full markdown file, all used figures and the bibliography as well as additional LaTeX configuration
 - **layouts:** Pandoc can convert the markdown into different output formats, in the layout folder could the different formats specify some individual layouts
+
+\pagebreak
 
 ### Buildscript
 
-The script "build.sh" is handling the generation of the PDF file. 
+The script `build.sh` is handling the generation of the PDF file. 
 
 ```bash
 #!/bin/bash
@@ -568,6 +576,9 @@ To run the  script run the following command from the latex-pdf directory:
 chmod +x build.sh #allow the script to be executed
 ./build.sh pdf_print #run the script
 ```
+
+\pagebreak
+
 ### Index.md
 
 The ```index.md``` is the markdown file that is specified in the [build.sh](#buildscript) file to convert into PDF.
@@ -611,6 +622,8 @@ For a local development environment, the following off-the-shelf software is use
 2. **nvm:** nvm is used to manage the specific node versions
 3. **Nodejs:** JavaScript runtime
 4. **Docker:** For PostgreSQL database
+
+![local development environment](images/local_dev.png)
 
 ### Setup Development environment
 
@@ -688,36 +701,13 @@ tasks:
 2. start docker containers (PostgreSQL database)
 3. start the svelte application
 
+\pagebreak
+
 ## Project folder structure
 
-tree view generated with the command: 
+![Project folder structure \label{fig:projectstruct}](images/folder_struct.png)
 
-```zsh
-tree | pbcopy
-```
-
-```
-+-- README.md
-+-- docker-compose.yaml
-+-- package-lock.json
-+-- package.json
-+-- postcss.config.cjs
-+-- prisma
-|   \-- schema.prisma
-+-- src
-|   +-- lib
-|   |   +-- server
-|   |   \-- util
-|   \-- routes
-+-- static
-|   \-- favicon.png
-+-- svelte.config.js
-+-- tailwind.config.cjs
-+-- tsconfig.json
-\-- vite.config.ts
-```
-
-TODO: describe structure
+For a more detailed description check the SvelteKit [documentation](https://kit.svelte.dev/docs/project-structure)
 
 ## Prisma Schema
 
@@ -728,7 +718,7 @@ The first part of the schema file is responsible for handling the connection to 
 1. **provider:**  The type of database used
 2. **url:** The connection string in the format:
    
- ```postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA```
+ `postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA`
    
 Here's a short explanation of each component from [@ConnectPrisma]:
 
@@ -773,14 +763,14 @@ After these configuration entries the models according to [ERD](#erd)
 
 ```js
 model ParkingGarage {
-  id             Int             @id @default(autoincrement())
-  name           String
-  address        String
-  levels         Level[]
-  parkingRates   ParkingRate[]
-  parkingTickets ParkingTicket[]
-  exitTickets    ExitTicket[]
-  customers      Customer[]
+  id                Int                @id @default(autoincrement())
+  name              String
+  address           String
+  levels            Level[]
+  parkingRates      ParkingRate[]
+  customers         Customer[]
+  accountingReports AccountingReport[]
+  ParkingTicket     ParkingTicket[]
 }
 ```
 
@@ -788,9 +778,9 @@ model ParkingGarage {
 2. **name:** the name of the garage
 3. **levels:** One-to-many (1-n) relation with the record "Level"
 4. **parkingRates:** One-to-many (1-n) relation with the record "ParkingRate"
-5. **parkingTickets:** One-to-many (1-n) relation with the record "ParkingTicket"
-6. **exitTickets:** One-to-many (1-n) relation with the record "ExitTicket"
-7. **customers:** One-to-many (1-n) relation with the record "Customer"
+5. **customers:** One-to-many (1-n) relation with the record "Customer"
+6. **accountingReports:** One-to-many (1-n) relation with the record "AccountingReport"
+7. **ParkingTicket:** One-to-many (1-n) relation with the record "ParkingTicket"
 
 #### Level
 
@@ -801,7 +791,7 @@ model Level {
   parking_spaces    Int
   parkingGarage     ParkingGarage  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
-  occupiedSpaces     ParkingSpace[]
+  occupiedSpaces    ParkingSpace[]
 
   @@unique([parking_garage_id, levelNumber])
 }
@@ -826,29 +816,27 @@ This ensures that the combination of the attributes ```parking_garage_id``` and 
 
 ```js
 model ParkingSpace {
-  id          Int      @id @default(autoincrement())
-  customer    Customer @relation(fields: [customer_id], references: [id])
-  customer_id String
-  level       Level    @relation(fields: [level_id], references: [id])
+  id          Int       @id @default(autoincrement())
+  level       Level     @relation(fields: [level_id], references: [id], onDelete: Cascade)
   level_id    Int
   parkingSpot Int
+  customer    Customer? @relation(fields: [customer_id], references: [id], onDelete: SetNull)
+  customer_id String?   @unique
 
   @@unique([level_id, parkingSpot])
 }
 ```
 
 1. **id:** this is the primary key and is marked to be automatically created/incremented
-2. **customer:** one-to-one (1-1) relation with the Customer record
-3. **customer_id:** the foreign key to the Customer record
-4. **level:** one-to-one (1-1) relation with the Level record
-5. **level_id:** the foreign key to the Level record
-6. **parkingSpot:** the number of the spot
+2. **level:** one-to-one (1-1) relation with the Level record
+3. **level_id:** the foreign key to the Level record
+4. **parkingSpot:** the number of the spot
+5. **customer:** one-to-one (1-1) relation with the Customer record
+6. **customer_id:** the foreign key to the Customer record
 
 The model ParkingSpace represents an occupied parking space. If there are no parking spots occupied, then this table is empty.
 
-One ```ParkingSpace``` can not have the same combination of the level and parking spot twice. 
-
-This prevents from trying to occupy the same spot twice at the same time.
+One ```ParkingSpace``` can not have the same combination of the level and parking spot twice. This prevents them from trying to occupy the same spot twice at the same time.
 
 #### Customer
 
@@ -857,11 +845,13 @@ model Customer {
   id                    String          @id @default(uuid())
   is_long_term_customer Boolean
   is_blocked            Boolean
-  parkingSpace          ParkingSpace[]
+  license_plate         String?
+  last_payment          DateTime?
+  created_at            DateTime        @default(now())
+  parkingSpace          ParkingSpace?
   parkingTickets        ParkingTicket[]
-  exitTickets           ExitTicket[]
-  parkingGarages        ParkingGarage   @relation(fields: [parking_garage_id],
-                                        references: [id])
+  parkingGarage         ParkingGarage 
+  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id     Int
 }
 ```
@@ -869,11 +859,14 @@ model Customer {
 1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **is_long_term_customer:** indicates if the user is a casual user or a permanent tenant
 3. **is_blocked:** indicates if the user has paid the monthly fee if its a permanent tenant
-4. **parkingSpace:** one-to-many (1-n) relation with the ParkingSpace record
-5. **parkingTickets:** one-to-many (1-n) relation with the ParkingTicket record
-6. **exitTickets:** one-to-many (1-n) relation with the ExitTicket record
-7. **parkingGarages:** tne-to-many (1-n) relation with the ParkingGarage record
-8. **parking_garage_id:** the foreign key to the ParkingGarage record
+4. **license_plate:** represents the license plate of an occasional customer
+5. **last_payment:** the date, where a permanent tenant paid last.
+6. **created_at:** gets set automatically when a new entry is created
+7. **parkingSpace:** one-to-many (1-n) relation with the ParkingSpace record
+8. **parkingTickets:** one-to-many (1-n) relation with the ParkingTicket record
+9. **exitTickets:** one-to-many (1-n) relation with the ExitTicket record
+10. **parkingGarages:** tne-to-many (1-n) relation with the ParkingGarage record
+11. **parking_garage_id:** the foreign key to the ParkingGarage record
 
 Instead of using:  
 
@@ -887,16 +880,44 @@ When generated according to the standard methods, UUIDs are, for practical purpo
 
 The "randomness" of the UUID gives additional security and does not let other customers guess other customers' IDs. This is crucial because the primary key is also used for permanent tenants to open the entry and exit barrier.
 
+#### AccountingReport
+
+```js
+model AccountingReport {
+  id                Int           @id @default(autoincrement())
+  parkingGarage     ParkingGarage
+  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parking_garage_id Int
+  generationTime    DateTime
+  searchFrom        DateTime
+  searchTo          DateTime
+  price             Float
+}
+```
+
+
+1. **id:** this is the primary key and is marked to be automatically created/incremented
+2. **parkingGarage:** one-to-many (1-n) relation with the ParkingGarage record
+3. **parking_garage_id:** the foreign key to the ParkingGarage record
+4. **generationTime:** the date when the report is last created
+5. **searchFrom:** the start time of the report search period
+6. **searchTo:** the end time of the report search period
+7. **price:** the final profit over the period
+
 #### ParkingTicket
 
 ```js
 model ParkingTicket {
   id                Int           @id @default(autoincrement())
   entry_date        DateTime
-  customer          Customer      @relation(fields: [customer_id], references: [id])
-  customer_id       String
-  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  customer          Customer?     
+  @relation(fields: [customer_id], references: [id], onDelete: SetNull)
+  customer_id       String?
+  parkingGarage     ParkingGarage 
+  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
+  exit_date         DateTime?
+  finalprice        Float?
 }
 ```
 
@@ -906,39 +927,21 @@ model ParkingTicket {
 4. **customer_id:** the foreign key to the Customer record
 5. **parkingGarages:** one-to-many (1-n) relation with the ParkingGarage record
 6. **parking_garage_id:** the foreign key to the ParkingGarage record
-
-
-#### ExitTicket
-
-```js
-model ExitTicket {
-  id                Int           @id @default(autoincrement())
-  exit_date         DateTime
-  price             Float
-  customer          Customer      @relation(fields: [customer_id], references: [id])
-  customer_id       String
-  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
-  parking_garage_id Int
-}
-```
-
-1. **id:** this is the primary key and is marked to be automatically created/incremented
-2. **exit_date:** the timestamp when a user left the garage
-3. **customer:** one-to-many (1-n) relation with the ParkingSpace record
-4. **customer_id:** the foreign key to the Customer record
-5. **parkingGarages:** one-to-many (1-n) relation with the ParkingGarage record
-6. **parking_garage_id:** the foreign key to the ParkingGarage record
+7. **exit_date:** gets set on checkout
+8. **finalprice:** gets set on checkout
 
 #### ParkingRate
 
 ```js
 model ParkingRate {
   id                Int           @id @default(autoincrement())
-  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id])
+  parkingGarage     ParkingGarage 
+  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   price             Float
-  start_time   DateTime
-  end_time     DateTime
+  start_time        DateTime
+  end_time          DateTime
+  rateType          RateType
 }
 ```
 
@@ -948,6 +951,23 @@ model ParkingRate {
 4. **price:** the hourly price
 5. **start_time:** start time
 6. **end_time:** end time
+7. **rateType:** an enum, that represents different types like weekday,weekend etc
+
+#### RateType
+
+```js
+enum RateType {
+  WEEKDAY
+  WEEKEND
+  HOLIDAY
+  DAYRATE
+  MONTHRATE
+}
+
+```
+A simple enum for the different types.
+
+\pagebreak
 
 ## Algorithm
 
@@ -955,82 +975,43 @@ When a new customer (permanent tenant with no fixed parking spot or an occasiona
 
 The method requires passing the garage, for which a parking space should be found to be passed as a function argument. The function returns a new parking space on the level that has the least percentage of occupied parking spots.
 
-### Imports
-
-```typescript
-import { prisma } from '$lib/server/database';
-import type { ParkingGarage, ParkingSpace, Level, Customer } from '.prisma/client';
-import {
-  getAllParkingSpacesForLevel,
-  getOccupancyForLevel,
-  type LevelParkingSpace
-} from './parkingSpaceUtil';
-```
-
-The is using the ES6 module syntax to import the following modules:
-
-1. **prisma:** object from the database module inside the $lib/server directory. This likely refers to an instance of the Prisma Client, which is a type-safe database client for TypeScript and Node.js applications. The database module is probably a custom module that exports the Prisma object after initializing it with the necessary configuration options.
-   
-2. **ParkingGarage, ParkingSpace, Level, Customer:** type from the .prisma/client module. This module is generated by Prisma based on your database schema and contains TypeScript types that correspond to your database tables and columns. In other words, it provides a strongly typed interface to interact with your database using Prisma Client.
-
-3. **getAllParkingSpacesForLevel, getOccupancyForLevel:** utility functions and types
-
 ### Implementation 
 
-1. Function definition
-
 ```typescript
-export async function findEmptyParkingSpace(
-  garage: ParkingGarage
-): Promise<LevelParkingSpace | null>
- ```
-
-This defines an asynchronous function that requires a parameter of type  ```ParkingGarage``` [ParkingGarage Prisma](#parkinggarage) and returns a Promise that is either of type ```LevelParkingSpace``` or ```null```.
-
-```LevelParkingSpace``` is a custom interface defined in the ```parkingSpaceUtil.ts``` file.
-
-1. The interface has the following properties:
-
-```typescript
-export interfaceLevelParkingSpace {
-  parkingSpot: number;
-  occupied: boolean;
-  level_id: number;
-}
-```
-
-- **parkingSpot:** the number of the parking spot
-- **occupied:** boolean that represents if the parking spot is free or occupied
-- **level_id:** reference on what level this parking spot is
-
-3. Get all levels for this parking garage
-
-``` typescript
-const levels = await prisma.level.findMany({
+export async function findEmptyParkingSpace(garage: ParkingGarage) {
+  const levels = await prisma.level.findMany({
     where: {
       parking_garage_id: garage.id
     }
   });
-```
 
-gets all entries from the ```level``` table that correspond with the current garage
-
-4. Check which level is the least occupied
-
-``` typescript
-let lastOccupancy = 100;
-let leastOccupiedLevel: Level | null = null;
-for (const level of levels) {
-  const current = await getOccupancyForLevel(level);
-  if (current < lastOccupancy) {
-    lastOccupancy = current;
-    leastOccupiedLevel = level;
+  let lastOccupancy = 100;
+  let leastOccupiedLevel: Level | null = null;
+  for (const level of levels) {
+    const current = await getOccupancyForLevel(level);
+    if (current < lastOccupancy) {
+      lastOccupancy = current;
+      leastOccupiedLevel = level;
+    }
   }
-}
-if (!leastOccupiedLevel) return null;
-```
+  if (!leastOccupiedLevel) return null;
+  const parkingSpaces = await getAllParkingSpacesForLevel(leastOccupiedLevel);
+  if (parkingSpaces.length === 0) return null;
 
-loop over all levels and use the utility function ```getOccupancyForLevel``` to get the occupancy for a specific level
+  //find the first parking space that is not occupied
+  const freeParkingSpace = parkingSpaces.find((parkingSpace) => !parkingSpace.occupied);
+
+  if (!freeParkingSpace) return null;
+
+  return freeParkingSpace;
+}
+ ```
+
+The function `findEmptyParkingSpace` is responsible for handling the parking allocation. Let's break the function down.
+
+First, the function gets all levels for this parking garage then loop over all levels and uses the utility function ```getOccupancyForLevel``` to get the occupancy for a specific level.
+
+\pagebreak
 
 ```typescript
 export async function getOccupancyForLevel(level: Level): Promise<number> {
@@ -1040,7 +1021,7 @@ export async function getOccupancyForLevel(level: Level): Promise<number> {
 }
 ```
 
-The function first gets all the occupied parking spaces for a specific level with another utility function and then divides the number of occupied parking spaces with the maximal number of parking spaces for this level.
+The function first gets all the occupied parking spaces for a specific level with another utility function and then divides the number of occupied parking spaces by the maximal number of parking spaces for this level.
 
 ```typescript
 async function getOccupiedParkingSpacesForLevel(level: Level): Promise<Array<number>> {
@@ -1055,37 +1036,63 @@ async function getOccupiedParkingSpacesForLevel(level: Level): Promise<Array<num
 
 To get all occupied parking spaces a database query gets all entries in the `parkingSpace` table [ParkingSpace table](#parkingspace). Afterward, the array gets filtered to only include the parking spot number.
 
-1. Get all parking spots for this level
+Then in the `findEmptyParkingSpace` we have all the occupied parking spaces as well as the occupancy for each level. The next step is get all the parking spots for the least occupied level.
 
 ```typescript
 const parkingSpaces = await getAllParkingSpacesForLevel(leastOccupiedLevel);
 ```
 
-The utility function `getAllParkingSpacesForLevel` returns an array of `LevelParkingSpace`
+\pagebreak
+
+The utility function `getAllParkingSpacesForLevel` returns an array containing information about each parking spot
 
 ```typescript
-export async function getAllParkingSpacesForLevel(level: Level):
-Promise<LevelParkingSpace[]> {
+export async function getAllParkingSpacesForLevel(level: Level) {
   const occupiedParkingSpaces = await getOccupiedParkingSpacesForLevel(level);
-  const parkingSpaces = new Array<LevelParkingSpace>();
+  const parkingSpaces = [];
   for (let i = 0; i < level.parking_spaces; i++) {
-    parkingSpaces.push({
-      parkingSpot: i,
-      occupied: occupiedParkingSpaces.includes(i),
-      level_id: level.id
-    });
+    if (occupiedParkingSpaces.includes(i)) {
+      const parkingSpace = await prisma.parkingSpace.findFirst({
+        where: {
+          level_id: level.id,
+          parkingSpot: i
+        }
+      });
+      if (!parkingSpace) continue;
+      if (parkingSpace.customer_id === null) continue;
+
+      const customer = await prisma.customer.findFirst({
+        where: {
+          id: parkingSpace.customer_id
+        }
+      });
+      if (!customer) continue;
+
+      parkingSpaces.push({
+        parkingSpot: i,
+        occupied: true,
+        level_id: level.id,
+        permanentTenant: customer.is_long_term_customer
+      });
+    } else {
+      parkingSpaces.push({
+        parkingSpot: i,
+        occupied: false,
+        level_id: level.id,
+        permanentTenant: false
+      });
+    }
   }
   return parkingSpaces;
 }
 ```
 
 - this function first gets all the occupied parking spots
-- creates a new array of the type `LevelParkingSpace` gets created
 - loop from 0 to the maximum number of parking spaces for this level
-- push a new element to the array that includes the parking spot, if it's occupied and the corresponding level
+- push a new element to the array that includes the parking spot, if it's occupied and the corresponding level as well as if it's occupied by a permanent tenant.
 - return the array
-
-6. Find a parking space in the array that is not occupied
+  
+Afterward, the function `findEmptyParkingSpace` has all the needed information and can just get the next free element from the previously returned array.
 
 ```typescript
 if (parkingSpaces.length === 0) return null;
@@ -1132,7 +1139,7 @@ export const load = (async () => {
   return { garages: garages };
 }) satisfies PageServerLoad;
 ```
-In sveltekit, the load function is used to do server-side rendering, on the client, the data can be accessed as following
+In SvelteKit, the load function is used to do server-side rendering, on the client, the data can be accessed as following
 
 ```html
 <script lang="ts">
@@ -1238,11 +1245,11 @@ The Checkout UI simulates the exit barrier. It's not only the exit barrier where
 
 The Checkout has separate views for permanent tenants and occasional users
 
-![exit barrier permanent tenants \label{fig:exitperm}](images/checkout_perm.png){ width=100% }
+![Exit barrier permanent tenants \label{fig:exitperm}](images/checkout_perm.png){ width=100% }
 
 For Permanent tenants, the view shows the garage, their user status and the parking spot.
 
-![exit barrier \label{fig:exit}](images/checkout.png){ width=100% }
+![Exit barrier \label{fig:exit}](images/checkout.png){ width=100% }
 
 The checkout view shows the current garage as well as the spot where the parked car is. Additionally, the entry time and the current price is displayed. 
 
@@ -1300,11 +1307,11 @@ The admin UI is responsible for creating, updating and deleting garages as well 
 
 ### Garage overview
 
-![garage overview \label{fig:garageoverviewempty}](images/admin.png){ width=100% }
+![Garage overview \label{fig:garageoverviewempty}](images/admin.png){ width=100% }
 
 On startup, no garage exists. The overview list is empty. 
 
-![overview with sample data\label{fig:garageoverviewsample}](images/garage_over_view.png){ width=100% }
+![Overview with sample data\label{fig:garageoverviewsample}](images/garage_over_view.png){ width=100% }
 
 When a garage is added, this view shows a list of the garage's name and address. The following options exist:
 
@@ -1325,11 +1332,13 @@ export const load = (async () => {
 ```
 The overview of the garages does only need to retrieve the information for all garages from the database.
 
+\pagebreak
+
 ### Add garages
 
 To add a new garage, it's required to fill in the name and the address of the garage.
 
-![new garage form \label{fig:addgarage}](images/add_garage.png){ width=100% }
+![New garage form \label{fig:addgarage}](images/add_garage.png){ width=100% }
 
 After pressing the button, the user will be redirected to the [garage overview](#garage-overview)
 
@@ -1479,13 +1488,13 @@ Omit<ParkingRate, 'id'>[] = (
 
 The edit view is split vertically into two sections. On the left is the garage meta information like name and address, and on the right is the information for the levels.
 
-![edit garage \label{fig:editgarage}](images/edit_garage.png){ width=100% }
+![Edit garage \label{fig:editgarage}](images/edit_garage.png){ width=100% }
 
 In the level section left, it's possible to add or remove parking spaces or entire levels.
 
 by pressing the `edit prices` button, it's possible to edit the prices for a garage in the given predefined timeslots.
 
-![edit prices \label{fig:editprice}](images/edit_prices.png)
+![Edit prices \label{fig:editprice}](images/edit_prices.png)
 
 #### Implementation
 
@@ -1522,6 +1531,8 @@ updateGarage: async ({ request }) => {
 ```
 
 This function checks if the given form data is complete, and updates the entry with the new information.
+
+\pagebreak
 
 **Delete Garage**
 
@@ -1616,6 +1627,8 @@ addLevel: async ({ request }) => {
 
 This function first checks if the given form data is complete, then requests the database for all levels for the given garage and orders them descending and returns the first element, this element is representative of the highest level currently in the database. Afterwards a new level gets created that has the level number incremented by one and has a default number of parking spaces of 10 parking spots.
 
+\pagebreak
+
 **Update the number of parking spaces**
 
 ```typescript
@@ -1686,11 +1699,11 @@ This function first checks if the given form data is complete, afterwards all ra
 The detailed view gives an overview of all levels of this garage. Each level is represented as a card and has some basic information displayed like the level number, the estimated revenue from the currently occupied parking spots and how many permanent tenants on this level exist.
 
 
-![garage details \label{fig:garagedetail}](images/garage_details.png)
+![Garage details \label{fig:garagedetail}](images/garage_details.png)
 
 A detailed view of a specific level can be shown by clicking on a level.
 
-![level details \label{fig:detaillevel}](images/level_detail.png)
+![Level details \label{fig:detaillevel}](images/level_detail.png)
 
 The detailed level view shows all the parking spaces this level has with the following color code:
 
@@ -1895,7 +1908,8 @@ After the filter is run, the `matchingRatesHourSlots` contains all slots that ma
 
 ```typescript
 //https://date.nager.at/swagger/index.html
-const request = await fetch('https://date.nager.at/api/v3/IsTodayPublicHoliday/CH?offset=0', {
+const request = await fetch(
+ 'https://date.nager.at/api/v3/IsTodayPublicHoliday/CH?offset=0', {
   method: 'GET',
   headers: {
     accept: '*/*'
@@ -1933,6 +1947,8 @@ timeDifferenceInHours * rate[0].price + days * dayRate.price;
 ```
 
 The calculation multiplies the time difference with the hourly rate and adds the daily rate for each day spend extra.
+
+\pagebreak
 
 # Verification and validation
 
@@ -2017,6 +2033,8 @@ The following configuration needs to be changed to run SvelteKit on Railway
 
 Then go to [Railway]((https://railway.app/new)) select deploy from GitHub and choose the repository.
 
+![Railway deployment \label{fig:railwaydep}](images/railway.png)
+
 After choosing the repository a new environment gets created, Railway tries to create and deploy the application but a database needs to be added first.
 From the service catalog, a postgreSQL database can be deployed, after successfully deploying the database add the variables to the app with the new [database reference varaibles](https://blog.railway.app/p/database-reference-variables) from Railway. After this, the application will be built and deployed.
 
@@ -2025,7 +2043,7 @@ From the service catalog, a postgreSQL database can be deployed, after successfu
 
 I chose to use a framework and language I'm not familiar with to learn something new. Additionally, I also wanted to test if writing large documentation and academic papers in markdown is suited or if it becomes slow and unmanageable when the documentation grows.
 
-I learned a lot about SvelteKit and typescript and would say I'm now more comfortable with using both. I enjoyed writing the documentation in markdown and using pandoc to convert it to a pdf. I noticed that pandoc has its limitation and that if you want to highly customize the built pdf it's maybe easier to just use LaTeX from the start. I will for sure use this setup in a future project again, but will spend more time on fine-tuning the pandoc output to my needs.
+I learned a lot about SvelteKit and typescript and would say I'm now more comfortable with using both. I enjoyed writing the documentation in markdown and using pandoc to convert it to a pdf. I noticed that pandoc has its limitation and that if you want to highly customize the built pdf it's maybe easier to just use LaTeX from the start. I will for sure use this setup in a future project again, but will spend more time on fine-tuning the pandoc output to my needs to get a cleaned and more polished look.
 
 
 # References
