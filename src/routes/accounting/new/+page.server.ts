@@ -2,6 +2,7 @@ import { prisma } from '$lib/server/database';
 import { getReportForGarage } from '$lib/util/reports';
 import { RateType, type ParkingGarage } from '@prisma/client';
 import { error, redirect } from '@sveltejs/kit';
+import { info } from 'console';
 import { DateTime } from 'luxon';
 import type { PageServerLoad } from './$types';
 
@@ -36,14 +37,17 @@ export const actions = {
       throw error(500, 'Missing garage');
     }
     let combinedRevenue = 0;
+    let numberOfTickets = 0;
 
     if (isPermanentTenant === 'true') {
-      combinedRevenue = await reportPermanentTenants(garage, startTime, endTime);
+      const info = await reportPermanentTenants(garage, startTime, endTime);
+      combinedRevenue = info.revenue;
+      numberOfTickets = info.numberOfTickets;
     } else {
-      const revenue = await profitFromPeriod(garage, startTime, endTime);
+      const info = await infoFromPeriod(garage, startTime, endTime);
       const estimatedRevenue = await getReportForGarage(garage.id);
-
-      combinedRevenue = revenue + estimatedRevenue.estimatedRevenue;
+      combinedRevenue = info.revenue + estimatedRevenue.estimatedRevenue;
+      numberOfTickets = info.numberOfTickets;
     }
 
     const report = await prisma.accountingReport.create({
@@ -52,7 +56,8 @@ export const actions = {
         generationTime: new Date(),
         searchFrom: startTime,
         searchTo: endTime,
-        price: combinedRevenue
+        price: combinedRevenue,
+        numberOfTickets: numberOfTickets
       }
     });
 
@@ -60,11 +65,7 @@ export const actions = {
   }
 };
 
-async function profitFromPeriod(
-  garage: ParkingGarage,
-  startTime: Date,
-  endTime: Date
-): Promise<number> {
+async function infoFromPeriod(garage: ParkingGarage, startTime: Date, endTime: Date) {
   const tickets = await prisma.parkingTicket.findMany({
     where: {
       parking_garage_id: garage.id,
@@ -72,12 +73,21 @@ async function profitFromPeriod(
         gte: startTime,
         lte: endTime
       }
+    },
+    include: {
+      customer: true
     }
   });
 
+  if (!tickets) return { revenue: 0, numberOfTickets: 0 };
+
+  const numberOfTickets = tickets.filter(
+    (ticket) => ticket.customer?.is_long_term_customer !== true
+  ).length;
+
   const revenue = tickets.reduce((acc, ticket) => acc + ticket.finalprice!, 0);
 
-  return revenue;
+  return { revenue: revenue, numberOfTickets: numberOfTickets };
 }
 
 async function reportPermanentTenants(garage: ParkingGarage, startTime: Date, endTime: Date) {
@@ -91,6 +101,9 @@ async function reportPermanentTenants(garage: ParkingGarage, startTime: Date, en
       last_payment: {
         gte: startTime
       }
+    },
+    include: {
+      parkingTickets: true
     }
   });
 
@@ -106,7 +119,9 @@ async function reportPermanentTenants(garage: ParkingGarage, startTime: Date, en
   }
 
   let revenue = 0;
+  let numberOfTickets = 0;
   for (const customer of customers) {
+    numberOfTickets += customer.parkingTickets.length;
     let start = DateTime.fromJSDate(customer.created_at!);
     let end = DateTime.fromJSDate(customer.last_payment!);
     if (DateTime.fromJSDate(startTime) > DateTime.fromJSDate(customer.created_at!)) {
@@ -119,9 +134,8 @@ async function reportPermanentTenants(garage: ParkingGarage, startTime: Date, en
     let current = start;
     while (current <= end) {
       revenue += monthRate.price!;
-      console.log(current.toISODate());
       current = current.plus({ months: 1 });
     }
   }
-  return revenue;
+  return { revenue: revenue, numberOfTickets: numberOfTickets };
 }

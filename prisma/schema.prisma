@@ -67,6 +67,7 @@ model AccountingReport {
   searchFrom        DateTime
   searchTo          DateTime
   price             Float
+  numberOfTickets   Int
 }
 
 model ParkingTicket {

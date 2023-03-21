@@ -18,58 +18,39 @@
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            class="inline-block h-8 w-8 stroke-current"
-            ><path
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6"
+          >
+            <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              stroke-width="2"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            /></svg
-          >
+              d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
+            />
+          </svg>
         </div>
-        <div class="stat-title">Total Likes</div>
-        <div class="stat-value text-primary">25.6K</div>
-        <div class="stat-desc">21% more than last month</div>
+        <div class="stat-title">Total Parking Tickets</div>
+        <div class="stat-value text-primary">{data.report.numberOfTickets}</div>
       </div>
-
       <div class="stat">
         <div class="stat-figure text-secondary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            class="inline-block h-8 w-8 stroke-current"
-            ><path
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6"
+          >
+            <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-            /></svg
-          >
+              d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
         </div>
-        <div class="stat-title">Page Views</div>
-        <div class="stat-value text-secondary">2.6M</div>
-        <div class="stat-desc">21% more than last month</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-figure text-secondary">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="inline-block h-8 w-8 stroke-current"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-            /></svg
-          >
-        </div>
-        <div class="stat-value">86%</div>
-        <div class="stat-title">Tasks done</div>
-        <div class="stat-desc text-secondary">31 tasks remaining</div>
+        <div class="stat-title">Total revenue</div>
+        <div class="stat-value text-secondary">{data.report.price}</div>
       </div>
     </div>
   </div>

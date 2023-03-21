@@ -50,6 +50,7 @@ MONTHRATE MONTHRATE
     DateTime searchFrom  
     DateTime searchTo  
     Float price  
+    Int numberOfTickets  
     }
   
 
