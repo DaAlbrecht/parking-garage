@@ -40,7 +40,7 @@ model ParkingSpace {
   level       Level     @relation(fields: [level_id], references: [id], onDelete: Cascade)
   level_id    Int
   parkingSpot Int
-  customer    Customer? @relation(fields: [customer_id], references: [id], onDelete: SetNull)
+  customer    Customer? @relation(fields: [customer_id], references: [id], onDelete: Cascade)
   customer_id String?   @unique
 
   @@unique([level_id, parkingSpot])

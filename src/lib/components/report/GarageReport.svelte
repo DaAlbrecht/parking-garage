@@ -17,7 +17,7 @@
     <div class="stats stats-vertical">
       <div class="stat">
         <div class="stat-title">Revenue</div>
-        <div class="stat-value">{garageInfo?.totalRevenue}</div>
+        <div class="stat-value">{garageInfo?.totalRevenue} CHF</div>
       </div>
     </div>
   </div>

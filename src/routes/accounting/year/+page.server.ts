@@ -26,59 +26,6 @@ export const load = (async () => {
     current = startTime;
     garageInfo.push({ id: garage.id, name: garage.name, monthlyRevenue, totalRevenue });
   }
-
-  // const garageInfo = [
-  //   {
-  //     id: 1,
-  //     name: 'Garage 1',
-  //     totalRevenue: 100,
-  //     monthlyRevenue: [
-  //       {
-  //         revenue: 100,
-  //         month: 'January'
-  //       },
-  //       {
-  //         revenue: 0,
-  //         month: 'February'
-  //       },
-  //       {
-  //         revenue: 20,
-  //         month: 'march'
-  //       },
-  //       {
-  //         revenue: 0,
-  //         month: 'April'
-  //       },
-  //       {
-  //         revenue: 0,
-  //         month: 'May'
-  //       },
-  //       {
-  //         revenue: 0,
-  //         month: 'June'
-  //       },
-  //       {
-  //         revenue: 0,
-  //         month: 'July'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Garage 2',
-  //     totalRevenue: 200,
-  //     monthlyRevenue: [
-  //       {
-  //         revenue: 100,
-  //         month: 'January'
-  //       },
-  //       {
-  //         revenue: 0,
-  //         month: 'February'
-  //       }
-  //     ]
-  //   }
-  // ];
   return { garageInfo };
 }) satisfies PageServerLoad;
 

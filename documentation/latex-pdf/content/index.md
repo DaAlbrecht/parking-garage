@@ -784,7 +784,8 @@ model Level {
   id                Int            @id @default(autoincrement())
   levelNumber       Int
   parking_spaces    Int
-  parkingGarage     ParkingGarage  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parkingGarage     ParkingGarage
+  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   occupiedSpaces    ParkingSpace[]
 
