@@ -14,7 +14,7 @@
 >
   <div class="card-body px-4">
     <h2 class="card-title">Garage: {garageInfo?.name}</h2>
-    <div class="stats stats-vertical shadow">
+    <div class="stats stats-vertical">
       <div class="stat">
         <div class="stat-title">Revenue</div>
         <div class="stat-value">{garageInfo?.totalRevenue}</div>
