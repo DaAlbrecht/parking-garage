@@ -84,7 +84,6 @@ ParkinTown requires a new parking garage management tool.
 7. Training and Support: Training and support should be provided to all users of the new IT system to ensure that they can use it effectively.
 8. Data Privacy and Security: The new IT system should be designed with data privacy and security in mind. Measures should be put in place to ensure that customer data is protected and that the system is secure from external threats. This may include encryption of sensitive data and regular security updates.
 
-\pagebreak
 
 ### Product-related general conditions
 
@@ -97,6 +96,8 @@ ParkinTown requires a new parking garage management tool.
 | GCR-105  | Requirements | The amount owed by occasional users should be calculated based on the length of stay and the applicable parking tariff. The system should automatically switch to a daily flat rate for stays longer than 24 hours, and the full amount should be charged for the elapsed days. After payment, a digital exit ticket should be issued to the customer. |
 
 Table: Product-related general conditions \label{tab:prodgencon}
+
+\pagebreak
 
 ## Delimitations
 
@@ -543,6 +544,7 @@ pdf_print() {
     mkdir "${BUILDDIR}"
     echo "Creating pdf-print output"
     pandoc "${CONTENTDIR}/${FILENAME}.md" \
+        -H disable_float.tex \
         --resource-path="${CONTENTDIR}" \
         --citeproc \
         --csl="${ASSETSDIR}/citation-style.csl" \
@@ -878,7 +880,8 @@ The "randomness" of the UUID gives additional security and does not let other cu
 ```js
 model AccountingReport {
   id                Int           @id @default(autoincrement())
-  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parkingGarage     ParkingGarage
+  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   generationTime    DateTime
   searchFrom        DateTime
@@ -1192,7 +1195,8 @@ longTermCustomer: async ({ request }) => {
 
     if (!customer) return fail(422, { error: 'Customer does not exist' });
 
-    if (customer.last_payment === null) return fail(422, { error: 'Customer has not paid yet' });
+    if (customer.last_payment === null) 
+    return fail(422, { error: 'Customer has not paid yet' });
 
     const date = new Date();
 
@@ -1971,6 +1975,188 @@ timeDifferenceInHours * rate[0].price + days * dayRate.price;
 ```
 
 The calculation multiplies the time difference with the hourly rate and adds the daily rate for each day spend extra.
+
+\pagebreak
+
+## Accounting
+
+Accounting is responsible for the generation of reports. There are two different kinds of reports. The first one is a report that allows searching in a custom period. The other report is a yearly report, that shows the revenue listed for each month.
+
+![Accounting \label{fig:accounting}](images/accounting.png)
+
+When generating a report, a new form needs to be filled out. The form allows defining what type of customer the search should be for (permanent tenants or occasional customers) and which garage. 
+
+![Generate report \label{fig:generatereport}](images/report_generation.png)
+
+The generated report shows the report id, generation date, how many parking tickets got issued during the period and the revenue from the parking tickets. The report takes currently parked occasional users into the calculation and calculates an estimated revenue.
+
+![Report \label{fig:report}](images/report.png)
+
+The yearly report shows first an overview of all garages for the current year.
+
+![Yearly report \label{fig:yearlt}](images/yearly.png)
+
+When clicking on a garage, a detailed view listing the months and their revenue shows
+
+![Detailed overview of the yearly report \label{fig:detailedyeaerly}](images/yearly_detail.png)
+
+\pagebreak
+
+### Implementation
+
+For the views, HTML from the level implementation was reused.
+
+#### New Report
+
+```typescript
+export const actions = {
+  generateReport: async ({ request }) => {
+    const data = await request.formData();
+    const id = data.get('id');
+    const from = data.get('from');
+    const to = data.get('to');
+    const isPermanentTenant = data.get('customerType');
+
+    if (!id || !from || !to) {
+      throw error(500, 'Missing parameters');
+    }
+
+    const startTime = new Date(from.toString());
+    const endTime = new Date(to.toString());
+
+    const garage = await prisma.parkingGarage.findUnique({
+      where: {
+        id: Number(id)
+      }
+    });
+
+    if (!garage) {
+      throw error(500, 'Missing garage');
+    }
+    let combinedRevenue = 0;
+    let numberOfTickets = 0;
+
+    if (isPermanentTenant === 'true') {
+      const info = await reportPermanentTenants(garage, startTime, endTime);
+      combinedRevenue = info.revenue;
+      numberOfTickets = info.numberOfTickets;
+    } else {
+      const info = await infoFromPeriod(garage, startTime, endTime);
+      const estimatedRevenue = await getReportForGarage(garage.id);
+      combinedRevenue = info.revenue + estimatedRevenue.estimatedRevenue;
+      numberOfTickets = info.numberOfTickets;
+    }
+
+    const report = await prisma.accountingReport.create({
+      data: {
+        parking_garage_id: garage.id,
+        generationTime: new Date(),
+        searchFrom: startTime,
+        searchTo: endTime,
+        price: combinedRevenue,
+        numberOfTickets: numberOfTickets
+      }
+    });
+
+    throw redirect(303, `/accounting/report/${report.id}`);
+  }
+};
+```
+
+When creating a new report, first the sent form gets validated and checked if all required input data is sent. Afterward, the start and end times from the period get created using the built-in Date implementation from JavaScript. Then the garage, the report should be created for, gets read from the database. Then it either generates a report for permanent tenants or occasional users. The reason why the creation of the two reports differs is that for the occasional customers, it adds up all ticket prices and then gets the currently parked customers and calculates their fees up to the time of creation. Permanent users, on the other hand, don't get charged for leaving the parking garage and therefore have no price on their parking ticket.
+
+\pagebreak
+
+**Calculating occasional customers**
+
+```typescript
+async function infoFromPeriod(garage: ParkingGarage, startTime: Date, endTime: Date) {
+  const tickets = await prisma.parkingTicket.findMany({
+    where: {
+      parking_garage_id: garage.id,
+      exit_date: {
+        gte: startTime,
+        lte: endTime
+      }
+    },
+    include: {
+      customer: true
+    }
+  });
+
+  if (!tickets) return { revenue: 0, numberOfTickets: 0 };
+
+  const numberOfTickets = tickets.filter(
+    (ticket) => ticket.customer?.is_long_term_customer !== true
+  ).length;
+
+  const revenue = tickets.reduce((acc, ticket) => acc + ticket.finalprice!, 0);
+
+  return { revenue: revenue, numberOfTickets: numberOfTickets };
+}
+```
+
+For occasional users, first, get all parking tickets that are in the given period, and count the length of the array filtering for only parking tickets that don't belong to a permanent tenant. Then the price of the parking tickets gets summed up, and there it doesn't matter that it's not fileted since permanent customers' exit tickets have a price of 0.
+
+\pagebreak
+
+
+**Calculating permanent customers**
+
+```typescript
+async function reportPermanentTenants
+(garage: ParkingGarage, startTime: Date, endTime: Date) {
+  const customers = await prisma.customer.findMany({
+    where: {
+      parking_garage_id: garage.id,
+      is_long_term_customer: true,
+      created_at: {
+        lte: endTime
+      },
+      last_payment: {
+        gte: startTime
+      }
+    },
+    include: {
+      parkingTickets: true
+    }
+  });
+
+  const monthRate = await prisma.parkingRate.findFirst({
+    where: {
+      parking_garage_id: garage.id,
+      rateType: RateType.MONTHRATE
+    }
+  });
+
+  if (!monthRate) {
+    throw new Error('No month rate found for this parking garage');
+  }
+
+  let revenue = 0;
+  let numberOfTickets = 0;
+  for (const customer of customers) {
+    numberOfTickets += customer.parkingTickets.length;
+    let start = DateTime.fromJSDate(customer.created_at!);
+    let end = DateTime.fromJSDate(customer.last_payment!);
+    if (DateTime.fromJSDate(startTime) > DateTime.fromJSDate(customer.created_at!)) {
+      start = DateTime.fromJSDate(startTime);
+    }
+    if (DateTime.fromJSDate(endTime) < DateTime.fromJSDate(customer.last_payment!)) {
+      end = DateTime.fromJSDate(endTime);
+    }
+
+    let current = start;
+    while (current <= end) {
+      revenue += monthRate.price!;
+      current = current.plus({ months: 1 });
+    }
+  }
+  return { revenue: revenue, numberOfTickets: numberOfTickets };
+}
+```
+
+Calculating the revenue of permanent tenants is more complicated. Since their price is not on the parking ticket it's not as easy as summing up the price. First, all customers created before the given time period that have at least paid their last monthly fee once during the period get requested from the database. Then the monthly rate for that garage gets saved. Afterward, the function iterates over each customer. The function then iterates over the period and checks if the customer was paying each month, and only adds the monthly fee to the total revenue if the customer paid.
 
 \pagebreak
 
