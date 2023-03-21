@@ -2,7 +2,6 @@ import { prisma } from '$lib/server/database';
 import { getReportForGarage } from '$lib/util/reports';
 import { RateType, type ParkingGarage } from '@prisma/client';
 import { error, redirect } from '@sveltejs/kit';
-import { info } from 'console';
 import { DateTime } from 'luxon';
 import type { PageServerLoad } from './$types';
 
