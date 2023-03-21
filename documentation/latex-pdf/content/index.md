@@ -878,16 +878,15 @@ The "randomness" of the UUID gives additional security and does not let other cu
 ```js
 model AccountingReport {
   id                Int           @id @default(autoincrement())
-  parkingGarage     ParkingGarage
-  @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
+  parkingGarage     ParkingGarage @relation(fields: [parking_garage_id], references: [id], onDelete: Cascade)
   parking_garage_id Int
   generationTime    DateTime
   searchFrom        DateTime
   searchTo          DateTime
   price             Float
+  numberOfTickets   Int
 }
 ```
-
 
 1. **id:** this is the primary key and is marked to be automatically created/incremented
 2. **parkingGarage:** one-to-many (1-n) relation with the ParkingGarage record
@@ -896,6 +895,7 @@ model AccountingReport {
 5. **searchFrom:** the start time of the report search period
 6. **searchTo:** the end time of the report search period
 7. **price:** the final profit over the period
+8. **numberOfTickets:** the number of tickets found
 
 #### ParkingTicket
 
